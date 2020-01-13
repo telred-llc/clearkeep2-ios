@@ -1,6 +1,6 @@
 //
 //  Session.swift
-//  ChatQL
+//  Clearkeep
 //
 //  Created by Pham Hoa on 1/15/19.
 //  Copyright © 2019 Pham Hoa. All rights reserved.
@@ -11,7 +11,7 @@ import Foundation
 class Session {
     static let shared = Session()
     
-    var meData: MeQuery.Data.Me?
+    var meData: GetUserQuery.Data.GetUser?
     
     var lastCredential: (String?, String?)? {
         get {
@@ -25,8 +25,8 @@ class Session {
             }
         }
         set {
-            UserDefaults.standard.set(lastCredential?.0, forKey: "username")
-            UserDefaults.standard.set(lastCredential?.1, forKey: "password")
+            UserDefaults.standard.set(newValue?.0, forKey: "username")
+            UserDefaults.standard.set(newValue?.1, forKey: "password")
             UserDefaults.standard.synchronize()
         }
     }

@@ -1,6 +1,6 @@
 //
 //  ViewController.swift
-//  ChatQL
+//  Clearkeep
 //
 //  Created by Pham Hoa on 1/10/19.
 //  Copyright © 2019 Pham Hoa. All rights reserved.
@@ -44,9 +44,10 @@ class LoginViewController: BaseViewController {
             self.showAlert(title: "Missing information", msg: "Please enter a valid user name and password")
             return
         }
-        
+
+        let username = self.usernameTextField.text!
         self.showProgressHub()
-        AWSMobileClient.default().signIn(username: self.usernameTextField.text!, password: self.passwordTextField.text!, completionHandler: { (signInResult, error) in
+        AWSMobileClient.default().signIn(username: username, password: self.passwordTextField.text!, completionHandler: { (signInResult, error) in
             self.hideProgressHub()
             if let error = error {
                 self.showErrorMessage(error: error, {
@@ -62,7 +63,7 @@ class LoginViewController: BaseViewController {
             } else if let signInResult = signInResult {
                 switch (signInResult.signInState) {
                 case .signedIn:
-                    self.createUserIfNeeded()
+                    self.checkIfUserExists(username: username)
                 case .smsMFA:
                     self.showAlert(title: nil, msg: "SMS message sent to \(signInResult.codeDetails!.destination!)", {
                         self.showConfirmationVC(type: .signin)
@@ -74,31 +75,36 @@ class LoginViewController: BaseViewController {
         })
     }
 
-    func createUserIfNeeded() {
+    func checkIfUserExists(username: String) {
         self.showProgressHub()
-        appSyncClient?.fetch(query: MeQuery(), cachePolicy: CachePolicy.fetchIgnoringCacheData, resultHandler: { (result, error) in
+        appSyncClient?.fetch(query: GetUserQuery.init(id: username), cachePolicy: CachePolicy.fetchIgnoringCacheData, resultHandler: { (result, error) in
             self.hideProgressHub()
             if let error = error {
                 self.showErrorMessage(error: error)
-            } else if result?.data?.me == nil {
-                self.createUser()
+            } else if result?.data?.getUser == nil {
+                self.createUser(username: username)
             } else {
-                Session.shared.meData = result?.data?.me
+                Session.shared.meData = result?.data?.getUser
                 Switcher.updateRootVC(logined: true)
             }
         })
     }
 
-    func createUser() {
+    func createUser(username: String) {
         self.showProgressHub()
-        appSyncClient?.perform(mutation: CreateUserMutation.init(username: self.usernameTextField.text!), resultHandler: { (result, error) in
+        let createUserMutation = CreateUserMutation.init(input: CreateUserInput.init(username: username))
+        appSyncClient?.perform(mutation: createUserMutation, resultHandler: { (result, error) in
             self.hideProgressHub()
             if let error = error {
                 self.showErrorMessage(error: error)
             } else if let result = result {
-                if let snapshot = result.data?.createUser?.snapshot {
-                    Session.shared.meData = MeQuery.Data.Me.init(snapshot: snapshot)
-                    Switcher.updateRootVC(logined: true)
+                if let jsonObject = result.data?.createUser?.jsonObject {
+                    do {
+                        Session.shared.meData = try GetUserQuery.Data.GetUser.init(jsonObject: jsonObject)
+                        Switcher.updateRootVC(logined: true)
+                    } catch {
+                        print("Cannot parse graphql object: \(error)")
+                    }
                 }
             }
         })

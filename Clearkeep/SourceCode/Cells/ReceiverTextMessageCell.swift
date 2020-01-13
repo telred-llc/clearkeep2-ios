@@ -1,6 +1,6 @@
 //
 //  ReceiverTextMessageCell.swift
-//  ChatQLDemo
+//  Clearkeep
 //
 //  Created by Dat Nguyen on 1/16/19.
 //  Copyright © 2019 Dat Nguyen. All rights reserved.
@@ -30,7 +30,7 @@ class NodeTextMessageCell: BaseTableViewCell {
         timeSendLabel.font = UIFont.systemFont(ofSize: 12)
     }
     
-    func setUI(form data: AllMessageConnectionQuery.Data.AllMessageConnection.Message?, indexPath: IndexPath) {
+    func setUI(form data: GetConvoQuery.Data.GetConvo.Message.Item?, indexPath: IndexPath) {
         self.indexPath = indexPath
         
         self.nameLabel.text = nil
@@ -42,7 +42,7 @@ class NodeTextMessageCell: BaseTableViewCell {
                 self.nameLabel.text = dateFormatter.string(from: date)
             }
         }
-        self.statusIcon.image = UIImage(named: data?.isSent ?? false ? "ic-receiver" : "ic-sent")
+//        self.statusIcon.image = UIImage(named: data?.isSent ?? false ? "ic-receiver" : "ic-sent")
         self.contentLabel.text = data?.content
         self.timeSendLabel.text = nil
     }

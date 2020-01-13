@@ -1,0 +1,20 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "clearkeep-dev-20200112162329-authRole",
+            "UnauthRoleArn": "arn:aws:iam::073874858801:role/clearkeep-dev-20200112162329-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::073874858801:role/clearkeep-dev-20200112162329-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "clearkeep-dev-20200112162329-deployment",
+            "UnauthRoleName": "clearkeep-dev-20200112162329-unauthRole",
+            "StackName": "clearkeep-dev-20200112162329",
+            "StackId": "arn:aws:cloudformation:us-west-2:073874858801:stack/clearkeep-dev-20200112162329/33cae4c0-351d-11ea-9ba0-0af3380f813e",
+            "AmplifyAppId": "d1jo1ajlhitf8n"
+        },
+        "categories": {
+            "auth": {
+                "clearkeep96f5ec29": {}
+            }
+        }
+    }
+}

@@ -1,6 +1,6 @@
 //
 //  ForgotPasswordViewControlller.swift
-//  ChatQL
+//  Clearkeep
 //
 //  Created by Dat Nguyen on 1/18/19.
 //  Copyright © 2019 Pham Hoa. All rights reserved.
@@ -44,10 +44,11 @@ class ForgotPasswordViewControlller: BaseViewController {
                 case .done?:
                     break
                 case .confirmationCodeSent?:
-                    guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConfirmForgotPasswordViewController") as? ConfirmForgotPasswordViewController else {
-                        return
-                    }
                     DispatchQueue.main.async {
+                        guard let vc = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "ConfirmForgotPasswordViewController") as? ConfirmForgotPasswordViewController else {
+                            return
+                        }
+
                         vc.username = self.usernameInputTextField.text ?? ""
                         self.navigationController?.pushViewController(vc, animated: true)
                     }

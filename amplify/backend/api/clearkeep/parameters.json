@@ -1,0 +1,11 @@
+{
+    "AppSyncApiName": "clearkeep",
+    "DynamoDBBillingMode": "PAY_PER_REQUEST",
+    "DynamoDBEnableServerSideEncryption": "false",
+    "AuthCognitoUserPoolId": {
+        "Fn::GetAtt": [
+            "authclearkeep96f5ec29",
+            "Outputs.UserPoolId"
+        ]
+    }
+}

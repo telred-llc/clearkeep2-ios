@@ -1,6 +1,6 @@
 //
 //  AppDelegate.swift
-//  ChatQL
+//  Clearkeep
 //
 //  Created by Pham Hoa on 1/10/19.
 //  Copyright © 2019 Pham Hoa. All rights reserved.
@@ -32,17 +32,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     func setupAppSyncInitialization() {
         do {
-            // initialize the AppSync client configuration configuration
+            // You can choose the directory in which AppSync stores its persistent cache databases
             let cacheConfiguration = try AWSAppSyncCacheConfiguration()
-            let appSyncConfig = try AWSAppSyncClientConfiguration(appSyncServiceConfig: AWSAppSyncServiceConfig(),
+
+            // AppSync configuration & client initialization
+            let appSyncServiceConfig = try AWSAppSyncServiceConfig()
+            let appSyncConfig = try AWSAppSyncClientConfiguration(appSyncServiceConfig: appSyncServiceConfig,
+                                                                  userPoolsAuthProvider: self,
                                                                   cacheConfiguration: cacheConfiguration)
-            // initialize app sync client
-            appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
-
-            // set id as the cache key for objects
-            appSyncClient?.apolloClient?.cacheKeyForObject = { $0["id"] }
-
-            print("AppSyncClient initialized with cacheConfiguration: \(cacheConfiguration)")
+            self.appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
+            print("Initialized appsync client.")
         } catch {
             print("Error initializing appsync client. \(error)")
         }

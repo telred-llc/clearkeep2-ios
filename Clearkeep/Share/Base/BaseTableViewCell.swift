@@ -1,6 +1,6 @@
 //
 //  BaseTableViewCell.swift
-//  ChatQLDemo
+//  ClearkeepDemo
 //
 //  Created by Dat Nguyen on 1/16/19.
 //  Copyright © 2019 Dat Nguyen. All rights reserved.

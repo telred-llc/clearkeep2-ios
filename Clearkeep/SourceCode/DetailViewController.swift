@@ -1,6 +1,6 @@
 //
 //  DetailViewController.swift
-//  ChatQL
+//  Clearkeep
 //
 //  Created by Pham Hoa on 1/14/19.
 //  Copyright © 2019 Pham Hoa. All rights reserved.
@@ -29,9 +29,9 @@ class DetailViewController: BaseViewController {
             self.title = conversationName
         }
     }
-    
-    private var messages: [AllMessageConnectionQuery.Data.AllMessageConnection.Message] = []
-    private var meData: MeQuery.Data.Me? = Session.shared.meData
+
+    private var conversationData: GetConvoQuery.Data.GetConvo?
+    private var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
     private var nextToken: String?
     private lazy var dateFormatter = DateFormatter.init()
     private let numberOfItemsPerPage: Int = 20
@@ -48,7 +48,7 @@ class DetailViewController: BaseViewController {
         super.viewWillAppear(animated)
         self.title = conversationName
         self.messagesTableView.reloadData()
-        self.refreshData(self.messages.count == 0)
+        self.refreshData(conversationData?.messages?.items?.isEmpty != true)
     }
     
     override func viewDidDisappear(_ animated: Bool) {
@@ -64,15 +64,16 @@ class DetailViewController: BaseViewController {
         if self.conversationId.count == 0 {
             //
         } else {
-            firstly { () -> PromiseKit.Promise<AllMessageConnectionQuery.Data.AllMessageConnection?> in
+            firstly { () -> PromiseKit.Promise<GetConvoQuery.Data.GetConvo?> in
                 if animated {
                     self.showProgressHub()
                 }
-                return self.fetchAllMessageConnection(conversationId: self.conversationId, nextToken: nil)
-                }.done({ (allMessageConnection) in
-                    let messages = allMessageConnection?.messages?.compactMap({ return $0 }) ?? []
-                    self.nextToken = allMessageConnection?.nextToken
-                    self.messages = self.sort(messages: messages)
+                return self.fetchConversation(conversationId: self.conversationId)
+                }.done({ (conversation) in
+                    self.conversationData = conversation
+                    let messages = conversation?.messages?.items?.compactMap({ return $0 }) ?? []
+                    let sortedMessages = self.sort(messages: messages)
+                    self.conversationData?.messages?.items = sortedMessages
                 }).ensure {
                     self.messagesTableView.reloadData()
                     if animated {
@@ -95,18 +96,18 @@ class DetailViewController: BaseViewController {
     }
     
     func clearData() {
-        self.messages.removeAll()
+        self.conversationData?.messages?.items?.removeAll()
         self.messagesTableView.reloadData()
     }
     
-    func fetchAllMessageConnection(conversationId: String, nextToken: String?) -> PromiseKit.Promise<AllMessageConnectionQuery.Data.AllMessageConnection?> {
-        return PromiseKit.Promise<AllMessageConnectionQuery.Data.AllMessageConnection?> { (resolver) in
-            let query = AllMessageConnectionQuery.init(after: nextToken, conversationId: conversationId, first: numberOfItemsPerPage)
+    func fetchConversation(conversationId: String) -> PromiseKit.Promise<GetConvoQuery.Data.GetConvo?> {
+        return PromiseKit.Promise<GetConvoQuery.Data.GetConvo?> { (resolver) in
+            let query = GetConvoQuery.init(id: conversationId)
             appSyncClient?.fetch(query: query, cachePolicy: CachePolicy.fetchIgnoringCacheData, resultHandler: { (result, error) in
                 if let error = error {
                     resolver.reject(error)
                 } else {
-                    resolver.fulfill(result?.data?.allMessageConnection)
+                    resolver.fulfill(result?.data?.getConvo)
                 }
             })
         }
@@ -123,14 +124,15 @@ class DetailViewController: BaseViewController {
         let createdAt = dateFormatter.string(from: date)
         let id = createdAt + "_" + UUID().uuidString
 
-        let tempMessage = AllMessageConnectionQuery.Data.AllMessageConnection.Message.init(content: content, conversationId: conversationId, createdAt: createdAt, id: id, isSent: false, sender: meData?.id)
+        let tempMessage = GetConvoQuery.Data.GetConvo.Message.Item.init(id: id, authorId: meData?.id, content: content, messageConversationId: conversationId, createdAt: createdAt, updatedAt: nil)
         self.addNewMessage(message: tempMessage)
         self.inputTextView.text = ""
 
-        appSyncClient?.perform(mutation: CreateMessageMutation.init(content: content, conversationId: self.conversationId, createdAt: createdAt, id: id), resultHandler: { (result, error) in
+        let createMessageMutaion = CreateMessageMutation.init(input: CreateMessageInput.init(id: id, authorId: meData?.id, content: content, messageConversationId: conversationId, createdAt: createdAt, updatedAt: nil))
+        appSyncClient?.perform(mutation: createMessageMutaion, resultHandler: { (result, error) in
             if let result = result {
                 if let snapshot = result.data?.createMessage?.snapshot {
-                    self.addNewMessage(message: AllMessageConnectionQuery.Data.AllMessageConnection.Message.init(snapshot: snapshot))
+                    self.addNewMessage(message: GetConvoQuery.Data.GetConvo.Message.Item.init(snapshot: snapshot))
                 }
             } else {
                 self.showToast(message: "Can't send the message")
@@ -138,13 +140,15 @@ class DetailViewController: BaseViewController {
         })
     }
     
-    func addNewMessage(message: AllMessageConnectionQuery.Data.AllMessageConnection.Message) {
-        if let indexOfExistingMessage = self.messages.index(where: { $0.id == message.id }) {
-            self.messages[indexOfExistingMessage] = message
+    func addNewMessage(message: GetConvoQuery.Data.GetConvo.Message.Item) {
+        if let indexOfExistingMessage = self.conversationData?.messages?.items?.index(where: { $0?.id == message.id }) {
+            self.conversationData?.messages?.items?[indexOfExistingMessage] = message
             self.messagesTableView?.reloadRows(at: [IndexPath.init(row: indexOfExistingMessage, section: 0)], with: .none)
         } else {
-            self.messages.append(message)
-            let lastIndexPath = IndexPath.init(row: self.messages.count - 1, section: 0)
+            self.conversationData?.messages?.items?.append(message)
+            var lastRow = (self.conversationData?.messages?.items?.count ?? 0) - 1
+            lastRow = lastRow >= 0 ? lastRow : 0
+            let lastIndexPath = IndexPath.init(row: lastRow, section: 0)
             self.messagesTableView?.beginUpdates()
             self.messagesTableView?.insertRows(at: [lastIndexPath], with: .automatic)
             self.messagesTableView?.endUpdates()
@@ -153,8 +157,8 @@ class DetailViewController: BaseViewController {
     }
     
     func srollToLatestMessage() {
-        if self.messages.count > 0 {
-            self.messagesTableView?.scrollToRow(at: IndexPath.init(row: self.messages.count - 1, section: 0), at: .bottom, animated: true)
+        if let messagesCount = self.conversationData?.messages?.items?.count, messagesCount > 0 {
+            self.messagesTableView?.scrollToRow(at: IndexPath.init(row: messagesCount - 1, section: 0), at: .bottom, animated: true)
         }
     }
     
@@ -206,30 +210,32 @@ class DetailViewController: BaseViewController {
     
     func loadMoreMessage(_ completion: (() -> Void)?) {
         if let nextToken = self.nextToken {
-            firstly { () -> PromiseKit.Promise<AllMessageConnectionQuery.Data.AllMessageConnection?> in
-                return self.fetchAllMessageConnection(conversationId: self.conversationId, nextToken: nextToken)
-                }.done({ (allMessageConnection) in
-                    var messages = allMessageConnection?.messages?.compactMap({ return $0 }) ?? []
-                    self.nextToken = allMessageConnection?.nextToken
-                    
-                    messages = self.sort(messages: messages).reversed()
-                    for message in messages {
-                        self.messagesTableView.beginUpdates()
-                        self.messages.insert(message, at: 0)
-                        self.messagesTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .none)
-                        self.messagesTableView.endUpdates()
-                    }
-                }).ensure {
-                    completion?()
-                }.catch { (error) in
-                    print(error)
-            }
+            completion?()
+
+//            firstly { () -> PromiseKit.Promise<[GetConvoQuery.Data.GetConvo.Message.Item]?> in
+//                return self.fetchAllMessageConnection(conversationId: self.conversationId, nextToken: nextToken)
+//                }.done({ (allMessageConnection) in
+//                    var messages = allMessageConnection?.messages?.compactMap({ return $0 }) ?? []
+//                    self.nextToken = allMessageConnection?.nextToken
+//
+//                    messages = self.sort(messages: messages).reversed()
+//                    for message in messages {
+//                        self.messagesTableView.beginUpdates()
+//                        self.messages.insert(message, at: 0)
+//                        self.messagesTableView.insertRows(at: [IndexPath.init(row: 0, section: 0)], with: .none)
+//                        self.messagesTableView.endUpdates()
+//                    }
+//                }).ensure {
+//                    completion?()
+//                }.catch { (error) in
+//                    print(error)
+//            }
         } else {
             completion?()
         }
     }
     
-    func sort(messages: [AllMessageConnectionQuery.Data.AllMessageConnection.Message]) -> [AllMessageConnectionQuery.Data.AllMessageConnection.Message] {
+    func sort(messages: [GetConvoQuery.Data.GetConvo.Message.Item]) -> [GetConvoQuery.Data.GetConvo.Message.Item] {
         let sortedMessages = messages.sorted(by: { (left, right) -> Bool in
             if left.createdAt != nil && right.createdAt != nil {
                 
@@ -303,21 +309,23 @@ extension DetailViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return messages.count
+        return conversationData?.messages?.items?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let message = self.messages[indexPath.row]
-        if meData?.id == message.sender {
-            let cell = tableViewSenderTextMessage(tableView, cellForRowAt: indexPath, with: message)
-            return cell
-        } else {
-            let cell = tableViewReceiverTextMessage(tableView, cellForRowAt: indexPath, with: message)
-            return cell
+        if let message = self.conversationData?.messages?.items?[indexPath.row] {
+            if meData?.id == message.authorId {
+                let cell = tableViewSenderTextMessage(tableView, cellForRowAt: indexPath, with: message)
+                return cell
+            } else {
+                let cell = tableViewReceiverTextMessage(tableView, cellForRowAt: indexPath, with: message)
+                return cell
+            }
         }
+        return UITableViewCell()
     }
     
-    func tableViewSenderTextMessage(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, with item: AllMessageConnectionQuery.Data.AllMessageConnection.Message) -> UITableViewCell {
+    func tableViewSenderTextMessage(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, with item: GetConvoQuery.Data.GetConvo.Message.Item) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SenderTextMessageCell", for: indexPath) as? NodeTextMessageCell else {
             return UITableViewCell()
         }
@@ -329,7 +337,7 @@ extension DetailViewController: UITableViewDataSource {
         return cell
     }
     
-    func tableViewReceiverTextMessage(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, with item: AllMessageConnectionQuery.Data.AllMessageConnection.Message) -> UITableViewCell {
+    func tableViewReceiverTextMessage(_ tableView: UITableView, cellForRowAt indexPath: IndexPath, with item: GetConvoQuery.Data.GetConvo.Message.Item) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "ReceiverTextMessageCell", for: indexPath) as? NodeTextMessageCell else {
             return UITableViewCell()
         }
@@ -358,8 +366,8 @@ extension DetailViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
         DispatchQueue.main.async {
             if let cell = cell as? NodeTextMessageCell {
-                let message = self.messages[indexPath.row]
-                if self.meData?.id == message.sender {
+                let message = self.conversationData?.messages?.items?[indexPath.row]
+                if self.meData?.id == message?.authorId {
                     var path = UIBezierPath()
                     path = UIBezierPath(roundedRect: cell.containerView.bounds, byRoundingCorners: [.topLeft, .topRight, .bottomLeft], cornerRadii: CGSize(width: 16, height: 8))
                     let mask = CAShapeLayer()

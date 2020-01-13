@@ -1,6 +1,6 @@
 //
 //  ConfirmForgotPasswordViewController.swift
-//  ChatQL
+//  Clearkeep
 //
 //  Created by Dat Nguyen on 1/18/19.
 //  Copyright © 2019 Pham Hoa. All rights reserved.

@@ -1,6 +1,6 @@
 //
 //  CQLError.swift
-//  ChatQL
+//  Clearkeep
 //
 //  Created by Pham Hoa on 1/17/19.
 //  Copyright © 2019 Pham Hoa. All rights reserved.
