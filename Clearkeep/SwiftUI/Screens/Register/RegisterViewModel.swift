@@ -70,7 +70,7 @@ final class RegisterViewModel: ObservableObject {
                                                             MessageUtils.showMess(type: .failed, string: "Somthing went wrong!")
                                                         }
                                                     } else if let error = error {
-                                                        MessageUtils.showMess(error: error)
+                                                        MessageUtils.showErrorMessage(error: error)
                                                     }
         }
     }

@@ -59,7 +59,7 @@ final class MessageUtils {
         
     }
     
-    static func showMess(error: Error) {
+    static func showErrorMessage(error: Error) {
         let mess = MessageUtils.getMessage(error: error)
         MessageUtils.showMess(type: .failed, string: mess)
     }

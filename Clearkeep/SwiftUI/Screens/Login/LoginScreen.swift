@@ -18,7 +18,7 @@ struct LoginScreen: View {
             Spacer()
             WelcomeText()
             LogoImage().padding(.bottom, 20)
-            FlatTextField(title: "Username", text: $viewModel.email)
+            FlatTextField(title: "Username", text: $viewModel.username)
                 .modifier(TextFieldLoginModifier())
             
             FlatTextField(title: "Password", text: $viewModel.password, isSecure: true)
@@ -28,8 +28,7 @@ struct LoginScreen: View {
                 .modifier(ButtonLoginModifier())
                 .onTapGesture {
                     //TODO: handle login here
-                    MessageUtils.showMess(type: .failed, string: "Something went wron")
-                    //                        Switcher.changeRootView(view: UIHostingController(rootView: TabbarScreen()))
+                    self.viewModel.login()
             }
             
             HStack(spacing: 4) {

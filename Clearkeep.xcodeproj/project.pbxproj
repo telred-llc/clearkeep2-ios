@@ -33,6 +33,7 @@
 		AAB3DBBE21F0407B00B22A78 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3DBBD21F0407B00B22A78 /* LoadingView.swift */; };
 		AAB3DBC121F16B0C00B22A78 /* ForgotPasswordViewControlller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3DBC021F16B0C00B22A78 /* ForgotPasswordViewControlller.swift */; };
 		AAB3DBC421F16B5F00B22A78 /* ConfirmForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3DBC321F16B5F00B22A78 /* ConfirmForgotPasswordViewController.swift */; };
+		B226ABDE23CE1FEB00BEC69C /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B226ABDD23CE1FEB00BEC69C /* Utils.swift */; };
 		B22E236A23CC47B200D63F77 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22E236923CC47B200D63F77 /* LoginScreen.swift */; };
 		B22E236D23CC497300D63F77 /* FlatTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22E236C23CC497300D63F77 /* FlatTextField.swift */; };
 		B22E237123CC4A4600D63F77 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22E237023CC4A4600D63F77 /* LoginViewModel.swift */; };
@@ -88,6 +89,7 @@
 		AAB3DBBD21F0407B00B22A78 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		AAB3DBC021F16B0C00B22A78 /* ForgotPasswordViewControlller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewControlller.swift; sourceTree = "<group>"; };
 		AAB3DBC321F16B5F00B22A78 /* ConfirmForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmForgotPasswordViewController.swift; sourceTree = "<group>"; };
+		B226ABDD23CE1FEB00BEC69C /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		B22E236923CC47B200D63F77 /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		B22E236C23CC497300D63F77 /* FlatTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatTextField.swift; sourceTree = "<group>"; };
 		B22E237023CC4A4600D63F77 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -179,6 +181,7 @@
 				8562186521E74703004D53A7 /* Switcher.swift */,
 				8562186B21E75D6B004D53A7 /* Constants.swift */,
 				B26A3D7323CDC76000FAAC0D /* MessageUtils.swift */,
+				B226ABDD23CE1FEB00BEC69C /* Utils.swift */,
 			);
 			path = Share;
 			sourceTree = "<group>";
@@ -525,6 +528,7 @@
 				856DC99521F01C09003BEAAD /* BaseViewController.swift in Sources */,
 				B22E236A23CC47B200D63F77 /* LoginScreen.swift in Sources */,
 				B2701F8123CC759E001DC21C /* ContactScreen.swift in Sources */,
+				B226ABDE23CE1FEB00BEC69C /* Utils.swift in Sources */,
 				856DC99021EF4DF4003BEAAD /* SplashViewController.swift in Sources */,
 				B2701F8323CC75A9001DC21C /* ProfileScreen.swift in Sources */,
 				B22E237C23CC5B5500D63F77 /* ConversationScreen.swift in Sources */,
