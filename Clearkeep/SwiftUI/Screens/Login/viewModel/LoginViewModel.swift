@@ -109,6 +109,8 @@ public class LoginViewModel: ObservableObject {
                     Session.shared.meData = GetUserQuery.Data.GetUser.init(snapshot: snapshot)
                     Switcher.updateRootVC(logined: true)
                 }
+                Switcher.updateRootVC(logined: true)
+
             }
         })
     }

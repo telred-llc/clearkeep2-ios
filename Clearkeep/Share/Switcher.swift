@@ -11,26 +11,31 @@ import SwiftUI
 
 class Switcher {
     static func updateRootVC(logined: Bool) {
-        var rootVC : UIViewController?
-        
+//        var rootVC : UIViewController?
+//
+//        if logined {
+//            rootVC = UIHostingController(rootView: TabbarScreen())
+//        }
+//        else {
+//            rootVC = UIHostingController(rootView: LoginScreen())
+//        }
+//
+//        DispatchQueue.main.async {
+//            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+//            if rootVC?.isKind(of: UISplitViewController.self) == true  {
+//                (rootVC as! UISplitViewController).delegate = appDelegate
+//                appDelegate.window?.rootViewController = rootVC
+//            } else if rootVC?.isKind(of: UINavigationController.self) == true {
+//                appDelegate.window?.rootViewController = rootVC
+//            } else {
+//                appDelegate.window?.rootViewController = UINavigationController.init(rootViewController: rootVC!)
+//            }
+//            appDelegate.window?.makeKeyAndVisible()
+//        }
         if logined {
-            rootVC = UIHostingController(rootView: TabbarScreen())
-        }
-        else {
-            rootVC = UIHostingController(rootView: LoginScreen())
-        }
-        
-        DispatchQueue.main.async {
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            if rootVC?.isKind(of: UISplitViewController.self) == true  {
-                (rootVC as! UISplitViewController).delegate = appDelegate
-                appDelegate.window?.rootViewController = rootVC
-            } else if rootVC?.isKind(of: UINavigationController.self) == true {
-                appDelegate.window?.rootViewController = rootVC
-            } else {
-                appDelegate.window?.rootViewController = UINavigationController.init(rootViewController: rootVC!)
-            }
-            appDelegate.window?.makeKeyAndVisible()
+            Switcher.changeRootView(view: UIHostingController(rootView: TabbarScreen()))
+        } else {
+            Switcher.changeRootView(view: UIHostingController(rootView: LoginScreen()))
         }
     }
     

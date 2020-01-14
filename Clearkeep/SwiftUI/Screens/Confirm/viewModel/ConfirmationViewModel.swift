@@ -23,10 +23,13 @@ final class ConfirmationViewModel: ObservableObject {
                 switch(signUpResult.signUpConfirmationState) {
                 case .confirmed:
                     MessageUtils.showMess(type: .success, string: "Your account has been successfully verified!")
-                    
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+                        Switcher.updateRootVC(logined: true)
+                        
+                    }
                 case .unconfirmed:
                     MessageUtils.showMess(type: .warning, string: "User is not confirmed and needs verification via \(signUpResult.codeDeliveryDetails!.deliveryMedium) sent at \(signUpResult.codeDeliveryDetails!.destination!)")
-
+                    
                 case .unknown:
                     MessageUtils.showMess(type: .failed, string: "Somthing went wrong!")
                 }

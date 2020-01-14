@@ -22,6 +22,7 @@ struct ConfirmationScreen: View {
             Button("Submit") {
                 switch self.type {
                 case .signup:
+                    self.viewModel.username = "vuvdv3101"
                     self.viewModel.confirmSignup()
                 case .signin:
                     self.viewModel.confirmSignin()
