@@ -14,10 +14,10 @@ class Switcher {
         var rootVC : UIViewController?
         
         if logined {
-            rootVC = UIStoryboard.init(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "SplitViewController")
+            rootVC = UIHostingController(rootView: TabbarScreen())
         }
         else {
-            rootVC = UIStoryboard(name:"Main", bundle: nil).instantiateViewController(withIdentifier: "LoginViewController")
+            rootVC = UIHostingController(rootView: LoginScreen())
         }
         
         DispatchQueue.main.async {

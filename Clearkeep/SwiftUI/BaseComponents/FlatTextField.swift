@@ -17,9 +17,13 @@ struct FlatTextField: View {
             if isSecure {
                 SecureField(title, text: $text)
                     .textFieldStyle(PlainTextFieldStyle())
+                    .autocapitalization(.none)
+                
             } else {
                 TextField(title, text: $text)
                     .textFieldStyle(PlainTextFieldStyle())
+                    .autocapitalization(.none)
+                
             }
         }
         

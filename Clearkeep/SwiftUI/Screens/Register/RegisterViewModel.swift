@@ -11,6 +11,7 @@ import SwiftUI
 import AWSCognitoIdentityProvider
 import AWSMobileClient
 import AWSAppSync
+import SVProgressHUD
 
 final class RegisterViewModel: ObservableObject {
     //MARK: - Properties
@@ -29,44 +30,47 @@ final class RegisterViewModel: ObservableObject {
     //MARK: -Public fucntion
     
     func register() {
-        guard validate().0 else {
-            //Todo: show mess
+        guard validate() else {
             return
         }
-        registerToServer()
+        DispatchQueue.main.async {
+            self.registerToServer()
+        }
     }
     
     //MARK: - Private fucntion
     
-    private func validate() -> (Bool, String?) {
+    private func validate() -> Bool {
         guard !username.isEmpty, !password.isEmpty, !email.isEmpty, !phone.isEmpty else {
-            return (false, "Please input all field!")
+            MessageUtils.showMess(type: .failed, string: "Please input all field")
+            return false
         }
-        return (true, nil)
+        return true
     }
     
     private func registerToServer() {
         guard let phoneCode = phoneModel?.phoneCode else {
             return
         }
+        SVProgressHUD.show()
         let validPhone = "+\(phoneCode)\(phone)"
-        AWSMobileClient.sharedInstance().signUp(username: username,
+        AWSMobileClient.default().signUp(username: username,
                                                 password: password,
-                                                userAttributes: ["email": "\(email)", "phone_number": "\(validPhone)"]) { [weak self] (signUpResult, error) in
-                                                    guard let `self` = self else {
-                                                        return
-                                                    }
+                                                userAttributes: ["email": "\(email)", "phone_number": "\(validPhone)"]) {(signUpResult, error) in
+                                                    SVProgressHUD.dismiss()
                                                     if let signUpResult = signUpResult {
-//                                                        switch(signUpResult.signUpConfirmationState) {
-//                                                        case .confirmed:
-//                                                            self.showAlert(title: "", mess: "User is signed up and confirmed.", data: signUpResult)
-//                                                        case .unconfirmed:
-//                                                            self.showAlert(title: "Successed", mess: "A verification code has been sent via \(signUpResult.codeDeliveryDetails!.deliveryMedium) at \(signUpResult.codeDeliveryDetails!.destination!)", data: nil)
-//                                                        case .unknown:
-//                                                            self.showAlert(title: "Error", mess: "Somthing went wrong!", data: nil)
-//                                                        }
+                                                        switch(signUpResult.signUpConfirmationState) {
+                                                        case .confirmed:
+                                                            MessageUtils.showMess(type: .success, string: "User is signed up and confirmed")
+                                                            Switcher.updateRootVC(logined: true)
+                                                        case .unconfirmed:
+                                                            let mess = "A verification code has been sent via \(signUpResult.codeDeliveryDetails!.deliveryMedium) at \(signUpResult.codeDeliveryDetails!.destination!)"
+                                                            MessageUtils.showMess(type: .success, string: mess)
+                                                        case .unknown:
+                                                            MessageUtils.showMess(type: .failed, string: "Somthing went wrong!")
+                                                        }
                                                     } else if let error = error {
-//                                                        self.showAlert(title: "Error", mess: nil, data: error)
+                                                        MessageUtils.showMess(error: error)
                                                     }
         }
     }
