@@ -17,6 +17,8 @@ public class LoginViewModel: ObservableObject {
     
     @Published var username: String = ""
     @Published var password: String = ""
+    @Published var isShowConfirm = false
+    @Published var type: ConfirmationScreen.ConfirmationType = .signin
     let appSyncClient = Utils.getAppSync()
     
     func login() {
@@ -43,7 +45,17 @@ public class LoginViewModel: ObservableObject {
                 return
             }
             if let error = error {
-                MessageUtils.showErrorMessage(error: error)
+                if let awsClientError = error as? AWSMobileClientError {
+                    switch awsClientError {
+                    case .userNotConfirmed(message: _):
+                        self.showConfirmationVC(type: .signup)
+                    default:
+                        MessageUtils.showErrorMessage(error: error)
+                        
+                    }
+                } else {
+                    MessageUtils.showErrorMessage(error: error)
+                }
             } else if let response = response {
                 switch (response.signInState) {
                 case .signedIn:
@@ -56,6 +68,7 @@ public class LoginViewModel: ObservableObject {
                     })
                 case .smsMFA:
                     MessageUtils.showMess(type: .success, string: "SMS message sent to \(response.codeDetails!.destination!)")
+                    self.showConfirmationVC(type: .signin)
                 default:
                     MessageUtils.showMess(type: .failed, string: "\(response.signInState.rawValue)")
                     
@@ -98,5 +111,13 @@ public class LoginViewModel: ObservableObject {
                 }
             }
         })
+    }
+    
+    private func showConfirmationVC(type: ConfirmationScreen.ConfirmationType) {
+        DispatchQueue.main.async {
+            self.isShowConfirm = true
+            self.type = type
+        }
+        
     }
 }

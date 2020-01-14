@@ -13,58 +13,64 @@ struct LoginScreen: View {
     @ObservedObject private var viewModel = LoginViewModel()
     
     var body: some View {
-        
-        VStack(spacing: 16) {
-            Spacer()
-            WelcomeText()
-            LogoImage().padding(.bottom, 20)
-            FlatTextField(title: "Username", text: $viewModel.username)
-                .modifier(TextFieldLoginModifier())
-            
-            FlatTextField(title: "Password", text: $viewModel.password, isSecure: true)
-                .modifier(TextFieldLoginModifier())
-            
-            Text("LOGIN")
-                .modifier(ButtonLoginModifier())
-                .onTapGesture {
-                    //TODO: handle login here
-                    self.viewModel.login()
-            }
-            
-            HStack(spacing: 4) {
-                Text("Dou you have an account?")
-                    .font(Font.system(size: 14, weight: .regular))
-                    .foregroundColor(Color("gray"))
+        NavigationView {
+            VStack(spacing: 16) {
+                //MARK: - NavigationLink auto
+                NavigationLink(destination: ConfirmationScreen(type: $viewModel.type.wrappedValue), isActive: $viewModel.isShowConfirm) {
+                    Text("")
+                }
+                Spacer()
+                WelcomeText()
+                LogoImage().padding(.bottom, 20)
+                FlatTextField(title: "Username", text: $viewModel.username)
+                    .modifier(TextFieldLoginModifier())
+                
+                FlatTextField(title: "Password", text: $viewModel.password, isSecure: true)
+                    .modifier(TextFieldLoginModifier())
+                
+                Text("LOGIN")
+                    .modifier(ButtonLoginModifier())
+                    .onTapGesture {
+                        //TODO: handle login here
+                        self.viewModel.login()
+                }
+                
+                HStack(spacing: 4) {
+                    Text("Dou you have an account?")
+                        .font(Font.system(size: 14, weight: .regular))
+                        .foregroundColor(Color("gray"))
+                    Button(action: {
+                        
+                    }, label: {
+                        Text("Signup Now")
+                            .font(Font.system(size: 15, weight: .bold))
+                            .foregroundColor(Color("gray"))
+                            .padding(.vertical, 16)
+                            .onTapGesture {
+                                
+                                Switcher.changeRootView(view: UIHostingController(rootView: RegisterScreen()))
+                        }
+                    })
+                }
+                Spacer()
                 Button(action: {
-                    
-                }, label: {
-                    Text("Signup Now")
+                    // Move to forgot
+                } , label: {
+                    Text("Forgot pasword")
                         .font(Font.system(size: 15, weight: .bold))
                         .foregroundColor(Color("gray"))
+                        .padding(.horizontal, 30)
                         .padding(.vertical, 16)
-                        .onTapGesture {
-                            
-                            Switcher.changeRootView(view: UIHostingController(rootView: RegisterScreen()))
-                    }
+                    
                 })
-            }
-            Spacer()
-            Button(action: {
-                // Move to forgot
-            } , label: {
-                Text("Forgot pasword")
-                    .font(Font.system(size: 15, weight: .bold))
-                    .foregroundColor(Color("gray"))
-                    .padding(.horizontal, 30)
-                    .padding(.vertical, 16)
                 
-            })
+            }
+            .padding(30)
+            .background(Color("background_view"))
+            .edgesIgnoringSafeArea(.vertical)
             
-        }
-        .padding(30)
-        .background(Color("background_view"))
-        .edgesIgnoringSafeArea(.vertical)
-        
+        }.navigationBarTitle("")
+        .navigationBarHidden(true)
         
     }
 }
