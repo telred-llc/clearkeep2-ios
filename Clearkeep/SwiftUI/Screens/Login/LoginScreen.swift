@@ -16,7 +16,7 @@ struct LoginScreen: View {
         NavigationView {
             VStack(spacing: 16) {
                 //MARK: - NavigationLink auto
-                NavigationLink(destination: ConfirmationScreen(type: $viewModel.type.wrappedValue), isActive: $viewModel.isShowConfirm) {
+                NavigationLink(destination: ConfirmationScreen(type: $viewModel.type.wrappedValue, username: viewModel.username), isActive: $viewModel.isShowConfirm) {
                     Text("")
                 }
                 Spacer()
@@ -47,7 +47,6 @@ struct LoginScreen: View {
                             .foregroundColor(Color("gray"))
                             .padding(.vertical, 16)
                             .onTapGesture {
-                                
                                 Switcher.changeRootView(view: UIHostingController(rootView: RegisterScreen()))
                         }
                     })

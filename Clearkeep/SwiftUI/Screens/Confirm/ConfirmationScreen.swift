@@ -15,6 +15,14 @@ struct ConfirmationScreen: View {
        }
     @ObservedObject private var viewModel = ConfirmationViewModel()
     var type: ConfirmationType = .signup
+    var username = ""
+    
+    init() {}
+    
+    init(type: ConfirmationType, username: String) {
+        viewModel.username = username
+        self.type = type
+    }
     
     var body: some View {
         VStack(spacing: 20) {

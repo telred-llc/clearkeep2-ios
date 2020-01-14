@@ -18,17 +18,22 @@ struct RegisterScreen: View {
     
     var body: some View {
         NavigationView {
+            
+            
             ScrollView {
+                NavigationLink(destination: ConfirmationScreen(type: .signup, username: viewModel.username), isActive: $viewModel.isShowConfirm) {
+                    Text("")
+                }.frame(maxHeight: 0)
                 VStack(spacing: 20) {
                     
                     FlatTextField(title: "Username*", text: $viewModel.username)
                         .modifier(TextFieldLoginModifier())
                     FlatTextField(title: "Password*", text: $viewModel.password, isSecure: true)
-                    .modifier(TextFieldLoginModifier())
-
+                        .modifier(TextFieldLoginModifier())
+                    
                     FlatTextField(title: "Email*", text: $viewModel.email)
-                    .modifier(TextFieldLoginModifier())
-
+                        .modifier(TextFieldLoginModifier())
+                    
                     NavigationLink(destination: CountryPicker(phoneCodeDataSource: $viewModel.phoneCodeDataSource, showing: $isShowPicker, model: $viewModel.phoneModel), isActive: $isShowPicker) {
                         Text(String(format: "+%@ %@", viewModel.phoneModel?.phoneCode ?? "", viewModel.phoneModel?.countryName ?? "" ))
                             .multilineTextAlignment(.leading)
@@ -36,11 +41,11 @@ struct RegisterScreen: View {
                             .foregroundColor(Color.gray)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .background(Color("background_textfield"))
-                        .cornerRadius(5)
+                            .cornerRadius(5)
                     }
                     
                     FlatTextField(title: "Phone*", text: $viewModel.phone)
-                    .modifier(TextFieldLoginModifier())
+                        .modifier(TextFieldLoginModifier())
                     
                     Button("REGISTER") {
                         self.viewModel.register()
@@ -59,7 +64,7 @@ struct RegisterScreen: View {
                                 .foregroundColor(Color("gray"))
                                 .padding(.vertical, 16)
                                 .onTapGesture {
-                                   Switcher.changeRootView(view: UIHostingController(rootView: LoginScreen()))
+                                    Switcher.changeRootView(view: UIHostingController(rootView: LoginScreen()))
                             }
                         })
                     }

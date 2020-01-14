@@ -51,7 +51,6 @@ public class LoginViewModel: ObservableObject {
                         self.showConfirmationVC(type: .signup)
                     default:
                         MessageUtils.showErrorMessage(error: error)
-                        
                     }
                 } else {
                     MessageUtils.showErrorMessage(error: error)
@@ -68,7 +67,7 @@ public class LoginViewModel: ObservableObject {
                     })
                 case .smsMFA:
                     MessageUtils.showMess(type: .success, string: "SMS message sent to \(response.codeDetails!.destination!)")
-                    self.showConfirmationVC(type: .signin)
+                    self.showConfirmationVC(type: .signup)
                 default:
                     MessageUtils.showMess(type: .failed, string: "\(response.signInState.rawValue)")
                     
@@ -119,6 +118,7 @@ public class LoginViewModel: ObservableObject {
         DispatchQueue.main.async {
             self.isShowConfirm = true
             self.type = type
+            self.objectWillChange.send()
         }
         
     }

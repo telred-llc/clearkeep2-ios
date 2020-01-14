@@ -21,7 +21,7 @@ final class RegisterViewModel: ObservableObject {
     @Published var phoneModel: PhoneCodeModel?
     @Published var phone: String = ""
     @Published var phoneCodeDataSource: [PhoneCodeModel] = []
-    
+    @Published var isShowConfirm = false
     //MARK: -Initialize
     init() {
         self.prepareData()
@@ -66,6 +66,9 @@ final class RegisterViewModel: ObservableObject {
                                                         case .unconfirmed:
                                                             let mess = "A verification code has been sent via \(signUpResult.codeDeliveryDetails!.deliveryMedium) at \(signUpResult.codeDeliveryDetails!.destination!)"
                                                             MessageUtils.showMess(type: .success, string: mess)
+                                                            DispatchQueue.main.async {
+                                                                self.isShowConfirm = true
+                                                            }
                                                         case .unknown:
                                                             MessageUtils.showMess(type: .failed, string: "Somthing went wrong!")
                                                         }
