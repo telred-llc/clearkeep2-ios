@@ -27,10 +27,10 @@ struct ConfirmationScreen: View {
     var body: some View {
         VStack(spacing: 20) {
             FlatTextField(title: "Verify Code*", text: $viewModel.code)
+                .modifier(TextFieldLoginModifier())
             Button("Submit") {
                 switch self.type {
                 case .signup:
-                    self.viewModel.username = "vuvdv3101"
                     self.viewModel.confirmSignup()
                 case .signin:
                     self.viewModel.confirmSignin()

@@ -36,6 +36,7 @@
 		B226ABDE23CE1FEB00BEC69C /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B226ABDD23CE1FEB00BEC69C /* Utils.swift */; };
 		B226ABE123CE21EE00BEC69C /* ConfirmationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B226ABE023CE21EE00BEC69C /* ConfirmationScreen.swift */; };
 		B226ABE423CE221300BEC69C /* ConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B226ABE323CE221300BEC69C /* ConfirmationViewModel.swift */; };
+		B226ABE623CE3CEB00BEC69C /* ConversationModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B226ABE523CE3CEB00BEC69C /* ConversationModel.swift */; };
 		B22E236A23CC47B200D63F77 /* LoginScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22E236923CC47B200D63F77 /* LoginScreen.swift */; };
 		B22E236D23CC497300D63F77 /* FlatTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22E236C23CC497300D63F77 /* FlatTextField.swift */; };
 		B22E237123CC4A4600D63F77 /* LoginViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B22E237023CC4A4600D63F77 /* LoginViewModel.swift */; };
@@ -94,6 +95,7 @@
 		B226ABDD23CE1FEB00BEC69C /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		B226ABE023CE21EE00BEC69C /* ConfirmationScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmationScreen.swift; sourceTree = "<group>"; };
 		B226ABE323CE221300BEC69C /* ConfirmationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmationViewModel.swift; sourceTree = "<group>"; };
+		B226ABE523CE3CEB00BEC69C /* ConversationModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversationModel.swift; sourceTree = "<group>"; };
 		B22E236923CC47B200D63F77 /* LoginScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginScreen.swift; sourceTree = "<group>"; };
 		B22E236C23CC497300D63F77 /* FlatTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlatTextField.swift; sourceTree = "<group>"; };
 		B22E237023CC4A4600D63F77 /* LoginViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewModel.swift; sourceTree = "<group>"; };
@@ -407,6 +409,7 @@
 			isa = PBXGroup;
 			children = (
 				B2C935DE23CD6D7500202204 /* MessageModel.swift */,
+				B226ABE523CE3CEB00BEC69C /* ConversationModel.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -549,6 +552,7 @@
 				B26A3D6323CD95F100FAAC0D /* DetailConversationScreen.swift in Sources */,
 				8562186621E74703004D53A7 /* Switcher.swift in Sources */,
 				856DC99521F01C09003BEAAD /* BaseViewController.swift in Sources */,
+				B226ABE623CE3CEB00BEC69C /* ConversationModel.swift in Sources */,
 				B22E236A23CC47B200D63F77 /* LoginScreen.swift in Sources */,
 				B2701F8123CC759E001DC21C /* ContactScreen.swift in Sources */,
 				B226ABDE23CE1FEB00BEC69C /* Utils.swift in Sources */,
