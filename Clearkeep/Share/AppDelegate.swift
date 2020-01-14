@@ -12,6 +12,7 @@ import AWSCognitoIdentityProvider
 import IQKeyboardManagerSwift
 import AWSMobileClient
 import Toast_Swift
+import SwiftUI
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -23,10 +24,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         setupAppSyncInitialization()
         setupIQKeyboardMananger()
-        
         ToastManager.shared.isQueueEnabled = false
         ToastManager.shared.isTapToDismissEnabled = false
-
+        
+        window = UIWindow(frame: UIScreen.main.bounds)
+        window?.rootViewController = UIHostingController(rootView: LoginScreen())
+        window?.makeKeyAndVisible()
         return true
     }
     

@@ -16,5 +16,6 @@ target 'Clearkeep' do
   pod 'PromiseKit'
   pod 'Material'
   pod 'CRRefresh'
+  pod 'SwiftEntryKit', '1.2.3'
 
 end
