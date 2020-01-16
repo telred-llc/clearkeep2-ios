@@ -14,12 +14,15 @@ struct DetailConversationScreen: View {
     @State private var message = ""
     @State private var conversation: ConversationModel?
     @State var idConversation: String?
-    
+    @State var heightTF: CGFloat = 35
     init(idConversation: String?) {
         self.idConversation = idConversation
+        self.viewModel.idConversation = idConversation
         UITableView.appearance().separatorColor = .clear
         self.conversation = DataStorage.shared.dataConversation.first(where: {$0.id == idConversation})
     }
+    
+    init() {}
     
     var body: some View {
         VStack {
@@ -30,15 +33,16 @@ struct DetailConversationScreen: View {
                 
             }
             .scaleEffect(x: 1, y: -1, anchor: .center)
-            HStack(spacing: 0) {
-                FlatTextField(title: "Type a message", text: $message)
+            HStack(alignment: .bottom, spacing: 0) {
+                GrowTextView(value: $message, placeholder: "Type a message", height: $heightTF)
                     .font(.system(size: 13, weight: .medium))
-                    .padding(.horizontal, 16)
-                    .padding(.vertical, 8)
-                    .frame(minHeight: 35, maxHeight: 35)
+                    .padding(.horizontal, 8)
+                    .frame(minHeight: 35, maxHeight: heightTF)
                     .background(Color("background_textfield"))
                     .cornerRadius(17.5)
                     .padding(.horizontal, 8)
+                    .padding(.vertical, 8)
+                
                 
                 Text("SEND")
                     .font(.system(size: 14, weight: .medium))
@@ -48,6 +52,7 @@ struct DetailConversationScreen: View {
                     .background(Color("cyanColor"))
                     .cornerRadius(17.5)
                     .padding(.trailing, 8)
+                    .padding(.vertical, 8)
                     .onTapGesture {
                         let mess = MessageModel(name: "Vuvuong", isOwner: true, mess: self.message)
                         
@@ -58,7 +63,7 @@ struct DetailConversationScreen: View {
                 }
                 
             }
-            .frame(minHeight: 50, maxHeight: 50)
+            .frame(minHeight: 50)
             .background(Color.clear)
         }
         .navigationBarBackButtonHidden(true)

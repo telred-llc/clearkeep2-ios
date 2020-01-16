@@ -56,6 +56,7 @@
 		B2701F8323CC75A9001DC21C /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2701F8223CC75A9001DC21C /* ProfileScreen.swift */; };
 		B2701F8523CC7977001DC21C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2701F8423CC7977001DC21C /* Extension.swift */; };
 		B2BA299223D0663A005E79EA /* GrowTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299123D06639005E79EA /* GrowTextView.swift */; };
+		B2BA299423D06999005E79EA /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299323D06999005E79EA /* SplashScreen.swift */; };
 		B2C935D823CD6C6B00202204 /* ChatConversationItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C935D723CD6C6B00202204 /* ChatConversationItemView.swift */; };
 		B2C935DA23CD6CB500202204 /* ConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C935D923CD6CB500202204 /* ConversationViewModel.swift */; };
 		B2C935DC23CD6D0C00202204 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C935DB23CD6D0C00202204 /* DataStorage.swift */; };
@@ -116,6 +117,7 @@
 		B2701F8223CC75A9001DC21C /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		B2701F8423CC7977001DC21C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		B2BA299123D06639005E79EA /* GrowTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrowTextView.swift; sourceTree = "<group>"; };
+		B2BA299323D06999005E79EA /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashScreen.swift; path = Clearkeep/SwiftUI/Screens/Login/SplashScreen.swift; sourceTree = SOURCE_ROOT; };
 		B2C935D723CD6C6B00202204 /* ChatConversationItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatConversationItemView.swift; sourceTree = "<group>"; };
 		B2C935D923CD6CB500202204 /* ConversationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewModel.swift; sourceTree = "<group>"; };
 		B2C935DB23CD6D0C00202204 /* DataStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
@@ -316,6 +318,7 @@
 			children = (
 				B22E236F23CC4A3800D63F77 /* viewModel */,
 				B22E236923CC47B200D63F77 /* LoginScreen.swift */,
+				B2BA299323D06999005E79EA /* SplashScreen.swift */,
 			);
 			path = Login;
 			sourceTree = "<group>";
@@ -556,6 +559,7 @@
 				8562186621E74703004D53A7 /* Switcher.swift in Sources */,
 				856DC99521F01C09003BEAAD /* BaseViewController.swift in Sources */,
 				B226ABE623CE3CEB00BEC69C /* ConversationModel.swift in Sources */,
+				B2BA299423D06999005E79EA /* SplashScreen.swift in Sources */,
 				B22E236A23CC47B200D63F77 /* LoginScreen.swift in Sources */,
 				B2701F8123CC759E001DC21C /* ContactScreen.swift in Sources */,
 				B226ABDE23CE1FEB00BEC69C /* Utils.swift in Sources */,

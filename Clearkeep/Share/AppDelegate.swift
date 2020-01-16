@@ -28,7 +28,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         ToastManager.shared.isTapToDismissEnabled = false
         
         window = UIWindow(frame: UIScreen.main.bounds)
-        window?.rootViewController = UIHostingController(rootView: LoginScreen())
+        window?.rootViewController = UIHostingController(rootView: SplashScreen())
         window?.makeKeyAndVisible()
         return true
     }
