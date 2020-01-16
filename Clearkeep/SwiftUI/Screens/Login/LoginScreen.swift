@@ -51,7 +51,6 @@ struct LoginScreen: View {
                         }
                     })
                 }
-                Spacer()
                 Button(action: {
                     // Move to forgot
                 } , label: {
@@ -62,7 +61,8 @@ struct LoginScreen: View {
                         .padding(.vertical, 16)
                     
                 })
-                
+                Spacer()
+
             }
             .padding(30)
             .background(Color("background_view"))

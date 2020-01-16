@@ -8,6 +8,7 @@ ${BUILT_PRODUCTS_DIR}/AWSCore/AWSCore.framework
 ${BUILT_PRODUCTS_DIR}/AWSMobileClient/AWSMobileClient.framework
 ${BUILT_PRODUCTS_DIR}/CRRefresh/CRRefresh.framework
 ${BUILT_PRODUCTS_DIR}/DropDown/DropDown.framework
+${BUILT_PRODUCTS_DIR}/GrowingTextView/GrowingTextView.framework
 ${BUILT_PRODUCTS_DIR}/IQKeyboardManagerSwift/IQKeyboardManagerSwift.framework
 ${BUILT_PRODUCTS_DIR}/Material/Material.framework
 ${BUILT_PRODUCTS_DIR}/Motion/Motion.framework
