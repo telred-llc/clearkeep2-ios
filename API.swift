@@ -5093,7 +5093,7 @@ public final class UpdateConvoLinkMutation: GraphQLMutation {
 
 public final class GetUserQuery: GraphQLQuery {
   public static let operationString =
-    "query GetUser($id: ID!) {\n  getUser(id: $id) {\n    __typename\n    id\n    username\n    conversations {\n      __typename\n      items {\n        __typename\n        id\n        convoLinkUserId\n        convoLinkConversationId\n        createdAt\n        updatedAt\n      }\n      nextToken\n    }\n    messages {\n      __typename\n      items {\n        __typename\n        id\n        authorId\n        content\n        messageConversationId\n        createdAt\n        updatedAt\n      }\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
+    "query GetUser($id: ID!) {\n  getUser(id: $id) {\n    __typename\n    id\n    username\n    conversations {\n      __typename\n      items {\n        __typename\n        id\n        convoLinkUserId\n        convoLinkConversationId\n        conversation {\n          __typename\n          id\n          name\n        }\n        createdAt\n        updatedAt\n      }\n      nextToken\n    }\n    messages {\n      __typename\n      items {\n        __typename\n        id\n        authorId\n        content\n        messageConversationId\n        createdAt\n        updatedAt\n      }\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
 
   public var id: GraphQLID
 
@@ -5271,6 +5271,7 @@ public final class GetUserQuery: GraphQLQuery {
             GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
             GraphQLField("convoLinkUserId", type: .scalar(GraphQLID.self)),
             GraphQLField("convoLinkConversationId", type: .nonNull(.scalar(GraphQLID.self))),
+            GraphQLField("conversation", type: .nonNull(.object(Conversation.selections))),
             GraphQLField("createdAt", type: .scalar(String.self)),
             GraphQLField("updatedAt", type: .scalar(String.self)),
           ]
@@ -5281,8 +5282,8 @@ public final class GetUserQuery: GraphQLQuery {
             self.snapshot = snapshot
           }
 
-          public init(id: GraphQLID, convoLinkUserId: GraphQLID? = nil, convoLinkConversationId: GraphQLID, createdAt: String? = nil, updatedAt: String? = nil) {
-            self.init(snapshot: ["__typename": "ConvoLink", "id": id, "convoLinkUserId": convoLinkUserId, "convoLinkConversationId": convoLinkConversationId, "createdAt": createdAt, "updatedAt": updatedAt])
+          public init(id: GraphQLID, convoLinkUserId: GraphQLID? = nil, convoLinkConversationId: GraphQLID, conversation: Conversation, createdAt: String? = nil, updatedAt: String? = nil) {
+            self.init(snapshot: ["__typename": "ConvoLink", "id": id, "convoLinkUserId": convoLinkUserId, "convoLinkConversationId": convoLinkConversationId, "conversation": conversation.snapshot, "createdAt": createdAt, "updatedAt": updatedAt])
           }
 
           public var __typename: String {
@@ -5321,6 +5322,15 @@ public final class GetUserQuery: GraphQLQuery {
             }
           }
 
+          public var conversation: Conversation {
+            get {
+              return Conversation(snapshot: snapshot["conversation"]! as! Snapshot)
+            }
+            set {
+              snapshot.updateValue(newValue.snapshot, forKey: "conversation")
+            }
+          }
+
           public var createdAt: String? {
             get {
               return snapshot["createdAt"] as? String
@@ -5336,6 +5346,53 @@ public final class GetUserQuery: GraphQLQuery {
             }
             set {
               snapshot.updateValue(newValue, forKey: "updatedAt")
+            }
+          }
+
+          public struct Conversation: GraphQLSelectionSet {
+            public static let possibleTypes = ["Conversation"]
+
+            public static let selections: [GraphQLSelection] = [
+              GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
+              GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
+              GraphQLField("name", type: .nonNull(.scalar(String.self))),
+            ]
+
+            public var snapshot: Snapshot
+
+            public init(snapshot: Snapshot) {
+              self.snapshot = snapshot
+            }
+
+            public init(id: GraphQLID, name: String) {
+              self.init(snapshot: ["__typename": "Conversation", "id": id, "name": name])
+            }
+
+            public var __typename: String {
+              get {
+                return snapshot["__typename"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "__typename")
+              }
+            }
+
+            public var id: GraphQLID {
+              get {
+                return snapshot["id"]! as! GraphQLID
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "id")
+              }
+            }
+
+            public var name: String {
+              get {
+                return snapshot["name"]! as! String
+              }
+              set {
+                snapshot.updateValue(newValue, forKey: "name")
+              }
             }
           }
         }

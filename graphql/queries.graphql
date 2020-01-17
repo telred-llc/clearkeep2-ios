@@ -8,6 +8,10 @@ query GetUser($id: ID!) {
         id
         convoLinkUserId
         convoLinkConversationId
+        conversation {
+          id
+          name
+        }
         createdAt
         updatedAt
       }
