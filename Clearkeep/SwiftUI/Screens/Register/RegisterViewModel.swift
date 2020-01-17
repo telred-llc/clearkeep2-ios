@@ -11,7 +11,6 @@ import SwiftUI
 import AWSCognitoIdentityProvider
 import AWSMobileClient
 import AWSAppSync
-import SVProgressHUD
 
 final class RegisterViewModel: ObservableObject {
     //MARK: - Properties
@@ -52,12 +51,12 @@ final class RegisterViewModel: ObservableObject {
         guard let phoneCode = phoneModel?.phoneCode else {
             return
         }
-        SVProgressHUD.show()
+        Utils.showProgressHub()
         let validPhone = "+\(phoneCode)\(phone)"
         AWSMobileClient.default().signUp(username: username,
                                                 password: password,
                                                 userAttributes: ["email": "\(email)", "phone_number": "\(validPhone)"]) {(signUpResult, error) in
-                                                    SVProgressHUD.dismiss()
+                                                    Utils.hideProgressHub()
                                                     if let signUpResult = signUpResult {
                                                         switch(signUpResult.signUpConfirmationState) {
                                                         case .confirmed:

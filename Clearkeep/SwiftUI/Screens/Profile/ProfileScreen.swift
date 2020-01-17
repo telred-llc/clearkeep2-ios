@@ -17,7 +17,8 @@ struct ProfileScreen: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.blue)
         .navigationBarTitle(Text("Profile"), displayMode: .inline)
-        
+        .navigationBarItems(trailing: Text(""))
+
     }
 }
 

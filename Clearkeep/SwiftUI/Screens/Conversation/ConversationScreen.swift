@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ConversationScreen: View {
     @ObservedObject private var viewModel = ConversationViewModel()
- 
+    @State private var isShowPopup = false
     var body: some View {
         VStack {
             ScrollView(.vertical, showsIndicators: true) {
@@ -21,11 +21,26 @@ struct ConversationScreen: View {
                     .simultaneousGesture(TapGesture().onEnded({ _ in
                         data.isSaw = true
                     }))
-                    .buttonStyle(PlainButtonStyle())
+                        .buttonStyle(PlainButtonStyle())
                 }
             }
         }
         .navigationBarTitle(Text("Conversations"), displayMode: .inline)
+        .navigationBarItems(trailing: trailingView())
+        
+    }
+    
+    private func trailingView() -> some View {
+        HStack {
+            Image(systemName: "plus").onTapGesture {
+                Utils.showAlert(viewHosting: UIHostingController(rootView: CreateConversationPopup(type: .normal, createConversation: { (roomName) in
+                    // Create room here
+                })))
+            }
+            .frame(width: 50, height: 40)
+           
+        }
+        .offset(x: 16, y: 0)
     }
 }
 

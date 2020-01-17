@@ -10,7 +10,7 @@ import Foundation
 import SwiftUI
 
 final class DataStorage: ObservableObject {
-    @ObservedObject static var shared = DataStorage()
+    static var shared = DataStorage()
     @Published var dataConversation = [ConversationModel]()
 }
 

@@ -9,16 +9,36 @@
 import SwiftUI
 import Foundation
 
+enum ConversationPopupType {
+    case normal, user
+}
 struct CreateConversationPopup: View {
     @State private var text: String = ""
+    var type: ConversationPopupType?
     var createConversation: ((_ roomName: String) -> Void)?
+    
+    init(type: ConversationPopupType) {
+        self.type = type
+    }
+    
+    init(type: ConversationPopupType, createConversation: ((_ roomName: String) -> Void)? = nil) {
+        self.type = type
+        self.createConversation = createConversation
+    }
     var body: some View {
         
         VStack {
             Text("Create new conversation").font(.system(size: 18, weight: .bold))
-            FlatTextField(title: "Conversation name", text: $text)
-                .modifier(TextFieldLoginModifier())
-                .padding(.top, 16)
+            if type == ConversationPopupType.normal {
+                FlatTextField(title: "Conversation name", text: $text)
+                            .modifier(TextFieldLoginModifier())
+                            .padding(.top, 16)
+            } else {
+                Text("Create a conversation with this user")
+                    .font(.system(size: 12, weight: .medium))
+                .padding()
+                .background(Color("background_view"))
+            }
             
             HStack {
                 Text("CANCEL")
@@ -27,7 +47,7 @@ struct CreateConversationPopup: View {
                     .background(Color.gray.opacity(0.2))
                     .cornerRadius(5)
                     .onTapGesture {
-                        Utils.dissmissAlert()
+                        Utils.dismissAlert()
                 }
                 
                 Text("OK")
@@ -38,7 +58,7 @@ struct CreateConversationPopup: View {
                     .cornerRadius(5)
                     .onTapGesture {
                         self.createConversation?(self.text)
-                        Utils.dissmissAlert()
+                        Utils.dismissAlert()
                 }
             }
             .padding(.vertical, 8)            
@@ -48,11 +68,5 @@ struct CreateConversationPopup: View {
         .frame(maxWidth: 300)
         .background(Color.white)
         .cornerRadius(10)
-    }
-}
-
-struct CreateConversationPopup_Previews: PreviewProvider {
-    static var previews: some View {
-        CreateConversationPopup()
     }
 }

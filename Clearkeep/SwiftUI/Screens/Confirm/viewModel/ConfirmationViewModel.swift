@@ -8,7 +8,6 @@
 
 import Foundation
 import AWSMobileClient
-import SVProgressHUD
 
 final class ConfirmationViewModel: ObservableObject {
     
@@ -16,9 +15,9 @@ final class ConfirmationViewModel: ObservableObject {
     @Published var username: String = ""
     
     func confirmSignup() {
-        SVProgressHUD.show()
+        Utils.showProgressHub()
         AWSMobileClient.default().confirmSignUp(username: username, confirmationCode: code) { (signUpResult, error) in
-            SVProgressHUD.dismiss()
+            Utils.hideProgressHub()
             if let signUpResult = signUpResult {
                 switch(signUpResult.signUpConfirmationState) {
                 case .confirmed:
@@ -40,9 +39,9 @@ final class ConfirmationViewModel: ObservableObject {
     }
     
     func confirmSignin() {
-        SVProgressHUD.show()
+        Utils.showProgressHub()
         AWSMobileClient.default().confirmSignIn(challengeResponse: code) { (signInResult, error) in
-            SVProgressHUD.dismiss()
+            Utils.hideProgressHub()
             if let error = error  {
                 MessageUtils.showErrorMessage(error: error)
             } else if let signInResult = signInResult {
@@ -57,10 +56,10 @@ final class ConfirmationViewModel: ObservableObject {
     }
     
     func resendCode() {
-        SVProgressHUD.show()
+        Utils.showProgressHub()
         AWSMobileClient.default().resendSignUpCode(username: username, completionHandler: { (result, error) in
             
-            SVProgressHUD.dismiss()
+            Utils.hideProgressHub()
             if let signUpResult = result {
                 MessageUtils.showMess(type: .success, string: "A verification code has been sent via \(signUpResult.codeDeliveryDetails!.deliveryMedium) at \(signUpResult.codeDeliveryDetails!.destination!)")
             } else if let error = error {

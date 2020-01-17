@@ -14,9 +14,12 @@ class Switcher {
         var rootVC : UIViewController?
         
         if logined {
+//            rootVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "SplitViewController")
             rootVC = UIHostingController(rootView: TabbarScreen())
         }
         else {
+//            rootVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(identifier: "LoginViewController")
+
             rootVC = UIHostingController(rootView: LoginScreen())
         }
         

@@ -17,6 +17,5 @@ target 'Clearkeep' do
   pod 'Material'
   pod 'CRRefresh'
   pod 'SwiftEntryKit', '1.2.3'
-  pod 'SVProgressHUD'
   pod 'GrowingTextView'
 end
