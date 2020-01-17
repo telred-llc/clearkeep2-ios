@@ -14,20 +14,24 @@ import PromiseKit
 class MasterViewController: BaseViewController {
 
     @IBOutlet weak var tableView: UITableView!
-    
+
     var discardAllUsers: Cancellable?
-    var discardConversation: Cancellable?
+    var discardConvLink: Cancellable?
     var discardMessages: Cancellable?
     var allUsers: [ListUsersQuery.Data.ListUser.Item] = []
+    var conversations: [GetConvoQuery.Data.GetConvo] = []
     var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
     var detailViewController: DetailViewController? = nil
+    var creatingConversationLink: CreateConvoLinkMutation.Data.CreateConvoLink?
+
+    typealias CreateConvoResult = (CreateConvoMutation.Data.CreateConvo, CreateConvoLinkMutation.Data.CreateConvoLink?)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         refreshAllData()
 
         if let meId = self.meData?.id {
-            self.subscribeNewConversation(userId: meId)
+            self.subscribeNewConvLink(userId: meId)
         }
         
         if let split = splitViewController {
@@ -56,8 +60,8 @@ class MasterViewController: BaseViewController {
         // clear data
         discardAllUsers?.cancel()
         discardMessages?.cancel()
-        discardConversation?.cancel()
-        
+        discardConvLink?.cancel()
+
         // subscribeNewMessage
         if let conversationId = detailViewController?.conversationId, conversationId.count > 0 {
             self.subscribeNewMessage(conversationId: conversationId)
@@ -65,7 +69,7 @@ class MasterViewController: BaseViewController {
 
         // subscribeNewConversation
         if let meId = self.meData?.id {
-            self.subscribeNewConversation(userId: meId)
+            self.subscribeNewConvLink(userId: meId)
         }
 
         // fetch users
@@ -126,14 +130,22 @@ class MasterViewController: BaseViewController {
         }
     }
     
-    func subscribeNewConversation(userId: String) {
+    func subscribeNewConvLink(userId: String) {
         do {
-            discardConversation = try appSyncClient?.subscribe(subscription: OnCreateConvoLinkSubscription.init(convoLinkUserId: userId), resultHandler: { (result, transaction, error) in
+            discardConvLink = try appSyncClient?.subscribe(subscription: OnCreateConvoLinkSubscription.init(convoLinkUserId: userId), resultHandler: { [weak self] (result, transaction, error) in
                 if let result = result,
                     let newConvoLink = result.data?.onCreateConvoLink {
-                    if self.meData?.id == newConvoLink.user.id {
-                        self.meData?.conversations?.items?.append(GetUserQuery.Data.GetUser.Conversation.Item.init(snapshot: newConvoLink.snapshot))
-                        self.tableView.reloadData()
+                    if self?.meData?.id == newConvoLink.convoLinkUserId {
+
+                        let newConvLink = GetUserQuery.Data.GetUser.Conversation.Item.init(snapshot: newConvoLink.snapshot)
+                        self?.meData?.conversations?.items?.append(newConvLink)
+                        self?.tableView.reloadData()
+
+                        // If convLink was created by this user then show chat detail screen
+                        if let creatingConversationLink = self?.creatingConversationLink,
+                            creatingConversationLink.convoLinkUserId == newConvoLink.convoLinkUserId {
+                            self?.showDetail(conversation: newConvLink)
+                        }
                     }
                 }
             })
@@ -141,17 +153,17 @@ class MasterViewController: BaseViewController {
             print("Error starting subscription.")
         }
     }
-    
-    func createConversationAndLink(name: String, fromUserId: String, toUserId: String, completion: ((Bool, String?) -> Void)?) {
-        firstly { () -> PromiseKit.Promise<String> in
+
+    func createConversationAndLink(name: String, ownerId: String, otherUserId: String, completion: ((Bool, CreateConvoLinkMutation.Data.CreateConvoLink?) -> Void)?) {
+        firstly { () -> PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> in
             self.showProgressHub()
-            return createConversation(name: name)
-            }.then({ (conversationID) -> PromiseKit.Promise<String> in
-                return self.createConversationLink(conversationId: conversationID, userId: fromUserId)
-            }).then({ (conversationID) -> PromiseKit.Promise<String> in
-                return self.createConversationLink(conversationId: conversationID, userId: toUserId)
-            }).done({ (conversationID) in
-                completion?(true, conversationID)
+            return createConversation(name: name, ownerId: ownerId)
+            }.then({ (createdConv) -> PromiseKit.Promise<CreateConvoResult> in
+                return self.createConversationLink(conv: createdConv, userId: otherUserId)
+            }).then({ (result) -> PromiseKit.Promise<CreateConvoResult> in
+                return self.createConversationLink(conv: result.0, userId: ownerId)
+            }).done({ (result) in
+                completion?(true, result.1)
             }).ensure {
                 self.hideProgressHub()
             }.catch { (error) in
@@ -160,14 +172,14 @@ class MasterViewController: BaseViewController {
         }
     }
     
-    func createConversation(name: String) -> PromiseKit.Promise<String> {
-        return PromiseKit.Promise<String> { (resolver) in
-            appSyncClient?.perform(mutation: CreateConvoMutation.init(input: CreateConversationInput.init(name: name, members: [])), queue: DispatchQueue.main, resultHandler: { (result, error) in
+    func createConversation(name: String, ownerId: String) -> PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> {
+        return PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> { (resolver) in
+            appSyncClient?.perform(mutation: CreateConvoMutation.init(input: CreateConversationInput.init(name: name, members: [ownerId])), queue: DispatchQueue.main, resultHandler: { (result, error) in
                 if let error = error {
                     resolver.reject(error)
                 } else {
-                    if let conversationID = result?.data?.createConvo?.id {
-                        resolver.fulfill(conversationID)
+                    if let createdConvo = result?.data?.createConvo {
+                        resolver.fulfill(createdConvo)
                     } else {
                         resolver.reject(CQLError.unknownError)
                     }
@@ -176,16 +188,16 @@ class MasterViewController: BaseViewController {
         }
     }
 
-    func createConversationLink(conversationId: String, userId: String) -> PromiseKit.Promise<String> {
-        return PromiseKit.Promise<String> { (resolver) in
+    func createConversationLink(conv: CreateConvoMutation.Data.CreateConvo, userId: String) -> PromiseKit.Promise<CreateConvoResult> {
+        return PromiseKit.Promise<CreateConvoResult> { (resolver) in
             let id = UUID().uuidString
             let createdAt = "\(Int64(Date.init().timeIntervalSince1970 * 1000))"
 
-            appSyncClient?.perform(mutation: CreateConvoLinkMutation.init(input: CreateConvoLinkInput.init(id: id, convoLinkUserId: userId, convoLinkConversationId: conversationId, createdAt: createdAt, updatedAt: nil)), queue: DispatchQueue.main, resultHandler: { (result, error) in
+            appSyncClient?.perform(mutation: CreateConvoLinkMutation.init(input: CreateConvoLinkInput.init(id: id, convoLinkUserId: userId, convoLinkConversationId: conv.id, createdAt: createdAt, updatedAt: nil)), queue: DispatchQueue.main, resultHandler: { (result, error) in
                 if let error = error {
                     resolver.reject(error)
                 } else {
-                    resolver.fulfill(conversationId)
+                    resolver.fulfill((conv, result?.data?.createConvoLink))
                 }
             })
         }
@@ -204,6 +216,17 @@ class MasterViewController: BaseViewController {
                     }
                 }
             })
+        }
+    }
+
+    func showDetail(conversation: GetUserQuery.Data.GetUser.Conversation.Item?) {
+        detailViewController?.conversationName = conversation?.conversation.name ?? ""
+        if detailViewController?.conversationId != conversation?.convoLinkConversationId {
+            detailViewController?.conversationId = conversation?.convoLinkConversationId ?? ""
+            self.subscribeNewMessage(conversationId: detailViewController?.conversationId ?? "")
+            self.showDetailViewController(detailViewController!, sender: nil)
+        } else {
+            self.showDetailViewController(detailViewController!, sender: nil)
         }
     }
 
@@ -234,9 +257,9 @@ extension MasterViewController: UITableViewDataSource {
             let user = allUsers[indexPath.row]
             cell.textLabel?.text = user.username
         case 1:
-            if let conversations = meData?.conversations?.items,
-                let conversation = conversations[indexPath.row] {
-                cell.textLabel?.text = conversation.id
+            if let linkedConversations = meData?.conversations?.items,
+                let linkedConversation = linkedConversations[indexPath.row] {
+                cell.textLabel?.text = linkedConversation.conversation.name
             } else {
                 cell.textLabel?.text = nil
             }
@@ -251,41 +274,40 @@ extension MasterViewController: UITableViewDataSource {
 extension MasterViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        func showDetail(conversation: GetUserQuery.Data.GetUser.Conversation.Item?) {
-//            detailViewController?.conversationName = conversation?.conversation?.name ?? ""
-//            if detailViewController?.conversationId != userConversation?.conversationId {
-//                detailViewController?.conversationId = userConversation?.conversationId ?? ""
-//                self.subscribeNewMessage(conversationId: detailViewController?.conversationId ?? "")
-//                self.showDetailViewController(detailViewController!, sender: nil)
-//            } else {
-//                self.showDetailViewController(detailViewController!, sender: nil)
-//            }
-//        }
-//
-//        if indexPath.section == 0 {
-//            let selectedUser = allUsers[indexPath.row]
-//
-//            if let existingConv = meData?.conversations?.items?.first(where: { conversation in
-//                selectedUser.id == conversation?.convoLinkUserId
-//            }) {
-//                showDetail(conversation: existingConv)
-//            } else {
-//                // Preload the data source before performing the segue
-//                let conversationName = meData!.username + " and " + selectedUser.username
-//                if let meId = meData?.id {
-//                    self.createConversationAndLink(name: conversationName, fromUserId: meId, toUserId: selectedUser.id) { (isSuccess, convId) in
-//                        if isSuccess, let convId = convId {
-//
-//                        }
-//                    }
-//                }
-//            }
-//        } else if indexPath.section == 1 {
-//            if let conversations = meData?.conversations?.items {
-//                let conversation = conversations[indexPath.row]
-//                showDetail(conversation: conversation)
-//            }
-//        }
+        if indexPath.section == 0 {
+            let selectedUser = allUsers[indexPath.row]
+
+            if let existingLinkedConv = meData?.conversations?.items?.first(where: { conversation in
+                selectedUser.id == conversation?.convoLinkUserId
+            }) {
+                showDetail(conversation: existingLinkedConv)
+            } else {
+                // Preload the data source before performing the segue
+                let conversationName = meData!.username + " and " + selectedUser.username
+                if let meId = meData?.id {
+                    self.createConversationAndLink(name: conversationName, ownerId: meId, otherUserId: selectedUser.id) { [weak self] (isSuccess, conversationLink) in
+                        if isSuccess, let conversationLink = conversationLink {
+
+                            // If the app has reviced newConvLink from sunscription then push to the detail screen.
+                            // If not: then the app should wait a message from subscription
+                            if let existingConvLink = self?.meData?.conversations?.items?.first(where: { $0?.id == conversationLink.id }) {
+                                self?.showDetail(conversation: existingConvLink)
+                            } else {
+                                self?.creatingConversationLink = conversationLink
+                            }
+                        } else {
+                            print("Can not createConversationAndLink")
+                            self?.creatingConversationLink = nil
+                        }
+                    }
+                }
+            }
+        } else if indexPath.section == 1 {
+            if let linkedConversations = meData?.conversations?.items {
+                let linkedConversation = linkedConversations[indexPath.row]
+                showDetail(conversation: linkedConversation)
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
