@@ -35,7 +35,7 @@ struct ConversationScreen: View {
                 }
             }
         }
-            
+        .navigationBarItems(trailing: Text(""))
         .navigationBarTitle(Text("Conversations"), displayMode: .inline)
         .onAppear() {
             self.viewModel.subscribeNewConvLink(userId: Session.shared.meData?.id ?? "")
