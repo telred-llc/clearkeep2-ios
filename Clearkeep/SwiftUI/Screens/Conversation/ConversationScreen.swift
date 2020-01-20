@@ -7,27 +7,28 @@
 //
 
 import SwiftUI
+import AWSAppSync
 
 struct ConversationScreen: View {
     @ObservedObject private var viewModel = ConversationViewModel()
     @State private var isShowPopup = false
+    
     var body: some View {
         VStack {
             ScrollView(.vertical, showsIndicators: true) {
-                ForEach(DataStorage.shared.dataConversation , id: \.id) { (data: ConversationModel) in
-                    NavigationLink(destination: DetailConversationScreen(idConversation: data.id)) {
+                ForEach(viewModel.conversations, id: \.id) { (data: ConversationModel) in
+                    NavigationLink(destination: DetailConversationScreen(conversation: data)) {
                         ChatConversationItemView(model: data)
                     }
-                    .simultaneousGesture(TapGesture().onEnded({ _ in
-                        data.isSaw = true
-                    }))
-                        .buttonStyle(PlainButtonStyle())
                 }
+                .buttonStyle(PlainButtonStyle())
             }
+        .offset(y: 16)
         }
         .navigationBarTitle(Text("Conversations"), displayMode: .inline)
-        .navigationBarItems(trailing: trailingView())
-        
+        .onAppear() {
+            self.viewModel.subscribeNewConvLink(userId: Session.shared.meData?.id ?? "")
+        }
     }
     
     private func trailingView() -> some View {
@@ -38,7 +39,7 @@ struct ConversationScreen: View {
                 })))
             }
             .frame(width: 50, height: 40)
-           
+            
         }
         .offset(x: 16, y: 0)
     }

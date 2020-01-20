@@ -41,5 +41,9 @@ struct GrowTextView: UIViewRepresentable {
         func textViewDidChangeHeight(_ textView: GrowingTextView, height: CGFloat) {
             parent?.height = height
         }
+        
+        func textViewDidChange(_ textView: UITextView) {
+            parent?.value = textView.text
+        }
     }
 }

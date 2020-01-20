@@ -7,32 +7,24 @@
 //
 
 import SwiftUI
+import AWSAppSync
 
 struct DetailConversationScreen: View {
-    @Environment(\.presentationMode) var presentationMode: Binding<PresentationMode>
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @ObservedObject private var viewModel = DetailConversationViewModel()
     @State private var message = ""
-    @State private var conversation: ConversationModel?
-    @State var idConversation: String?
-    @State var heightTF: CGFloat = 35
-    init(idConversation: String?) {
-        self.idConversation = idConversation
-        self.viewModel.idConversation = idConversation
-        UITableView.appearance().separatorColor = .clear
-        self.conversation = DataStorage.shared.dataConversation.first(where: {$0.id == idConversation})
-    }
-    
-    init() {}
+    @State var conversation: ConversationModel?
+    @State private var heightTF: CGFloat = 35
     
     var body: some View {
         VStack {
-            List(conversation?.messages ?? [], id: \.id) { (message: MessageModel) in
+            List(viewModel.messages, id: \.id) { (message: MessageModel) in
                 MessageItemView(model: message)
-                    .scaleEffect(x: 1, y: -1, anchor: .center)
+//                    .scaleEffect(x: 1, y: -1, anchor: .center)
                     .padding(8)
                 
             }
-            .scaleEffect(x: 1, y: -1, anchor: .center)
+//            .scaleEffect(x: 1, y: -1, anchor: .center)
             HStack(alignment: .bottom, spacing: 0) {
                 GrowTextView(value: $message, placeholder: "Type a message", height: $heightTF)
                     .font(.system(size: 13, weight: .medium))
@@ -54,17 +46,19 @@ struct DetailConversationScreen: View {
                     .padding(.trailing, 8)
                     .padding(.vertical, 8)
                     .onTapGesture {
-                        let mess = MessageModel(name: "Vuvuong", isOwner: true, mess: self.message)
-                        
+                        self.viewModel.sendMessage(content: self.message)
                         self.message = ""
-                        self.conversation?.messages?.insert(mess, at: 0)
-                        self.viewModel.send(model: mess)
-                        self.viewModel.objectWillChange.send()
                 }
                 
             }
             .frame(minHeight: 50)
             .background(Color.clear)
+        }
+        .onAppear() {
+            UITableView.appearance().separatorColor = .clear
+            self.viewModel.idConversation = self.conversation?.id
+            print(self.conversation?.id ?? "")
+            self.viewModel.refreshData(false)
         }
         .navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: leadingView())
@@ -82,16 +76,9 @@ struct DetailConversationScreen: View {
                     
             }
             VStack(alignment: .leading) {
-                Text("IOS-C8-Internal").font(.system(size: 14, weight: .bold))
-                Text("vuvuong").font(.system(size: 12, weight: .regular))
+                Text(conversation?.conversation.name ?? "").font(.system(size: 16, weight: .bold))
             }
         }
         .offset(x: -16, y: 0)
-    }
-}
-
-struct DetailConversationScreen_Previews: PreviewProvider {
-    static var previews: some View {
-        DetailConversationScreen(idConversation: "1")
     }
 }

@@ -52,7 +52,6 @@ struct TabbarScreen: View {
                     .frame(minHeight: 49, maxHeight: 49)
                 }
             }
-            ContactScreen()
         }.background(Color.red)
         
     }

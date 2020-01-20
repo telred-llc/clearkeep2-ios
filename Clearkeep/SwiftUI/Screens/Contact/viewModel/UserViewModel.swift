@@ -17,7 +17,8 @@ class UserViewModel: ObservableObject {
     @Published var users: [UserModel] = []
     private var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
     var discardAllUsers: Cancellable?
-    
+    typealias CreateConvoResult = (CreateConvoMutation.Data.CreateConvo, CreateConvoLinkMutation.Data.CreateConvoLink?)
+
     func getAllUser(animated: Bool = true) {
         DispatchQueue.main.async {
             self.discardAllUsers?.cancel()
@@ -25,7 +26,7 @@ class UserViewModel: ObservableObject {
             self.discardAllUsers?.cancel()
             firstly { () -> PromiseKit.Promise<[ListUsersQuery.Data.ListUser.Item]?>  in
                 if animated {
-                    Utils.showProgressHub()
+//                    Utils.showProgressHub()
                 }
                 return self.fetchAllUsers()
             }.done({ (users) in
@@ -67,5 +68,55 @@ class UserViewModel: ObservableObject {
             }
         })
     }
+    
+    func createConversationAndLink(name: String, ownerId: String, otherUserId: String, completion: ((Bool, CreateConvoLinkMutation.Data.CreateConvoLink?) -> Void)?) {
+           firstly { () -> PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> in
+               Utils.showProgressHub()
+               return createConversation(name: name, ownerId: ownerId)
+               }.then({ (createdConv) -> PromiseKit.Promise<CreateConvoResult> in
+                   return self.createConversationLink(conv: createdConv, userId: otherUserId)
+               }).then({ (result) -> PromiseKit.Promise<CreateConvoResult> in
+                   return self.createConversationLink(conv: result.0, userId: ownerId)
+               }).done({ (result) in
+                   completion?(true, result.1)
+               }).ensure {
+                   Utils.hideProgressHub()
+               }.catch { (error) in
+                   print(error)
+                   completion?(false, nil)
+           }
+       }
+       
+       func createConversation(name: String, ownerId: String) -> PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> {
+           return PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> { (resolver) in
+            Utils.appSyncClient?.perform(mutation: CreateConvoMutation.init(input: CreateConversationInput.init(name: name, members: [ownerId])), queue: DispatchQueue.main, resultHandler: { (result, error) in
+                   if let error = error {
+                       resolver.reject(error)
+                   } else {
+                       if let createdConvo = result?.data?.createConvo {
+                           resolver.fulfill(createdConvo)
+                       } else {
+                           resolver.reject(CQLError.unknownError)
+                       }
+                   }
+               })
+           }
+       }
+
+       func createConversationLink(conv: CreateConvoMutation.Data.CreateConvo, userId: String) -> PromiseKit.Promise<CreateConvoResult> {
+           return PromiseKit.Promise<CreateConvoResult> { (resolver) in
+               let id = UUID().uuidString
+               let createdAt = "\(Int64(Date.init().timeIntervalSince1970 * 1000))"
+
+            Utils.appSyncClient?.perform(mutation: CreateConvoLinkMutation.init(input: CreateConvoLinkInput.init(id: id, convoLinkUserId: userId, convoLinkConversationId: conv.id, createdAt: createdAt, updatedAt: nil)), queue: DispatchQueue.main, resultHandler: { (result, error) in
+                   if let error = error {
+                       resolver.reject(error)
+                   } else {
+                       resolver.fulfill((conv, result?.data?.createConvoLink))
+                   }
+               })
+           }
+       }
+       
 }
 

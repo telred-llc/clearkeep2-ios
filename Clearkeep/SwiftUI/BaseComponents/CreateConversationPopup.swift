@@ -13,6 +13,7 @@ enum ConversationPopupType {
     case normal, user
 }
 struct CreateConversationPopup: View {
+    @ObservedObject private var keyboard = KeyboardManager()
     @State private var text: String = ""
     var type: ConversationPopupType?
     var createConversation: ((_ roomName: String) -> Void)?
@@ -30,14 +31,20 @@ struct CreateConversationPopup: View {
         VStack {
             Text("Create new conversation").font(.system(size: 18, weight: .bold))
             if type == ConversationPopupType.normal {
+                Text("Create a conversation with this user")
+                    .font(.system(size: 12, weight: .medium))
+                    .foregroundColor(Color("gray"))
+                    .padding()
+                    .background(Color("background_view"))
                 FlatTextField(title: "Conversation name", text: $text)
-                            .modifier(TextFieldLoginModifier())
-                            .padding(.top, 16)
+                    .font(.system(size: 12, weight: .medium))
+                    .modifier(TextFieldLoginModifier())
+                
             } else {
                 Text("Create a conversation with this user")
                     .font(.system(size: 12, weight: .medium))
-                .padding()
-                .background(Color("background_view"))
+                    .padding()
+                    .background(Color("background_view"))
             }
             
             HStack {
@@ -68,5 +75,7 @@ struct CreateConversationPopup: View {
         .frame(maxWidth: 300)
         .background(Color.white)
         .cornerRadius(10)
+        .offset(y: -self.keyboard.currentHeight/2)
+        .animation(.default)
     }
 }

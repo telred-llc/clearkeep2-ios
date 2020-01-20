@@ -8,22 +8,87 @@
 
 import Foundation
 import SwiftUI
+import AWSAppSync
+import AWSMobileClient
+import PromiseKit
 
+typealias MessageModel = GetConvoQuery.Data.GetConvo.Message.Item
 class DetailConversationViewModel: ObservableObject {
     
-    @Published var data = [MessageModel]()
-    @State var idConversation: String?
+    @Published var messages = [MessageModel]()
+    @State var idConversation: GraphQLID?
+    private var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
+    private var nextToken: String?
+    private lazy var dateFormatter = DateFormatter.init()
+    private let numberOfItemsPerPage: Int = 20
+    private var conversationData: GetConvoQuery.Data.GetConvo?
     
-    init() {
-        let conversation = DataStorage.shared.dataConversation.first(where: {$0.id == idConversation})
-        self.data = conversation?.messages ?? []
-    }
-    func send(model: MessageModel) {
-        data.insert(model, at: 0)
-        let model2 = MessageModel(name: "Bot", isOwner: false, mess: "This message is auto generate by Bot =))")
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-            self.data.insert(model2, at: 0)
+    func refreshData(_ animated: Bool = true) {
+        if idConversation?.isEmpty ?? false {
+            MessageUtils.showMess(type: .failed, string: "Can't get message")
+        } else {
+            firstly { () -> PromiseKit.Promise<GetConvoQuery.Data.GetConvo?> in
+                if animated {
+                    Utils.showProgressHub()
+                }
+                return self.fetchConversation(conversationId: self.idConversation ?? "")
+            }.done({ (conversation) in
+                _ = conversation?.messages?.items?.compactMap({ return $0 }) ?? []
+                self.conversationData = conversation
+                if let messages = conversation?.messages?.items as? [MessageModel] {
+                    self.messages = messages
+                }
+            }).ensure {
+                Utils.hideProgressHub()
+            }.catch { (error) in
+                
+            }
         }
+    }
+    
+    func clearData() {
+        self.conversationData?.messages?.items?.removeAll()
+    }
+    
+    func fetchConversation(conversationId: String) -> PromiseKit.Promise<GetConvoQuery.Data.GetConvo?> {
+        return PromiseKit.Promise<GetConvoQuery.Data.GetConvo?> { (resolver) in
+            let query = GetConvoQuery.init(id: conversationId)
+            Utils.appSyncClient?.fetch(query: query, cachePolicy: CachePolicy.fetchIgnoringCacheData, resultHandler: { (result, error) in
+                if let error = error {
+                    resolver.reject(error)
+                } else {
+                    resolver.fulfill(result?.data?.getConvo)
+                }
+            })
+        }
+    }
+    
+    func sendMessage(content: String) {
+        
+        guard content.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count > 0, let idCov = self.idConversation else {
+            return
+        }
+       
+        
+        let date = Date.init()
+        self.dateFormatter.dateFormat = Constant.globalDateFormat
+        let createdAt = self.dateFormatter.string(from: date)
+        let id = createdAt + "_" + UUID().uuidString
+        
+        let tempMessage = GetConvoQuery.Data.GetConvo.Message.Item.init(id: id, authorId: self.meData?.id, content: content, messageConversationId: idCov, createdAt: createdAt, updatedAt: nil)
+        self.conversationData?.messages?.items?.append(tempMessage)
+        let createMessageMutaion = CreateMessageMutation.init(input: CreateMessageInput.init(id: id, authorId: self.meData?.id, content: content, messageConversationId: idCov, createdAt: createdAt, updatedAt: nil))
+        Utils.appSyncClient?.perform(mutation: createMessageMutaion, resultHandler: { (result, error) in
+            if let result = result {
+                if let snapshot = result.data?.createMessage?.snapshot {
+                    self.conversationData?.messages?.items?.append(GetConvoQuery.Data.GetConvo.Message.Item.init(snapshot: snapshot))
+                    print("Send message: DONE")
+                }
+            } else {
+                MessageUtils.showMess(type: .failed, string: "Can't send message! Please try again")
+            }
+        })
         
     }
+    
 }

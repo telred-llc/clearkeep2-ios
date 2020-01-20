@@ -12,7 +12,7 @@ struct MessageItemView: View {
     @State var model: MessageModel?
     
     var body: some View {
-        let isOwner = model?.isOwner ?? false
+        let isOwner = model?.authorId == Session.shared.meData?.id
         return HStack(alignment: .top) {
             
             if !isOwner {
@@ -23,8 +23,8 @@ struct MessageItemView: View {
                     .clipShape(Circle())
                 
                 VStack(alignment: .leading) {
-                    Text("\(model?.userName ?? "Unknown"), 12:09 AM").lineLimit(1)
-                    Text(model?.message ?? "")
+                    Text("\(model?.authorId ?? "Unknown"), 12:09 AM").lineLimit(1)
+                    Text(model?.content ?? "")
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(8)
@@ -38,7 +38,7 @@ struct MessageItemView: View {
                 Spacer()
                 VStack(alignment: .trailing) {
                     Text("12:09 AM").lineLimit(1)
-                    Text(model?.message ?? "")
+                    Text(model?.content ?? "")
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
                         .padding(8)

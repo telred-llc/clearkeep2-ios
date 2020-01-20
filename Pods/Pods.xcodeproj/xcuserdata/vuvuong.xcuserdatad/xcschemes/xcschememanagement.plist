@@ -158,6 +158,11 @@
 			<key>orderHint</key>
 			<integer>21</integer>
 		</dict>
+		<key>SVProgressHUD.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>25</integer>
+		</dict>
 		<key>Starscream.xcscheme</key>
 		<dict>
 			<key>isShown</key>

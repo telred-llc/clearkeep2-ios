@@ -10,6 +10,7 @@ import SwiftUI
 import AWSMobileClient
 
 struct SplashScreen: View {
+    @ObservedObject private var viewModel = LoginViewModel()
     var body: some View {
         VStack {
             Image("logo-dark")
@@ -31,14 +32,9 @@ struct SplashScreen: View {
                 if let lastCredential = Session.shared.lastCredential,
                     let username = lastCredential.0,
                     let password = lastCredential.1 {
-                    
-                    AWSMobileClient.default().signIn(username: username, password: password) { (result, error) in
-                        if let signInResult = result?.signInState, signInResult == .signedIn {
-                            Switcher.updateRootVC(logined: true)
-                        } else {
-                            Switcher.updateRootVC(logined: false)
-                        }
-                    }
+                    self.viewModel.username = username
+                    self.viewModel.password = password
+                    self.viewModel.login()
                 } else {
                     Switcher.updateRootVC(logined: false)
                 }

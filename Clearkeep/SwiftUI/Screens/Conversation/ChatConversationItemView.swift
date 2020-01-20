@@ -27,9 +27,9 @@ struct ChatConversationItemView: View {
                     .padding(.leading, 8)
                 
                 VStack(alignment: .leading, spacing: 4) {
-                    Text(model?.nameRoom ?? "")
-                        .font(Font.system(size: 16, weight: (model?.isSaw ?? false) ? .regular : .bold))
-                        .foregroundColor((model?.isSaw ?? false) ? Color("title_color").opacity(0.5) : Color("title_color"))
+                    Text(model?.conversation.name ?? "")
+                        .font(Font.system(size: 16, weight: .bold))
+                        .foregroundColor(Color("title_color"))
                 }
                 Spacer()
                 Text("12:02 PM")
