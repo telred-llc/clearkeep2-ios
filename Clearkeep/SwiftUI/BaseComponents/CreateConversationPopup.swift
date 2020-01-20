@@ -15,6 +15,7 @@ enum ConversationPopupType {
 struct CreateConversationPopup: View {
     @ObservedObject private var keyboard = KeyboardManager()
     @State private var text: String = ""
+    @State private var isAnima = false
     var type: ConversationPopupType?
     var createConversation: ((_ roomName: String) -> Void)?
     
@@ -35,7 +36,6 @@ struct CreateConversationPopup: View {
                     .font(.system(size: 12, weight: .medium))
                     .foregroundColor(Color("gray"))
                     .padding()
-                    .background(Color("background_view"))
                 FlatTextField(title: "Conversation name", text: $text)
                     .font(.system(size: 12, weight: .medium))
                     .modifier(TextFieldLoginModifier())
@@ -71,11 +71,14 @@ struct CreateConversationPopup: View {
             .padding(.vertical, 8)            
             
         }
+        .onAppear() {
+            self.isAnima = true
+        }
         .padding()
         .frame(maxWidth: 300)
-        .background(Color("background_view"))
+        .background(Color("color_popup"))
         .cornerRadius(10)
         .offset(y: -self.keyboard.currentHeight/2)
-        .animation(.default)
+        .animation(self.isAnima ? nil : .interpolatingSpring(mass: 1.0,stiffness: 100.0,damping: 10,initialVelocity: 0))
     }
 }

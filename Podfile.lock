@@ -45,6 +45,7 @@ PODS:
     - SQLite.swift/standard (= 0.12.2)
   - SQLite.swift/standard (0.12.2)
   - Starscream (3.0.6)
+  - SwiftDate (5.1.0)
   - SwiftEntryKit (1.2.3):
     - QuickLayout (= 3.0.0)
   - Toast-Swift (5.0.1)
@@ -61,6 +62,7 @@ DEPENDENCIES:
   - Material
   - NVActivityIndicatorView
   - PromiseKit
+  - SwiftDate (~> 5.0)
   - SwiftEntryKit (= 1.2.3)
   - Toast-Swift
 
@@ -85,6 +87,7 @@ SPEC REPOS:
     - ReachabilitySwift
     - SQLite.swift
     - Starscream
+    - SwiftDate
     - SwiftEntryKit
     - Toast-Swift
 
@@ -108,9 +111,10 @@ SPEC CHECKSUMS:
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
+  SwiftDate: 6329e58969a2de31cea7f1ee1143b247693196e7
   SwiftEntryKit: 340713c2e4a6662c5149629990bf1088bf5f0389
   Toast-Swift: 9b6a70f28b3bf0b96c40d46c0c4b9d6639846711
 
-PODFILE CHECKSUM: 4b55ba879492e51049d4f317b914761ed842a2a5
+PODFILE CHECKSUM: a3fe120c5ad71ede361c26c4ba96e1fdb9968415
 
 COCOAPODS: 1.8.4

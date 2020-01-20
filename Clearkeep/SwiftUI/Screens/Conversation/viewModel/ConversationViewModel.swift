@@ -39,7 +39,7 @@ final class ConversationViewModel: ObservableObject {
                         self.meData?.conversations?.items?.append(newConvLink)
                         self.conversations = self.meData?.conversations?.items?.compactMap({$0}) ?? []
                         self.conversations.sort { (lItem, rItem) -> Bool in
-                            guard let lTime = lItem.createdAt?.timeIntervalStringToDate(), let rTime = rItem.createdAt?.timeIntervalStringToDate() else {
+                            guard let lTime = lItem.createdAt?.toDate(), let rTime = rItem.createdAt?.toDate() else {
                                 return false
                             }
                             return lTime > rTime

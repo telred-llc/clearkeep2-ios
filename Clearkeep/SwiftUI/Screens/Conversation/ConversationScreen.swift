@@ -12,36 +12,34 @@ import AWSAppSync
 struct ConversationScreen: View {
     @ObservedObject private var viewModel = ConversationViewModel()
     @State private var isShowPopup = false
-    
+    @State private var contentOffset: CGFloat = 0
     var body: some View {
-        VStack {
-            ScrollView(.vertical, showsIndicators: true) {
-                ForEach(viewModel.conversations, id: \.id) { (data: ConversationModel) in
-                    NavigationLink(destination: DetailConversationScreen(conversation: data)) {
-                        ChatConversationItemView(model: data)
+        let isNoConversation = viewModel.conversations.isEmpty
+        return VStack {
+            GeometryReader { geometry in
+                CustomScrollView(isNoConversation ? [] : .vertical, showIndicators: true, contentOffset: self.$contentOffset) {
+                    if isNoConversation {
+                        Image("empty_ic")
+                            .resizable()
+                            .scaledToFit()
+                            .frame(width: geometry.size.width - 50, height: geometry.size.height)
+                        
+                    } else {
+                        ForEach(self.viewModel.conversations, id: \.id) { (data: ConversationModel) in
+                            NavigationLink(destination: DetailConversationScreen(conversation: data)) {
+                                ChatConversationItemView(model: data)
+                            }
+                        }
+                        .buttonStyle(PlainButtonStyle())
                     }
                 }
-                .buttonStyle(PlainButtonStyle())
             }
-        .offset(y: 16)
         }
+            
         .navigationBarTitle(Text("Conversations"), displayMode: .inline)
         .onAppear() {
             self.viewModel.subscribeNewConvLink(userId: Session.shared.meData?.id ?? "")
         }
-    }
-    
-    private func trailingView() -> some View {
-        HStack {
-            Image(systemName: "plus").onTapGesture {
-                Utils.showAlert(viewHosting: UIHostingController(rootView: CreateConversationPopup(type: .normal, createConversation: { (roomName) in
-                    // Create room here
-                })))
-            }
-            .frame(width: 50, height: 40)
-            
-        }
-        .offset(x: 16, y: 0)
     }
 }
 

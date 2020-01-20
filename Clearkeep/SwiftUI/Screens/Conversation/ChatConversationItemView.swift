@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import SwiftDate
 
 struct ChatConversationItemView: View {
     @State var model: ConversationModel?
@@ -32,7 +33,7 @@ struct ChatConversationItemView: View {
                         .foregroundColor(Color("title_color"))
                 }
                 Spacer()
-                Text(model?.updatedAt?.timeIntervalStringToDateString(format: "MMMM-dd-yyyy HH:mm") ?? "")
+                Text(model?.updatedAt?.toDate(Constant.globalDateFormat, region: .local)?.toString() ?? "")
                     .foregroundColor(Color.gray.opacity(0.6))
                     .font(Font.system(size: 12, weight: .regular))
                     .padding(.trailing, 16)

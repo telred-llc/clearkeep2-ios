@@ -93,7 +93,7 @@ query ListUsers(
 query GetConvo($id: ID!) {
   getConvo(id: $id) {
     id
-    messages {
+    messages(limit: 100) {
       items {
         id
         author {

@@ -35,6 +35,7 @@
 		AAB3DBC421F16B5F00B22A78 /* ConfirmForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3DBC321F16B5F00B22A78 /* ConfirmForgotPasswordViewController.swift */; };
 		B209961B23D5555500098678 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209961A23D5555500098678 /* Date+Extension.swift */; };
 		B209961D23D5566200098678 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209961C23D5566200098678 /* String+Extension.swift */; };
+		B209961F23D5AAFD00098678 /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209961E23D5AAFD00098678 /* CustomScrollView.swift */; };
 		B226ABDE23CE1FEB00BEC69C /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = B226ABDD23CE1FEB00BEC69C /* Utils.swift */; };
 		B226ABE123CE21EE00BEC69C /* ConfirmationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B226ABE023CE21EE00BEC69C /* ConfirmationScreen.swift */; };
 		B226ABE423CE221300BEC69C /* ConfirmationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B226ABE323CE221300BEC69C /* ConfirmationViewModel.swift */; };
@@ -55,8 +56,6 @@
 		B2701F8123CC759E001DC21C /* ContactScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2701F8023CC759E001DC21C /* ContactScreen.swift */; };
 		B2701F8323CC75A9001DC21C /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2701F8223CC75A9001DC21C /* ProfileScreen.swift */; };
 		B2701F8523CC7977001DC21C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2701F8423CC7977001DC21C /* Extension.swift */; };
-		B2B226D423D1615B00420C8E /* PageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B226D323D1615B00420C8E /* PageViewController.swift */; };
-		B2B226D623D1617800420C8E /* PageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B226D523D1617800420C8E /* PageView.swift */; };
 		B2B226FA23D1A1BC00420C8E /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */; };
 		B2BA299223D0663A005E79EA /* GrowTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299123D06639005E79EA /* GrowTextView.swift */; };
 		B2BA299423D06999005E79EA /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299323D06999005E79EA /* SplashScreen.swift */; };
@@ -66,7 +65,6 @@
 		B2BA299F23D07108005E79EA /* UserItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299E23D07108005E79EA /* UserItemView.swift */; };
 		B2C935D823CD6C6B00202204 /* ChatConversationItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C935D723CD6C6B00202204 /* ChatConversationItemView.swift */; };
 		B2C935DA23CD6CB500202204 /* ConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C935D923CD6CB500202204 /* ConversationViewModel.swift */; };
-		B2C935DC23CD6D0C00202204 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C935DB23CD6D0C00202204 /* DataStorage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -102,6 +100,7 @@
 		AAB3DBC321F16B5F00B22A78 /* ConfirmForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		B209961A23D5555500098678 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		B209961C23D5566200098678 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
+		B209961E23D5AAFD00098678 /* CustomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
 		B226ABDD23CE1FEB00BEC69C /* Utils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utils.swift; sourceTree = "<group>"; };
 		B226ABE023CE21EE00BEC69C /* ConfirmationScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmationScreen.swift; sourceTree = "<group>"; };
 		B226ABE323CE221300BEC69C /* ConfirmationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConfirmationViewModel.swift; sourceTree = "<group>"; };
@@ -122,8 +121,6 @@
 		B2701F8023CC759E001DC21C /* ContactScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactScreen.swift; sourceTree = "<group>"; };
 		B2701F8223CC75A9001DC21C /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		B2701F8423CC7977001DC21C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
-		B2B226D323D1615B00420C8E /* PageViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageViewController.swift; sourceTree = "<group>"; };
-		B2B226D523D1617800420C8E /* PageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PageView.swift; sourceTree = "<group>"; };
 		B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		B2BA299123D06639005E79EA /* GrowTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrowTextView.swift; sourceTree = "<group>"; };
 		B2BA299323D06999005E79EA /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashScreen.swift; path = Clearkeep/SwiftUI/Screens/Login/SplashScreen.swift; sourceTree = SOURCE_ROOT; };
@@ -133,7 +130,6 @@
 		B2BA299E23D07108005E79EA /* UserItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItemView.swift; sourceTree = "<group>"; };
 		B2C935D723CD6C6B00202204 /* ChatConversationItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatConversationItemView.swift; sourceTree = "<group>"; };
 		B2C935D923CD6CB500202204 /* ConversationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewModel.swift; sourceTree = "<group>"; };
-		B2C935DB23CD6D0C00202204 /* DataStorage.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		BB35FD990B0F992C49100749 /* Pods-Clearkeep.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clearkeep.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Clearkeep/Pods-Clearkeep.debug.xcconfig"; sourceTree = "<group>"; };
 		EF3489B7E4111C5F61185490 /* Pods-Clearkeep.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clearkeep.release.xcconfig"; path = "Pods/Target Support Files/Pods-Clearkeep/Pods-Clearkeep.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -196,7 +192,7 @@
 		8562186E21E84982004D53A7 /* Share */ = {
 			isa = PBXGroup;
 			children = (
-				B2C935DB23CD6D0C00202204 /* DataStorage.swift */,
+				B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */,
 				AAB3DBBD21F0407B00B22A78 /* LoadingView.swift */,
 				85DE7F0921F06DDC00F74D0D /* CQLError.swift */,
 				856DC99121F01C09003BEAAD /* Base */,
@@ -276,6 +272,7 @@
 		B209961923D5554200098678 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
+				B2701F8423CC7977001DC21C /* Extension.swift */,
 				B209961A23D5555500098678 /* Date+Extension.swift */,
 				B209961C23D5566200098678 /* String+Extension.swift */,
 			);
@@ -330,10 +327,7 @@
 				B2BA299723D06B57005E79EA /* CreateConversationPopup.swift */,
 				B2BA299123D06639005E79EA /* GrowTextView.swift */,
 				B22E236C23CC497300D63F77 /* FlatTextField.swift */,
-				B2701F8423CC7977001DC21C /* Extension.swift */,
-				B2B226D323D1615B00420C8E /* PageViewController.swift */,
-				B2B226D523D1617800420C8E /* PageView.swift */,
-				B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */,
+				B209961E23D5AAFD00098678 /* CustomScrollView.swift */,
 			);
 			path = BaseComponents;
 			sourceTree = "<group>";
@@ -586,7 +580,6 @@
 				B22E237423CC4C9C00D63F77 /* TextFieldModifier.swift in Sources */,
 				B2B226FA23D1A1BC00420C8E /* KeyboardManager.swift in Sources */,
 				B26A3D6323CD95F100FAAC0D /* DetailConversationScreen.swift in Sources */,
-				B2B226D623D1617800420C8E /* PageView.swift in Sources */,
 				8562186621E74703004D53A7 /* Switcher.swift in Sources */,
 				856DC99521F01C09003BEAAD /* BaseViewController.swift in Sources */,
 				B2BA299423D06999005E79EA /* SplashScreen.swift in Sources */,
@@ -612,9 +605,8 @@
 				B26A3D6C23CDB86800FAAC0D /* RegisterScreen.swift in Sources */,
 				B209961B23D5555500098678 /* Date+Extension.swift in Sources */,
 				B2BA299223D0663A005E79EA /* GrowTextView.swift in Sources */,
-				B2B226D423D1615B00420C8E /* PageViewController.swift in Sources */,
 				B26A3D6823CDADC000FAAC0D /* DetailConversationViewModel.swift in Sources */,
-				B2C935DC23CD6D0C00202204 /* DataStorage.swift in Sources */,
+				B209961F23D5AAFD00098678 /* CustomScrollView.swift in Sources */,
 				8562186C21E75D6B004D53A7 /* Constants.swift in Sources */,
 				856DC99B21F01D4E003BEAAD /* ReceiverTextMessageCell.swift in Sources */,
 				B2701F8523CC7977001DC21C /* Extension.swift in Sources */,

@@ -22,7 +22,7 @@ class DetailConversationViewModel: ObservableObject {
     private let numberOfItemsPerPage: Int = 20
     @Published var conversationData: GetConvoQuery.Data.GetConvo?
     private var discardMessages: Cancellable?
-
+    
     func refreshData(_ animated: Bool = true) {
         if idConversation.isEmpty {
             MessageUtils.showMess(type: .failed, string: "Can't get message")
@@ -35,7 +35,7 @@ class DetailConversationViewModel: ObservableObject {
             }.done({ (conversation) in
                 self.conversationData = conversation
                 let items = conversation?.messages?.items?.compactMap({ return $0 }) ?? []
-                self.conversationData?.messages?.items = items.reversed()
+                self.conversationData?.messages?.items = items
             }).ensure {
                 Utils.hideProgressHub()
             }.catch { (error) in
@@ -50,6 +50,7 @@ class DetailConversationViewModel: ObservableObject {
     
     func fetchConversation(conversationId: String) -> PromiseKit.Promise<GetConvoQuery.Data.GetConvo?> {
         return PromiseKit.Promise<GetConvoQuery.Data.GetConvo?> { (resolver) in
+            
             let query = GetConvoQuery.init(id: conversationId)
             Utils.appSyncClient?.fetch(query: query, cachePolicy: CachePolicy.fetchIgnoringCacheData, resultHandler: { (result, error) in
                 if let error = error {
@@ -66,20 +67,17 @@ class DetailConversationViewModel: ObservableObject {
         guard content.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count > 0, !idConversation.isEmpty else {
             return
         }
-       
+        
         
         let date = Date.init()
         self.dateFormatter.dateFormat = Constant.globalDateFormat
         let createdAt = self.dateFormatter.string(from: date)
         let id = createdAt + "_" + UUID().uuidString
         
-//        let tempMessage = GetConvoQuery.Data.GetConvo.Message.Item.init(id: id, authorId: self.meData?.id, content: content, messageConversationId: idConversation, createdAt: createdAt, updatedAt: nil)
-//        self.conversationData?.messages?.items?.append(tempMessage)
         let createMessageMutaion = CreateMessageMutation.init(input: CreateMessageInput.init(id: id, authorId: self.meData?.id, content: content, messageConversationId: idConversation, createdAt: createdAt, updatedAt: nil))
         Utils.appSyncClient?.perform(mutation: createMessageMutaion, resultHandler: { (result, error) in
             if let result = result {
-                if let snapshot = result.data?.createMessage?.snapshot {
-                    self.conversationData?.messages?.items?.insert(GetConvoQuery.Data.GetConvo.Message.Item.init(snapshot: snapshot), at: 0)
+                if (result.data?.createMessage?.snapshot) != nil {
                     self.objectWillChange.send()
                     print("Send message: DONE")
                 }
@@ -98,7 +96,7 @@ class DetailConversationViewModel: ObservableObject {
             discardMessages = try Utils.appSyncClient?.subscribe(subscription: OnCreateMessageSubscription.init(messageConversationId: conversationId), queue: DispatchQueue.main, resultHandler: { (result, transaction, error) in
                 if let result = result {
                     if let snapshot = result.data?.onCreateMessage?.snapshot {
-                        self.conversationData?.messages?.items?.insert(GetConvoQuery.Data.GetConvo.Message.Item.init(snapshot: snapshot), at: 0)
+                        self.conversationData?.messages?.items?.append(GetConvoQuery.Data.GetConvo.Message.Item.init(snapshot: snapshot))
                     }
                 }
             })

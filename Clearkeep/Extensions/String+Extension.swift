@@ -10,27 +10,27 @@ import Foundation
 import UIKit
 
 extension String {
-    func toTimeInterval() -> TimeInterval? {
-        guard let doubleValue = Double(self) else {
-            return nil
-        }
-        return TimeInterval(floatLiteral: doubleValue)
+
+    func toDate() -> Date? {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = Constant.globalDateFormat
+        return dateFormatter.date(from: self)
     }
     
-    func timeIntervalStringToDate() -> Date? {
-        guard let timeInter = self.toTimeInterval() else {
-            return nil
-        }
-        return Date(timeIntervalSince1970: timeInter)
-    }
-    
-    func timeIntervalStringToDateString(format: String? = nil) -> String? {
-        guard let date = self.timeIntervalStringToDate() else {
-            return nil
-        }
+    func convertDateFormater(to format: String) -> String? {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = format
-        let dateString = dateFormatter.string(from: date)
-        return dateString
+        guard let date = self.toDate() else {
+            return "19:00 PM"
+        }
+        return  dateFormatter.string(from: date)
+        
+    }
+    
+    func getTimeMessage() -> String? {
+        guard let messTime = self.toDate() else {
+            return nil
+        }
+        return "19:00 AM"
     }
 }

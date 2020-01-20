@@ -18,4 +18,6 @@ target 'Clearkeep' do
   pod 'CRRefresh'
   pod 'SwiftEntryKit', '1.2.3'
   pod 'GrowingTextView'
+  pod 'SwiftDate', '~> 5.0'
+
 end
