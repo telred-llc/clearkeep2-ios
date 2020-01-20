@@ -19,7 +19,6 @@ class MasterViewController: BaseViewController {
     var discardConvLink: Cancellable?
     var discardMessages: Cancellable?
     var allUsers: [ListUsersQuery.Data.ListUser.Item] = []
-    var conversations: [GetConvoQuery.Data.GetConvo] = []
     var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
     var detailViewController: DetailViewController? = nil
     var creatingConversationLink: CreateConvoLinkMutation.Data.CreateConvoLink?
