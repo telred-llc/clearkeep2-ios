@@ -9,7 +9,20 @@ mutation CreateUser(
     conversations {
       items {
         id
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         convoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         convoLinkConversationId
         createdAt
         updatedAt
@@ -19,8 +32,21 @@ mutation CreateUser(
     messages {
       items {
         id
+        author {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         authorId
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         messageConversationId
         createdAt
         updatedAt
@@ -41,7 +67,20 @@ mutation UpdateUser(
     conversations {
       items {
         id
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         convoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         convoLinkConversationId
         createdAt
         updatedAt
@@ -51,8 +90,21 @@ mutation UpdateUser(
     messages {
       items {
         id
+        author {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         authorId
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         messageConversationId
         createdAt
         updatedAt
@@ -73,7 +125,20 @@ mutation DeleteUser(
     conversations {
       items {
         id
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         convoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         convoLinkConversationId
         createdAt
         updatedAt
@@ -83,8 +148,21 @@ mutation DeleteUser(
     messages {
       items {
         id
+        author {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         authorId
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         messageConversationId
         createdAt
         updatedAt
@@ -104,8 +182,21 @@ mutation CreateConvo(
     messages {
       items {
         id
+        author {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         authorId
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         messageConversationId
         createdAt
         updatedAt
@@ -115,7 +206,20 @@ mutation CreateConvo(
     associated {
       items {
         id
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         convoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         convoLinkConversationId
         createdAt
         updatedAt
@@ -138,9 +242,24 @@ mutation CreateMessage(
       id
       username
       conversations {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -151,9 +270,24 @@ mutation CreateMessage(
     conversation {
       id
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       associated {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       name
@@ -176,9 +310,24 @@ mutation UpdateMessage(
       id
       username
       conversations {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -189,9 +338,24 @@ mutation UpdateMessage(
     conversation {
       id
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       associated {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       name
@@ -214,9 +378,24 @@ mutation DeleteMessage(
       id
       username
       conversations {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -227,9 +406,24 @@ mutation DeleteMessage(
     conversation {
       id
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       associated {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       name
@@ -252,9 +446,24 @@ mutation CreateConvoLink(
       id
       username
       conversations {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -264,9 +473,24 @@ mutation CreateConvoLink(
     conversation {
       id
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       associated {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       name
@@ -289,9 +513,24 @@ mutation UpdateConvoLink(
       id
       username
       conversations {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -301,9 +540,24 @@ mutation UpdateConvoLink(
     conversation {
       id
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       associated {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       name

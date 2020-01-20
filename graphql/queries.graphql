@@ -6,12 +6,21 @@ query GetUser($id: ID!) {
     conversations {
       items {
         id
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         convoLinkUserId
-        convoLinkConversationId
         conversation {
           id
           name
+          members
+          createdAt
+          updatedAt
         }
+        convoLinkConversationId
         createdAt
         updatedAt
       }
@@ -20,8 +29,21 @@ query GetUser($id: ID!) {
     messages {
       items {
         id
+        author {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         authorId
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         messageConversationId
         createdAt
         updatedAt
@@ -42,9 +64,24 @@ query ListUsers(
       id
       username
       conversations {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -59,8 +96,21 @@ query GetConvo($id: ID!) {
     messages {
       items {
         id
+        author {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         authorId
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         messageConversationId
         createdAt
         updatedAt
@@ -70,7 +120,20 @@ query GetConvo($id: ID!) {
     associated {
       items {
         id
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         convoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         convoLinkConversationId
         createdAt
         updatedAt

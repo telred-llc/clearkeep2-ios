@@ -6,9 +6,24 @@ subscription OnCreateConvoLink($convoLinkUserId: ID!) {
       id
       username
       conversations {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -18,9 +33,24 @@ subscription OnCreateConvoLink($convoLinkUserId: ID!) {
     conversation {
       id
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       associated {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       name
@@ -40,9 +70,24 @@ subscription OnCreateMessage($messageConversationId: ID!) {
       id
       username
       conversations {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       createdAt
@@ -53,9 +98,24 @@ subscription OnCreateMessage($messageConversationId: ID!) {
     conversation {
       id
       messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       associated {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
         nextToken
       }
       name
@@ -75,7 +135,20 @@ subscription OnCreateUser($id: String!) {
     conversations {
       items {
         id
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         convoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         convoLinkConversationId
         createdAt
         updatedAt
@@ -85,8 +158,21 @@ subscription OnCreateUser($id: String!) {
     messages {
       items {
         id
+        author {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         authorId
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         messageConversationId
         createdAt
         updatedAt
@@ -104,7 +190,20 @@ subscription OnUpdateUser($id: String!) {
     conversations {
       items {
         id
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         convoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         convoLinkConversationId
         createdAt
         updatedAt
@@ -114,8 +213,21 @@ subscription OnUpdateUser($id: String!) {
     messages {
       items {
         id
+        author {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         authorId
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         messageConversationId
         createdAt
         updatedAt
@@ -133,7 +245,20 @@ subscription OnDeleteUser($id: String!) {
     conversations {
       items {
         id
+        user {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         convoLinkUserId
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         convoLinkConversationId
         createdAt
         updatedAt
@@ -143,8 +268,21 @@ subscription OnDeleteUser($id: String!) {
     messages {
       items {
         id
+        author {
+          id
+          username
+          createdAt
+          updatedAt
+        }
         authorId
         content
+        conversation {
+          id
+          name
+          members
+          createdAt
+          updatedAt
+        }
         messageConversationId
         createdAt
         updatedAt
