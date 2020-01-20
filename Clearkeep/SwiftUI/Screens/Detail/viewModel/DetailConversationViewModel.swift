@@ -15,29 +15,27 @@ import PromiseKit
 typealias MessageModel = GetConvoQuery.Data.GetConvo.Message.Item
 class DetailConversationViewModel: ObservableObject {
     
-    @Published var messages = [MessageModel]()
-    @State var idConversation: GraphQLID?
+    var idConversation: GraphQLID = ""
     private var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
     private var nextToken: String?
     private lazy var dateFormatter = DateFormatter.init()
     private let numberOfItemsPerPage: Int = 20
-    private var conversationData: GetConvoQuery.Data.GetConvo?
-    
+    @Published var conversationData: GetConvoQuery.Data.GetConvo?
+    private var discardMessages: Cancellable?
+
     func refreshData(_ animated: Bool = true) {
-        if idConversation?.isEmpty ?? false {
+        if idConversation.isEmpty {
             MessageUtils.showMess(type: .failed, string: "Can't get message")
         } else {
             firstly { () -> PromiseKit.Promise<GetConvoQuery.Data.GetConvo?> in
                 if animated {
                     Utils.showProgressHub()
                 }
-                return self.fetchConversation(conversationId: self.idConversation ?? "")
+                return self.fetchConversation(conversationId: self.idConversation )
             }.done({ (conversation) in
-                _ = conversation?.messages?.items?.compactMap({ return $0 }) ?? []
                 self.conversationData = conversation
-                if let messages = conversation?.messages?.items as? [MessageModel] {
-                    self.messages = messages
-                }
+                let items = conversation?.messages?.items?.compactMap({ return $0 }) ?? []
+                self.conversationData?.messages?.items = items.reversed()
             }).ensure {
                 Utils.hideProgressHub()
             }.catch { (error) in
@@ -65,7 +63,7 @@ class DetailConversationViewModel: ObservableObject {
     
     func sendMessage(content: String) {
         
-        guard content.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count > 0, let idCov = self.idConversation else {
+        guard content.trimmingCharacters(in: CharacterSet.whitespacesAndNewlines).count > 0, !idConversation.isEmpty else {
             return
         }
        
@@ -75,13 +73,14 @@ class DetailConversationViewModel: ObservableObject {
         let createdAt = self.dateFormatter.string(from: date)
         let id = createdAt + "_" + UUID().uuidString
         
-        let tempMessage = GetConvoQuery.Data.GetConvo.Message.Item.init(id: id, authorId: self.meData?.id, content: content, messageConversationId: idCov, createdAt: createdAt, updatedAt: nil)
-        self.conversationData?.messages?.items?.append(tempMessage)
-        let createMessageMutaion = CreateMessageMutation.init(input: CreateMessageInput.init(id: id, authorId: self.meData?.id, content: content, messageConversationId: idCov, createdAt: createdAt, updatedAt: nil))
+//        let tempMessage = GetConvoQuery.Data.GetConvo.Message.Item.init(id: id, authorId: self.meData?.id, content: content, messageConversationId: idConversation, createdAt: createdAt, updatedAt: nil)
+//        self.conversationData?.messages?.items?.append(tempMessage)
+        let createMessageMutaion = CreateMessageMutation.init(input: CreateMessageInput.init(id: id, authorId: self.meData?.id, content: content, messageConversationId: idConversation, createdAt: createdAt, updatedAt: nil))
         Utils.appSyncClient?.perform(mutation: createMessageMutaion, resultHandler: { (result, error) in
             if let result = result {
                 if let snapshot = result.data?.createMessage?.snapshot {
-                    self.conversationData?.messages?.items?.append(GetConvoQuery.Data.GetConvo.Message.Item.init(snapshot: snapshot))
+                    self.conversationData?.messages?.items?.insert(GetConvoQuery.Data.GetConvo.Message.Item.init(snapshot: snapshot), at: 0)
+                    self.objectWillChange.send()
                     print("Send message: DONE")
                 }
             } else {
@@ -89,6 +88,23 @@ class DetailConversationViewModel: ObservableObject {
             }
         })
         
+    }
+    
+    func subscribeNewMessage(conversationId: String) {
+        if conversationId.count == 0 {
+            return
+        }
+        do {
+            discardMessages = try Utils.appSyncClient?.subscribe(subscription: OnCreateMessageSubscription.init(messageConversationId: conversationId), queue: DispatchQueue.main, resultHandler: { (result, transaction, error) in
+                if let result = result {
+                    if let snapshot = result.data?.onCreateMessage?.snapshot {
+                        self.conversationData?.messages?.items?.insert(GetConvoQuery.Data.GetConvo.Message.Item.init(snapshot: snapshot), at: 0)
+                    }
+                }
+            })
+        } catch {
+            print("Error starting subscription.")
+        }
     }
     
 }

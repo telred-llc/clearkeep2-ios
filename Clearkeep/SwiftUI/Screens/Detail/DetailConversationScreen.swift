@@ -18,13 +18,13 @@ struct DetailConversationScreen: View {
     
     var body: some View {
         VStack {
-            List(viewModel.messages, id: \.id) { (message: MessageModel) in
+            List((viewModel.conversationData?.messages?.items)?.compactMap({$0}) ?? [], id: \.id) { (message: MessageModel) in
                 MessageItemView(model: message)
-//                    .scaleEffect(x: 1, y: -1, anchor: .center)
-                    .padding(8)
+                    .scaleEffect(x: 1, y: -1)
                 
             }
-//            .scaleEffect(x: 1, y: -1, anchor: .center)
+            .scaleEffect(x: 1, y: -1)
+            .offset(x: 0, y: 1)
             HStack(alignment: .bottom, spacing: 0) {
                 GrowTextView(value: $message, placeholder: "Type a message", height: $heightTF)
                     .font(.system(size: 13, weight: .medium))
@@ -56,8 +56,8 @@ struct DetailConversationScreen: View {
         }
         .onAppear() {
             UITableView.appearance().separatorColor = .clear
-            self.viewModel.idConversation = self.conversation?.id
-            print(self.conversation?.id ?? "")
+            self.viewModel.idConversation = self.conversation?.conversation.id ?? ""
+            self.viewModel.subscribeNewMessage(conversationId: self.conversation?.conversation.id ?? "")
             self.viewModel.refreshData(false)
         }
         .navigationBarBackButtonHidden(true)

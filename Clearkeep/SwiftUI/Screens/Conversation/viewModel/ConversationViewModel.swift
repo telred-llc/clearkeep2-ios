@@ -22,7 +22,7 @@ final class ConversationViewModel: ObservableObject {
     
     
     init() {
-        self.conversations = self.meData?.conversations?.items as! [ConversationModel]
+        self.conversations = self.meData?.conversations?.items?.compactMap({$0}) ?? []
     }
     
     func subscribeNewConvLink(userId: String) {
@@ -37,7 +37,13 @@ final class ConversationViewModel: ObservableObject {
                         }
                         let newConvLink = GetUserQuery.Data.GetUser.Conversation.Item.init(snapshot: newConvoLink.snapshot)
                         self.meData?.conversations?.items?.append(newConvLink)
-                        self.conversations = self.meData?.conversations?.items as! [ConversationModel]
+                        self.conversations = self.meData?.conversations?.items?.compactMap({$0}) ?? []
+                        self.conversations.sort { (lItem, rItem) -> Bool in
+                            guard let lTime = lItem.createdAt?.timeIntervalStringToDate(), let rTime = rItem.createdAt?.timeIntervalStringToDate() else {
+                                return false
+                            }
+                            return lTime > rTime
+                        }
                         // If convLink was created by this user then show chat detail screen
                         if let creatingConversationLink = self.creatingConversationLink,
                             creatingConversationLink.convoLinkUserId == newConvoLink.convoLinkUserId {

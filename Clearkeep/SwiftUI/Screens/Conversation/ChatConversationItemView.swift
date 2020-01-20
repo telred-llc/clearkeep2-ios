@@ -32,7 +32,7 @@ struct ChatConversationItemView: View {
                         .foregroundColor(Color("title_color"))
                 }
                 Spacer()
-                Text("12:02 PM")
+                Text(model?.updatedAt?.timeIntervalStringToDateString(format: "MMMM-dd-yyyy HH:mm") ?? "")
                     .foregroundColor(Color.gray.opacity(0.6))
                     .font(Font.system(size: 12, weight: .regular))
                     .padding(.trailing, 16)

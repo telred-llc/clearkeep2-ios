@@ -23,7 +23,10 @@ struct MessageItemView: View {
                     .clipShape(Circle())
                 
                 VStack(alignment: .leading) {
-                    Text("\(model?.authorId ?? "Unknown"), 12:09 AM").lineLimit(1)
+                    Text("\(model?.authorId ?? "Unknown"), 12:09 AM")
+                        .lineLimit(1)
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(.gray)
                     Text(model?.content ?? "")
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)
@@ -31,13 +34,16 @@ struct MessageItemView: View {
                         .background(Color("message_view"))
                         .cornerRadius(5)
                         .padding(.vertical, 4)
-                        
+                    
                 }
                 Spacer()
             } else {
                 Spacer()
                 VStack(alignment: .trailing) {
-                    Text("12:09 AM").lineLimit(1)
+                    Text("12:09 AM")
+                        .font(.system(size: 12, weight: .medium))
+                        .foregroundColor(.gray)
+                        .lineLimit(1)
                     Text(model?.content ?? "")
                         .lineLimit(nil)
                         .fixedSize(horizontal: false, vertical: true)

@@ -72,7 +72,7 @@ class UserViewModel: ObservableObject {
     func createConversationAndLink(name: String, ownerId: String, otherUserId: String, completion: ((Bool, CreateConvoLinkMutation.Data.CreateConvoLink?) -> Void)?) {
            firstly { () -> PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> in
                Utils.showProgressHub()
-               return createConversation(name: name, ownerId: ownerId)
+            return createConversation(name: name, members: [ownerId, otherUserId])
                }.then({ (createdConv) -> PromiseKit.Promise<CreateConvoResult> in
                    return self.createConversationLink(conv: createdConv, userId: otherUserId)
                }).then({ (result) -> PromiseKit.Promise<CreateConvoResult> in
@@ -87,9 +87,9 @@ class UserViewModel: ObservableObject {
            }
        }
        
-       func createConversation(name: String, ownerId: String) -> PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> {
+       func createConversation(name: String, members: [String]) -> PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> {
            return PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> { (resolver) in
-            Utils.appSyncClient?.perform(mutation: CreateConvoMutation.init(input: CreateConversationInput.init(name: name, members: [ownerId])), queue: DispatchQueue.main, resultHandler: { (result, error) in
+            Utils.appSyncClient?.perform(mutation: CreateConvoMutation.init(input: CreateConversationInput.init(name: name, members: members)), queue: DispatchQueue.main, resultHandler: { (result, error) in
                    if let error = error {
                        resolver.reject(error)
                    } else {

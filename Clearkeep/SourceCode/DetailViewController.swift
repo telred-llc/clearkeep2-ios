@@ -121,23 +121,23 @@ class DetailViewController: BaseViewController {
         
         let date = Date.init()
         dateFormatter.dateFormat = Constant.globalDateFormat
-        let createdAt = dateFormatter.string(from: date)
-        let id = createdAt + "_" + UUID().uuidString
+//        let createdAt = dateFormatter.string(from: date)
+//        let id = createdAt + "_" + UUID().uuidString
+//id: id, authorId: meData?.id, content: content, messageConversationId: conversationId, createdAt: createdAt, updatedAt: nil
+//        let tempMessage = GetConvoQuery.Data.GetConvo.Message.Item(id: id, author: , authorId: meData?.id, content: content, conversation: <#T##GetConvoQuery.Data.GetConvo.Message.Item.Conversation#>, messageConversationId: conversationId, createdAt: createdAt, updatedAt: nil)
+//        self.addNewMessage(message: tempMessage)
+//        self.inputTextView.text = ""
 
-        let tempMessage = GetConvoQuery.Data.GetConvo.Message.Item.init(id: id, authorId: meData?.id, content: content, messageConversationId: conversationId, createdAt: createdAt, updatedAt: nil)
-        self.addNewMessage(message: tempMessage)
-        self.inputTextView.text = ""
-
-        let createMessageMutaion = CreateMessageMutation.init(input: CreateMessageInput.init(id: id, authorId: meData?.id, content: content, messageConversationId: conversationId, createdAt: createdAt, updatedAt: nil))
-        appSyncClient?.perform(mutation: createMessageMutaion, resultHandler: { (result, error) in
-            if let result = result {
-                if let snapshot = result.data?.createMessage?.snapshot {
-                    self.addNewMessage(message: GetConvoQuery.Data.GetConvo.Message.Item.init(snapshot: snapshot))
-                }
-            } else {
-                self.showToast(message: "Can't send the message")
-            }
-        })
+//        let createMessageMutaion = CreateMessageMutation.init(input: CreateMessageInput.init(id: id, authorId: meData?.id, content: content, messageConversationId: conversationId, createdAt: createdAt, updatedAt: nil))
+//        appSyncClient?.perform(mutation: createMessageMutaion, resultHandler: { (result, error) in
+//            if let result = result {
+//                if let snapshot = result.data?.createMessage?.snapshot {
+//                    self.addNewMessage(message: GetConvoQuery.Data.GetConvo.Message.Item.init(snapshot: snapshot))
+//                }
+//            } else {
+//                self.showToast(message: "Can't send the message")
+//            }
+//        })
     }
     
     func addNewMessage(message: GetConvoQuery.Data.GetConvo.Message.Item) {

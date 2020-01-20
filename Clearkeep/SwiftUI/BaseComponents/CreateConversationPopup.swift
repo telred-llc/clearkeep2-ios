@@ -73,7 +73,7 @@ struct CreateConversationPopup: View {
         }
         .padding()
         .frame(maxWidth: 300)
-        .background(Color.white)
+        .background(Color("background_view"))
         .cornerRadius(10)
         .offset(y: -self.keyboard.currentHeight/2)
         .animation(.default)
