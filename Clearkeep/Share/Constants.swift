@@ -10,7 +10,7 @@ import Foundation
 
 struct Constant {
     
-    static let globalDateFormat = "yyyy-MM-dd'T'HH:mm:ss.sssZ"
+    static let globalDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     
     static let countries = ["AF": ["Afghanistan","93"],
                      "AX": ["Aland Islands","358"],
