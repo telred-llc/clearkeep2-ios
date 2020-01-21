@@ -53,7 +53,7 @@ struct TabbarScreen: View {
                     .frame(minHeight: 49, maxHeight: 49)
                 }
             }
-        }.background(Color.red)
+        }
         
     }
     

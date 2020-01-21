@@ -14,62 +14,60 @@ struct LoginScreen: View {
     
     var body: some View {
         NavigationView {
-            VStack(spacing: 16) {
-                //MARK: - NavigationLink auto
-                NavigationLink(destination: ConfirmationScreen(type: $viewModel.type.wrappedValue, username: viewModel.username), isActive: $viewModel.isShowConfirm) {
-                    Text("")
-                }
-                Spacer()
-                WelcomeText()
-                LogoImage().padding(.bottom, 20)
-                FlatTextField(title: "Username", text: $viewModel.username)
-                    .modifier(TextFieldLoginModifier())
-                
-                FlatTextField(title: "Password", text: $viewModel.password, isSecure: true)
-                    .modifier(TextFieldLoginModifier())
-                
-                Text("LOGIN")
-                    .modifier(ButtonLoginModifier())
-                    .onTapGesture {
-                        //TODO: handle login here
-                        self.viewModel.login()
-                }
-                
-                HStack(spacing: 4) {
-                    Text("Dou you have an account?")
-                        .font(Font.system(size: 14, weight: .regular))
-                        .foregroundColor(Color("gray"))
-                    Button(action: {
-                        
-                    }, label: {
-                        Text("Signup Now")
+            ScrollView {
+                VStack(spacing: 16) {
+                    //MARK: - NavigationLink auto
+                    NavigationLink(destination: ConfirmationScreen(type: $viewModel.type.wrappedValue, username: viewModel.username), isActive: $viewModel.isShowConfirm) {
+                        Text("")
+                    }
+                    LogoImage().padding(.bottom, 20)
+                    FlatTextField(title: "Username", text: $viewModel.username)
+                        .modifier(TextFieldLoginModifier())
+                    
+                    FlatTextField(title: "Password", text: $viewModel.password, isSecure: true)
+                        .modifier(TextFieldLoginModifier())
+                    
+                    Text("LOGIN")
+                        .modifier(ButtonLoginModifier())
+                        .onTapGesture {
+                            //TODO: handle login here
+                            self.viewModel.login()
+                    }
+                    
+                    HStack(spacing: 4) {
+                        Text("Dou you have an account?")
+                            .font(Font.system(size: 14, weight: .regular))
+                            .foregroundColor(Color("gray"))
+                        Button(action: {
+                            
+                        }, label: {
+                            Text("Signup Now")
+                                .font(Font.system(size: 15, weight: .bold))
+                                .foregroundColor(Color("gray"))
+                                .padding(.vertical, 16)
+                                .onTapGesture {
+                                    Switcher.changeRootView(view: UIHostingController(rootView: RegisterScreen()))
+                            }
+                        })
+                    }
+                    
+                    NavigationLink(destination: ForgotPasswordScreen()) {
+                        Text("Forgot pasword")
                             .font(Font.system(size: 15, weight: .bold))
                             .foregroundColor(Color("gray"))
+                            .padding(.horizontal, 30)
                             .padding(.vertical, 16)
-                            .onTapGesture {
-                                Switcher.changeRootView(view: UIHostingController(rootView: RegisterScreen()))
-                        }
-                    })
-                }
-                Button(action: {
-                    // Move to forgot
-                } , label: {
-                    Text("Forgot pasword")
-                        .font(Font.system(size: 15, weight: .bold))
-                        .foregroundColor(Color("gray"))
-                        .padding(.horizontal, 30)
-                        .padding(.vertical, 16)
+                    }
                     
-                })
-                Spacer()
-
+                    Spacer()
+                    
+                }
+                .navigationBarTitle("Login", displayMode: .inline)
+                .padding(30)
+                .background(Color("background_view"))
+                .edgesIgnoringSafeArea(.vertical)
             }
-            .padding(30)
-            .background(Color("background_view"))
-            .edgesIgnoringSafeArea(.vertical)
-            
-        }.navigationBarTitle("")
-        .navigationBarHidden(true)
+        }
         
     }
 }

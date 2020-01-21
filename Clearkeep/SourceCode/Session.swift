@@ -30,4 +30,9 @@ class Session {
             UserDefaults.standard.synchronize()
         }
     }
+    
+    func logout() {
+        Session.shared.meData = nil
+        Session.shared.lastCredential = nil
+    }
 }

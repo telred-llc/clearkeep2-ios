@@ -74,7 +74,7 @@ struct DetailConversationScreen: View {
             Image("back")
                 .scaledToFit()
                 .foregroundColor(Color("title_color"))
-                .frame(width: 40, height: 40)
+                .frame(width: 50, height: 50)
                 .onTapGesture {
                     self.presentationMode.wrappedValue.dismiss()
                     

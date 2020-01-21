@@ -56,6 +56,8 @@
 		B2701F8123CC759E001DC21C /* ContactScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2701F8023CC759E001DC21C /* ContactScreen.swift */; };
 		B2701F8323CC75A9001DC21C /* ProfileScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2701F8223CC75A9001DC21C /* ProfileScreen.swift */; };
 		B2701F8523CC7977001DC21C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2701F8423CC7977001DC21C /* Extension.swift */; };
+		B283DEFB23D69F7D0045690D /* ForgotPasswordScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B283DEFA23D69F7D0045690D /* ForgotPasswordScreen.swift */; };
+		B283DEFE23D6A2D20045690D /* ConfirmForgotPassScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B283DEFD23D6A2D20045690D /* ConfirmForgotPassScreen.swift */; };
 		B2B226FA23D1A1BC00420C8E /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */; };
 		B2BA299223D0663A005E79EA /* GrowTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299123D06639005E79EA /* GrowTextView.swift */; };
 		B2BA299423D06999005E79EA /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299323D06999005E79EA /* SplashScreen.swift */; };
@@ -121,6 +123,8 @@
 		B2701F8023CC759E001DC21C /* ContactScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactScreen.swift; sourceTree = "<group>"; };
 		B2701F8223CC75A9001DC21C /* ProfileScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileScreen.swift; sourceTree = "<group>"; };
 		B2701F8423CC7977001DC21C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
+		B283DEFA23D69F7D0045690D /* ForgotPasswordScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordScreen.swift; sourceTree = "<group>"; };
+		B283DEFD23D6A2D20045690D /* ConfirmForgotPassScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmForgotPassScreen.swift; sourceTree = "<group>"; };
 		B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		B2BA299123D06639005E79EA /* GrowTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrowTextView.swift; sourceTree = "<group>"; };
 		B2BA299323D06999005E79EA /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashScreen.swift; path = Clearkeep/SwiftUI/Screens/Login/SplashScreen.swift; sourceTree = SOURCE_ROOT; };
@@ -309,6 +313,7 @@
 		B22E236823CC47A000D63F77 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B283DEF923D69F640045690D /* ForgotPassword */,
 				B226ABDF23CE21DB00BEC69C /* Confirm */,
 				B26A3D6A23CDB84B00FAAC0D /* Register */,
 				B26A3D6123CD95E000FAAC0D /* Detail */,
@@ -430,6 +435,23 @@
 				B2701F8223CC75A9001DC21C /* ProfileScreen.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		B283DEF923D69F640045690D /* ForgotPassword */ = {
+			isa = PBXGroup;
+			children = (
+				B283DEFC23D6A2BC0045690D /* ConfirmForgot */,
+				B283DEFA23D69F7D0045690D /* ForgotPasswordScreen.swift */,
+			);
+			path = ForgotPassword;
+			sourceTree = "<group>";
+		};
+		B283DEFC23D6A2BC0045690D /* ConfirmForgot */ = {
+			isa = PBXGroup;
+			children = (
+				B283DEFD23D6A2D20045690D /* ConfirmForgotPassScreen.swift */,
+			);
+			path = ConfirmForgot;
 			sourceTree = "<group>";
 		};
 		B2BA299B23D06CDC005E79EA /* viewModel */ = {
@@ -597,12 +619,14 @@
 				8562186821E748FE004D53A7 /* MasterViewController.swift in Sources */,
 				B26A3D7423CDC76000FAAC0D /* MessageUtils.swift in Sources */,
 				AAB3DBC121F16B0C00B22A78 /* ForgotPasswordViewControlller.swift in Sources */,
+				B283DEFE23D6A2D20045690D /* ConfirmForgotPassScreen.swift in Sources */,
 				B2C935D823CD6C6B00202204 /* ChatConversationItemView.swift in Sources */,
 				B26A3D6E23CDB87C00FAAC0D /* RegisterViewModel.swift in Sources */,
 				B22E237623CC4D3100D63F77 /* ButtonModifier.swift in Sources */,
 				855DE38421EC893000567D53 /* DetailViewController.swift in Sources */,
 				856DC99421F01C09003BEAAD /* BaseTableViewCell.swift in Sources */,
 				B26A3D6C23CDB86800FAAC0D /* RegisterScreen.swift in Sources */,
+				B283DEFB23D69F7D0045690D /* ForgotPasswordScreen.swift in Sources */,
 				B209961B23D5555500098678 /* Date+Extension.swift in Sources */,
 				B2BA299223D0663A005E79EA /* GrowTextView.swift in Sources */,
 				B26A3D6823CDADC000FAAC0D /* DetailConversationViewModel.swift in Sources */,
