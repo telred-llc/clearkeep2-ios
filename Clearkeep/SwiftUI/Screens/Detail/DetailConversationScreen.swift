@@ -14,7 +14,7 @@ struct DetailConversationScreen: View {
     @ObservedObject private var viewModel = DetailConversationViewModel()
     @State private var message = ""
     @State var conversation: ConversationModel?
-    @State private var heightTF: CGFloat = 35
+    @State private var heightTF: CGFloat = 45
     
     var body: some View {
         VStack {
@@ -28,11 +28,12 @@ struct DetailConversationScreen: View {
             
             HStack(alignment: .bottom, spacing: 0) {
                 GrowTextView(value: $message, placeholder: "Type a message", height: $heightTF)
-                    .font(.system(size: 13, weight: .medium))
-                    .padding(.horizontal, 8)
-                    .frame(minHeight: 35, maxHeight: heightTF)
+                    .font(.system(size: 15, weight: .medium))
+                    .padding(.top, 3)
+                    .padding(.horizontal, 16)
+                    .frame(minHeight: 45, maxHeight: heightTF)
                     .background(Color("background_textfield"))
-                    .cornerRadius(17.5)
+                    .cornerRadius(22.5)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 8)
                 
@@ -40,10 +41,10 @@ struct DetailConversationScreen: View {
                 Text("SEND")
                     .font(.system(size: 14, weight: .medium))
                     .foregroundColor(.white)
-                    .frame(maxHeight: 35)
+                    .frame(maxHeight: 45)
                     .padding(.horizontal, 16)
                     .background(Color("cyanColor"))
-                    .cornerRadius(17.5)
+                    .cornerRadius(22.5)
                     .padding(.trailing, 8)
                     .padding(.vertical, 8)
                     .onTapGesture {
@@ -52,7 +53,7 @@ struct DetailConversationScreen: View {
                 }
                 
             }
-            .frame(minHeight: 50)
+            .frame(minHeight: 60)
             .background(Color.clear)
         }
         .onAppear() {

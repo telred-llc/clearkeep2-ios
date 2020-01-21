@@ -15,8 +15,12 @@ import AWSAppSync
 typealias UserModel = ListUsersQuery.Data.ListUser.Item
 class UserViewModel: ObservableObject {
     @Published var users: [UserModel] = []
+    @Published var isSuccess = false
+
     private var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
     var discardAllUsers: Cancellable?
+    var modelDetail: ConversationModel?
+    var creatingConversationLink: CreateConvoLinkMutation.Data.CreateConvoLink?
     typealias CreateConvoResult = (CreateConvoMutation.Data.CreateConvo, CreateConvoLinkMutation.Data.CreateConvoLink?)
 
     func getAllUser(animated: Bool = true) {

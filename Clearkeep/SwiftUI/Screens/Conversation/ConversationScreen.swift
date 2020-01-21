@@ -13,11 +13,22 @@ struct ConversationScreen: View {
     @ObservedObject private var viewModel = ConversationViewModel()
     @State private var isShowPopup = false
     @State private var contentOffset: CGFloat = 0
+    @State private var showDetail = false
+    @State private var creatingConversationLink: CreateConvoLinkMutation.Data.CreateConvoLink?
+    
+    init() {
+        self.viewModel.subscribeNewConvLink(userId: Session.shared.meData?.id ?? "")
+    }
     var body: some View {
         let isNoConversation = viewModel.conversations.isEmpty
+        
         return VStack {
+            
+            NavigationLink(destination: DetailConversationScreen(conversation: viewModel.newConvModel), isActive: $viewModel.showDetail) {
+                Text("")
+            }
             GeometryReader { geometry in
-                CustomScrollView(isNoConversation ? [] : .vertical, showIndicators: true, contentOffset: self.$contentOffset) {
+                ScrollView(isNoConversation ? [] : .vertical, showsIndicators: true) {
                     if isNoConversation {
                         Image("empty_ic")
                             .resizable()
@@ -37,10 +48,8 @@ struct ConversationScreen: View {
         }
         .navigationBarItems(trailing: Text(""))
         .navigationBarTitle(Text("Conversations"), displayMode: .inline)
-        .onAppear() {
-            self.viewModel.subscribeNewConvLink(userId: Session.shared.meData?.id ?? "")
-        }
     }
+    
 }
 
 struct ConversationScreen_Previews: PreviewProvider {

@@ -18,13 +18,15 @@ struct GrowTextView: UIViewRepresentable {
         let growingTV = GrowingTextView()
         growingTV.placeholder = placeholder
         growingTV.maxHeight = 150
-        growingTV.minHeight = 35
+        growingTV.minHeight = 45
         growingTV.backgroundColor = .clear
+        growingTV.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         growingTV.delegate = context.coordinator
         return growingTV
     }
     
     func updateUIView(_ uiView: GrowingTextView, context: Context) {
+        uiView.layoutIfNeeded()
         uiView.text = value
     }
     

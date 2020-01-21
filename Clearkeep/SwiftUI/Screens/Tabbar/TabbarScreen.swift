@@ -32,7 +32,8 @@ struct TabbarScreen: View {
     private let conversationScreen = ConversationScreen()
     private let contactScreen = ContactScreen()
     private let profileScreen = ProfileScreen()
-
+    
+    
     var body: some View {
         NavigationView {
             ZStack {
@@ -76,7 +77,7 @@ struct TabbarScreen: View {
     }
     
     private func renderPageView() -> some View {
-       
+        
         return VStack {
             if selectedIndex == 0 {
                 conversationScreen

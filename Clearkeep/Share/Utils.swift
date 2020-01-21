@@ -10,9 +10,9 @@ import Foundation
 import AWSAppSync
 import AWSMobileClient
 import NVActivityIndicatorView
+import SwiftUI
 
 class Utils {
-    
     static var appSyncClient: AWSAppSyncClient? {
         get {
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
