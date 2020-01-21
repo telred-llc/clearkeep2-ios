@@ -42,7 +42,6 @@ struct ContactScreen: View {
                     }
                 }
             }
-            
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarTitle(Text("Users"), displayMode: .inline)

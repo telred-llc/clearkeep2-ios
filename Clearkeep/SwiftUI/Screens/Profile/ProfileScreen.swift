@@ -10,12 +10,27 @@ import UIKit
 import SwiftUI
 import AWSMobileClient
 struct ProfileScreen: View {
+    private let meData: GetUserQuery.Data.GetUser? = Session.shared.meData
     
     var body: some View {
-        VStack {
-            Text("HELO Profile")
+        ScrollView {
+            VStack {
+                Spacer()
+                ZStack {
+                    Text("V")
+                        .font(.system(size: 30, weight: .bold))
+                }
+                .frame(minWidth: 100,minHeight: 100)
+                .background(Color.blue)
+                .clipShape(Circle())
+                
+                Text(meData?.username ?? "")
+                    .font(.system(size: 30, weight: .bold))
+                    .padding(.top, 16)
+
+            }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
         }
-        .frame(maxWidth: .infinity, maxHeight: .infinity)
         .navigationBarTitle(Text("Profile"), displayMode: .inline)
         .navigationBarItems(trailing:
             Text("Logout")

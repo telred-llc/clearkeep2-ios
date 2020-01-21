@@ -12,7 +12,6 @@ import AWSAppSync
 struct ConversationScreen: View {
     @ObservedObject private var viewModel = ConversationViewModel()
     @State private var isShowPopup = false
-    @State private var contentOffset: CGFloat = 0
     @State private var showDetail = false
     @State private var creatingConversationLink: CreateConvoLinkMutation.Data.CreateConvoLink?
     
@@ -25,7 +24,7 @@ struct ConversationScreen: View {
         return VStack {
             
             NavigationLink(destination: DetailConversationScreen(conversation: viewModel.newConvModel), isActive: $viewModel.showDetail) {
-                Text("")
+                Text("").frame(maxHeight: 0)
             }
             GeometryReader { geometry in
                 ScrollView(isNoConversation ? [] : .vertical, showsIndicators: true) {

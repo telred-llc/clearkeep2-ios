@@ -23,7 +23,7 @@ struct MessageItemView: View {
                     .clipShape(Circle())
                 
                 VStack(alignment: .leading) {
-                    Text("\(model?.authorId ?? "Unknown"), \(model?.updatedAt?.convertDateFormater(to: "HH:mm") ?? "")")
+                    Text("\(model?.authorId ?? "Unknown"), \((model?.createdAt ?? "").getTimeMessage())")
                         .lineLimit(1)
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(.gray)
@@ -40,7 +40,7 @@ struct MessageItemView: View {
             } else {
                 Spacer()
                 VStack(alignment: .trailing) {
-                    Text(model?.updatedAt?.convertDateFormater(to: "HH:mm") ?? "")
+                    Text((model?.createdAt ?? "").getTimeMessage())
                         .font(.system(size: 12, weight: .medium))
                         .foregroundColor(.gray)
                         .lineLimit(1)

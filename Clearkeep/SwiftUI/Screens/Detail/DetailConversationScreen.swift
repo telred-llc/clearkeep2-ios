@@ -8,6 +8,7 @@
 
 import SwiftUI
 import AWSAppSync
+import SwiftDate
 
 struct DetailConversationScreen: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
@@ -70,7 +71,8 @@ struct DetailConversationScreen: View {
     
     
     private func leadingView() -> some View {
-        HStack {
+
+        return HStack {
             Image("back")
                 .scaledToFit()
                 .foregroundColor(Color("title_color"))
@@ -79,7 +81,7 @@ struct DetailConversationScreen: View {
                     self.presentationMode.wrappedValue.dismiss()
                     
             }
-            VStack(alignment: .leading) {
+            VStack(alignment: .leading, spacing: 3) {
                 Text(conversation?.conversation.name ?? "").font(.system(size: 16, weight: .bold))
             }
         }

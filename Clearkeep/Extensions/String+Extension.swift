@@ -10,27 +10,32 @@ import Foundation
 import UIKit
 
 extension String {
-
-    func toDate() -> Date? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = Constant.globalDateFormat
-        return dateFormatter.date(from: self)
-    }
     
-    func convertDateFormater(to format: String) -> String? {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = format
-        guard let date = self.toDate() else {
-            return "19:00 PM"
+    func changeDateFormat(fromFormat: String, toFormat: String) -> String? {
+        let inputDateFormatter = DateFormatter()
+        inputDateFormatter.dateFormat = fromFormat
+        guard let date = inputDateFormatter.date(from: self) else {
+            return "N/A"
         }
-        return  dateFormatter.string(from: date)
         
+        let outputDateFormatter = DateFormatter()
+        outputDateFormatter.dateFormat = toFormat
+        return outputDateFormatter.string(from: date)
     }
     
-    func getTimeMessage() -> String? {
-        guard let messTime = self.toDate() else {
-            return nil
+    func getTimeConversation() -> String {
+        let mess = self.changeDateFormat(fromFormat: Constant.globalDateFormat, toFormat: "yyyy/MM/dd hh:mm a")
+        guard let messUnwrap = mess else {
+            return "N/A"
         }
-        return "19:00 AM"
+        return messUnwrap
+    }
+    
+    func getTimeMessage() -> String {
+        let mess = self.changeDateFormat(fromFormat: Constant.globalDateFormat, toFormat: "hh:mm a")
+        guard let messUnwrap = mess else {
+            return "N/A"
+        }
+        return messUnwrap
     }
 }

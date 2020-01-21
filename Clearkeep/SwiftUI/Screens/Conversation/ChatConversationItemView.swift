@@ -11,21 +11,20 @@ import SwiftDate
 
 struct ChatConversationItemView: View {
     @State var model: ConversationModel?
-       
+    
     var body: some View {
-        VStack(alignment: .leading, spacing: 0) {
+        let first = String(model?.conversation.name.prefix(1) ?? "").uppercased()
+        return VStack(alignment: .leading, spacing: 0) {
             HStack(alignment: .center,spacing: 8) {
-                Image("img-1")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(minWidth: 35, maxWidth: 35, minHeight: 35,maxHeight: 35, alignment: .center)
-                    .clipShape(Circle())
-                    .overlay(Circle()
-                    .fill(Color.green)
-                    .frame(maxWidth: 8, maxHeight: 8)
-                    .offset(x: -2, y: -2)
-                    , alignment: .bottomTrailing)
-                    .padding(.leading, 8)
+                ZStack {
+                    Text(first)
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.white)
+                }
+                .frame(minWidth: 35, maxWidth: 35, minHeight: 35,maxHeight: 35, alignment: .center)
+                .background(Color(UIColor(rgb: 0x009999)))
+                .clipShape(Circle())
+                .padding(.leading, 8)
                 
                 VStack(alignment: .leading, spacing: 4) {
                     Text(model?.conversation.name ?? "")
@@ -33,16 +32,16 @@ struct ChatConversationItemView: View {
                         .foregroundColor(Color("title_color"))
                 }
                 Spacer()
-                Text(model?.updatedAt?.toDate(Constant.globalDateFormat, region: .local)?.toString() ?? "")
+                Text((model?.conversation.createdAt ?? "").getTimeConversation())
                     .foregroundColor(Color.gray.opacity(0.6))
                     .font(Font.system(size: 12, weight: .regular))
                     .padding(.trailing, 16)
             }
-        .frame(maxHeight: 50)
+            .frame(maxHeight: 50)
             .padding(.vertical, 8)
             .background(Color("message_view"))
             .cornerRadius(25)
-            .padding(.horizontal, 8)
+            .padding(8)
         }
     }
     
