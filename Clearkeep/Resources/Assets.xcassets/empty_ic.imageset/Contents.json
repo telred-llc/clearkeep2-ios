@@ -18,13 +18,14 @@
     },
     {
       "idiom" : "universal",
-      "scale" : "1x",
+      "filename" : "empty_dark.png",
       "appearances" : [
         {
           "appearance" : "luminosity",
           "value" : "dark"
         }
-      ]
+      ],
+      "scale" : "1x"
     },
     {
       "idiom" : "universal",

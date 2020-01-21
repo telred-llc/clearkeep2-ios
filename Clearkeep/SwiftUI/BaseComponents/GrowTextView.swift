@@ -18,7 +18,7 @@ struct GrowTextView: UIViewRepresentable {
         let growingTV = GrowingTextView()
         growingTV.placeholder = placeholder
         growingTV.maxHeight = 150
-        growingTV.minHeight = 45
+        growingTV.minHeight = 40
         growingTV.backgroundColor = .clear
         growingTV.font = UIFont.systemFont(ofSize: 15, weight: .medium)
         growingTV.delegate = context.coordinator

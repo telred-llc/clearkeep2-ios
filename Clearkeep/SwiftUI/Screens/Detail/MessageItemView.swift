@@ -13,14 +13,18 @@ struct MessageItemView: View {
     
     var body: some View {
         let isOwner = model?.authorId == Session.shared.meData?.id
+        let firstCharacter = String(model?.author?.username.prefix(1) ?? "").uppercased()
         return HStack(alignment: .top) {
             
             if !isOwner {
-                Image("avatar")
-                    .resizable()
-                    .scaledToFill()
-                    .frame(maxWidth: 30, maxHeight: 30)
-                    .clipShape(Circle())
+                ZStack {
+                    Text(firstCharacter)
+                        .font(.system(size: 14, weight: .bold))
+                        .foregroundColor(.white)
+                }
+                .frame(minWidth: 30, maxWidth: 30, minHeight: 30,maxHeight: 30, alignment: .center)
+                .background(Color(UIColor(rgb: 0x009999)))
+                .clipShape(Circle())
                 
                 VStack(alignment: .leading) {
                     Text("\(model?.authorId ?? "Unknown"), \((model?.createdAt ?? "").getTimeMessage())")

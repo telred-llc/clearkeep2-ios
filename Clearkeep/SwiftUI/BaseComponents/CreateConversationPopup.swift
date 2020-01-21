@@ -79,6 +79,6 @@ struct CreateConversationPopup: View {
         .background(Color("color_popup"))
         .cornerRadius(10)
         .offset(y: -self.keyboard.currentHeight/2)
-        .animation(self.isAnima ? nil : .interpolatingSpring(mass: 1.0,stiffness: 100.0,damping: 10,initialVelocity: 0))
+        .animation(.default)
     }
 }
