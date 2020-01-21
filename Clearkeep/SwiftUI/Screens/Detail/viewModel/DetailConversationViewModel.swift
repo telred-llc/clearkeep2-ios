@@ -48,6 +48,11 @@ class DetailConversationViewModel: ObservableObject {
         self.conversationData?.messages?.items?.removeAll()
     }
     
+    func loadMore() {
+        let copyData = self.conversationData?.messages?.items ?? []
+        self.conversationData?.messages?.items?.append(contentsOf: copyData)
+    }
+    
     func fetchConversation(conversationId: String) -> PromiseKit.Promise<GetConvoQuery.Data.GetConvo?> {
         return PromiseKit.Promise<GetConvoQuery.Data.GetConvo?> { (resolver) in
             

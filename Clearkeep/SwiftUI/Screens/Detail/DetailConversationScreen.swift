@@ -15,13 +15,20 @@ struct DetailConversationScreen: View {
     @ObservedObject private var viewModel = DetailConversationViewModel()
     @State private var message = ""
     @State var conversation: ConversationModel?
-    @State private var heightTF: CGFloat = 45
+    @State private var heightTF: CGFloat = 40
     
     var body: some View {
-        VStack {
-            List((viewModel.conversationData?.messages?.items?.reversed())?.compactMap({$0}) ?? [], id: \.id) { (message: MessageModel) in
+        let datas = viewModel.conversationData?.messages?.items?.reversed().compactMap({$0}) ?? []
+        return VStack {
+            List(datas.enumerated().map({ $0 }), id: \.1.id) { (index: Int, message: MessageModel) in
                 MessageItemView(model: message)
                     .scaleEffect(x: 1, y: -1)
+                .onAppear(perform: {
+                    if index == datas.count - 5 {
+                        // Loadmore here
+                        self.viewModel.loadMore()
+                    }
+                })
                 
             }
             .scaleEffect(x: 1, y: -1)
@@ -32,9 +39,9 @@ struct DetailConversationScreen: View {
                     .font(.system(size: 15, weight: .medium))
                     .padding(.top, 3)
                     .padding(.horizontal, 16)
-                    .frame(minHeight: 45, maxHeight: heightTF)
+                    .frame(minHeight: 40, maxHeight: heightTF)
                     .background(Color("background_textfield"))
-                    .cornerRadius(22.5)
+                    .cornerRadius(20)
                     .padding(.horizontal, 8)
                     .padding(.vertical, 8)
                 
@@ -42,10 +49,10 @@ struct DetailConversationScreen: View {
                 Text("SEND")
                     .font(.system(size: 14, weight: .medium))
                     .foregroundColor(.white)
-                    .frame(maxHeight: 45)
+                    .frame(maxHeight: 40)
                     .padding(.horizontal, 16)
                     .background(Color("cyanColor"))
-                    .cornerRadius(22.5)
+                    .cornerRadius(20)
                     .padding(.trailing, 8)
                     .padding(.vertical, 8)
                     .onTapGesture {
