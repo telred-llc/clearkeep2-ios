@@ -93,7 +93,7 @@ query ListUsers(
 query GetConvo($id: ID!) {
   getConvo(id: $id) {
     id
-    messages(limit: 1000) {
+    messages(limit: 30) {
       items {
         id
         author {
@@ -144,5 +144,112 @@ query GetConvo($id: ID!) {
     members
     createdAt
     updatedAt
+  }
+}
+query GetMessage($id: ID!) {
+  getMessage(id: $id) {
+    id
+    author {
+      id
+      username
+      conversations {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      createdAt
+      updatedAt
+    }
+    authorId
+    content
+    conversation {
+      id
+      messages {
+        items {
+          id
+          authorId
+          content
+          messageConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      associated {
+        items {
+          id
+          convoLinkUserId
+          convoLinkConversationId
+          createdAt
+          updatedAt
+        }
+        nextToken
+      }
+      name
+      members
+      createdAt
+      updatedAt
+    }
+    messageConversationId
+    createdAt
+    updatedAt
+  }
+}
+query ListMessages(
+  $filter: ModelMessageFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listMessages(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      author {
+        id
+        username
+        conversations {
+          nextToken
+        }
+        messages {
+          nextToken
+        }
+        createdAt
+        updatedAt
+      }
+      authorId
+      content
+      conversation {
+        id
+        messages {
+          nextToken
+        }
+        associated {
+          nextToken
+        }
+        name
+        members
+        createdAt
+        updatedAt
+      }
+      messageConversationId
+      createdAt
+      updatedAt
+    }
+    nextToken
   }
 }

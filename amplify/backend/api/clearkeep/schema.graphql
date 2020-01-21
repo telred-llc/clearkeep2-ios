@@ -26,7 +26,7 @@ type Conversation
 }
 
 type Message 
-  @model(subscriptions: null, queries: null) {
+  @model(subscriptions: null, queries: { get: "getMessage", list: "listMessages" }) {
   id: ID!
   author: User @connection(name: "UserMessages", keyField: "authorId")
   authorId: String
