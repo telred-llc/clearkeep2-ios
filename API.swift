@@ -8254,7 +8254,7 @@ public final class UpdateConvoLinkMutation: GraphQLMutation {
 
 public final class GetUserQuery: GraphQLQuery {
   public static let operationString =
-    "query GetUser($id: ID!) {\n  getUser(id: $id) {\n    __typename\n    id\n    username\n    conversations {\n      __typename\n      items {\n        __typename\n        id\n        user {\n          __typename\n          id\n          username\n          createdAt\n          updatedAt\n        }\n        convoLinkUserId\n        conversation {\n          __typename\n          id\n          name\n          members\n          createdAt\n          updatedAt\n        }\n        convoLinkConversationId\n        createdAt\n        updatedAt\n      }\n      nextToken\n    }\n    messages {\n      __typename\n      items {\n        __typename\n        id\n        author {\n          __typename\n          id\n          username\n          createdAt\n          updatedAt\n        }\n        authorId\n        content\n        conversation {\n          __typename\n          id\n          name\n          members\n          createdAt\n          updatedAt\n        }\n        messageConversationId\n        createdAt\n        updatedAt\n      }\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
+    "query GetUser($id: ID!) {\n  getUser(id: $id) {\n    __typename\n    id\n    username\n    conversations(limit: 1000) {\n      __typename\n      items {\n        __typename\n        id\n        user {\n          __typename\n          id\n          username\n          createdAt\n          updatedAt\n        }\n        convoLinkUserId\n        conversation {\n          __typename\n          id\n          name\n          members\n          createdAt\n          updatedAt\n        }\n        convoLinkConversationId\n        createdAt\n        updatedAt\n      }\n      nextToken\n    }\n    messages {\n      __typename\n      items {\n        __typename\n        id\n        author {\n          __typename\n          id\n          username\n          createdAt\n          updatedAt\n        }\n        authorId\n        content\n        conversation {\n          __typename\n          id\n          name\n          members\n          createdAt\n          updatedAt\n        }\n        messageConversationId\n        createdAt\n        updatedAt\n      }\n      nextToken\n    }\n    createdAt\n    updatedAt\n  }\n}"
 
   public var id: GraphQLID
 
@@ -8299,7 +8299,7 @@ public final class GetUserQuery: GraphQLQuery {
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
         GraphQLField("username", type: .nonNull(.scalar(String.self))),
-        GraphQLField("conversations", type: .object(Conversation.selections)),
+        GraphQLField("conversations", arguments: ["limit": 1000], type: .object(Conversation.selections)),
         GraphQLField("messages", type: .object(Message.selections)),
         GraphQLField("createdAt", type: .scalar(String.self)),
         GraphQLField("updatedAt", type: .scalar(String.self)),

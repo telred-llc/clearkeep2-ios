@@ -3,7 +3,7 @@ query GetUser($id: ID!) {
   getUser(id: $id) {
     id
     username
-    conversations {
+    conversations(limit: 1000) {
       items {
         id
         user {
