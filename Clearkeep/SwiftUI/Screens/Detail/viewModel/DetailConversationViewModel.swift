@@ -58,7 +58,7 @@ class DetailConversationViewModel: ObservableObject {
         return PromiseKit.Promise<GetConvoQuery.Data.GetConvo?> { (resolver) in
             
             let query = GetConvoQuery.init(id: conversationId)
-            Utils.appSyncClient?.fetch(query: query, cachePolicy: CachePolicy.returnCacheDataAndFetch, resultHandler: { (result, error) in
+            Utils.appSyncClient?.fetch(query: query, cachePolicy: CachePolicy.fetchIgnoringCacheData, resultHandler: { (result, error) in
                 if let error = error {
                     resolver.reject(error)
                 } else {
