@@ -12,7 +12,7 @@ class Session {
     static let shared = Session()
     
     var meData: GetUserQuery.Data.GetUser?
-    
+    var users: [UserModel]?
     var lastCredential: (String?, String?)? {
         get {
             let username = UserDefaults.standard.value(forKey: "username") as? String

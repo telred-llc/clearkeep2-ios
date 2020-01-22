@@ -58,15 +58,17 @@
 		B2701F8523CC7977001DC21C /* Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2701F8423CC7977001DC21C /* Extension.swift */; };
 		B283DEFB23D69F7D0045690D /* ForgotPasswordScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B283DEFA23D69F7D0045690D /* ForgotPasswordScreen.swift */; };
 		B283DEFE23D6A2D20045690D /* ConfirmForgotPassScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B283DEFD23D6A2D20045690D /* ConfirmForgotPassScreen.swift */; };
+		B284350323D80067008CC363 /* UserItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B284350123D80067008CC363 /* UserItemView.swift */; };
 		B2B226FA23D1A1BC00420C8E /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */; };
 		B2BA299223D0663A005E79EA /* GrowTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299123D06639005E79EA /* GrowTextView.swift */; };
 		B2BA299423D06999005E79EA /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299323D06999005E79EA /* SplashScreen.swift */; };
 		B2BA299823D06B57005E79EA /* CreateConversationPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299723D06B57005E79EA /* CreateConversationPopup.swift */; };
 		B2BA299A23D06B6F005E79EA /* ConversationScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299923D06B6F005E79EA /* ConversationScreen.swift */; };
-		B2BA299D23D06CEC005E79EA /* UserViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299C23D06CEC005E79EA /* UserViewModel.swift */; };
-		B2BA299F23D07108005E79EA /* UserItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299E23D07108005E79EA /* UserItemView.swift */; };
+		B2BA299D23D06CEC005E79EA /* ContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299C23D06CEC005E79EA /* ContactViewModel.swift */; };
 		B2C935D823CD6C6B00202204 /* ChatConversationItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C935D723CD6C6B00202204 /* ChatConversationItemView.swift */; };
 		B2C935DA23CD6CB500202204 /* ConversationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2C935D923CD6CB500202204 /* ConversationViewModel.swift */; };
+		B2CC719123D7EEFF00163620 /* ListContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CC719023D7EEFF00163620 /* ListContactView.swift */; };
+		B2CC719423D7EF3A00163620 /* ListContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CC719323D7EF3A00163620 /* ListContactViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -125,15 +127,17 @@
 		B2701F8423CC7977001DC21C /* Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension.swift; sourceTree = "<group>"; };
 		B283DEFA23D69F7D0045690D /* ForgotPasswordScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordScreen.swift; sourceTree = "<group>"; };
 		B283DEFD23D6A2D20045690D /* ConfirmForgotPassScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmForgotPassScreen.swift; sourceTree = "<group>"; };
+		B284350123D80067008CC363 /* UserItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserItemView.swift; path = Clearkeep/SwiftUI/Screens/Contact/UserItemView.swift; sourceTree = SOURCE_ROOT; };
 		B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		B2BA299123D06639005E79EA /* GrowTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrowTextView.swift; sourceTree = "<group>"; };
 		B2BA299323D06999005E79EA /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashScreen.swift; path = Clearkeep/SwiftUI/Screens/Login/SplashScreen.swift; sourceTree = SOURCE_ROOT; };
 		B2BA299723D06B57005E79EA /* CreateConversationPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateConversationPopup.swift; sourceTree = "<group>"; };
 		B2BA299923D06B6F005E79EA /* ConversationScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationScreen.swift; sourceTree = "<group>"; };
-		B2BA299C23D06CEC005E79EA /* UserViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserViewModel.swift; sourceTree = "<group>"; };
-		B2BA299E23D07108005E79EA /* UserItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserItemView.swift; sourceTree = "<group>"; };
+		B2BA299C23D06CEC005E79EA /* ContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactViewModel.swift; sourceTree = "<group>"; };
 		B2C935D723CD6C6B00202204 /* ChatConversationItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatConversationItemView.swift; sourceTree = "<group>"; };
 		B2C935D923CD6CB500202204 /* ConversationViewModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationViewModel.swift; sourceTree = "<group>"; };
+		B2CC719023D7EEFF00163620 /* ListContactView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListContactView.swift; sourceTree = "<group>"; };
+		B2CC719323D7EF3A00163620 /* ListContactViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListContactViewModel.swift; sourceTree = "<group>"; };
 		BB35FD990B0F992C49100749 /* Pods-Clearkeep.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clearkeep.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Clearkeep/Pods-Clearkeep.debug.xcconfig"; sourceTree = "<group>"; };
 		EF3489B7E4111C5F61185490 /* Pods-Clearkeep.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Clearkeep.release.xcconfig"; path = "Pods/Target Support Files/Pods-Clearkeep/Pods-Clearkeep.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -313,6 +317,7 @@
 		B22E236823CC47A000D63F77 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B2CC718F23D7EEDC00163620 /* AddUser */,
 				B283DEF923D69F640045690D /* ForgotPassword */,
 				B226ABDF23CE21DB00BEC69C /* Confirm */,
 				B26A3D6A23CDB84B00FAAC0D /* Register */,
@@ -424,7 +429,7 @@
 			children = (
 				B2BA299B23D06CDC005E79EA /* viewModel */,
 				B2701F8023CC759E001DC21C /* ContactScreen.swift */,
-				B2BA299E23D07108005E79EA /* UserItemView.swift */,
+				B284350123D80067008CC363 /* UserItemView.swift */,
 			);
 			path = Contact;
 			sourceTree = "<group>";
@@ -457,7 +462,24 @@
 		B2BA299B23D06CDC005E79EA /* viewModel */ = {
 			isa = PBXGroup;
 			children = (
-				B2BA299C23D06CEC005E79EA /* UserViewModel.swift */,
+				B2BA299C23D06CEC005E79EA /* ContactViewModel.swift */,
+			);
+			path = viewModel;
+			sourceTree = "<group>";
+		};
+		B2CC718F23D7EEDC00163620 /* AddUser */ = {
+			isa = PBXGroup;
+			children = (
+				B2CC719223D7EF2C00163620 /* viewModel */,
+				B2CC719023D7EEFF00163620 /* ListContactView.swift */,
+			);
+			path = AddUser;
+			sourceTree = "<group>";
+		};
+		B2CC719223D7EF2C00163620 /* viewModel */ = {
+			isa = PBXGroup;
+			children = (
+				B2CC719323D7EF3A00163620 /* ListContactViewModel.swift */,
 			);
 			path = viewModel;
 			sourceTree = "<group>";
@@ -596,9 +618,8 @@
 				AAB3DBBE21F0407B00B22A78 /* LoadingView.swift in Sources */,
 				8562186221E7387E004D53A7 /* RegisterViewController.swift in Sources */,
 				B2BA299823D06B57005E79EA /* CreateConversationPopup.swift in Sources */,
-				B2BA299D23D06CEC005E79EA /* UserViewModel.swift in Sources */,
+				B2BA299D23D06CEC005E79EA /* ContactViewModel.swift in Sources */,
 				B226ABE123CE21EE00BEC69C /* ConfirmationScreen.swift in Sources */,
-				B2BA299F23D07108005E79EA /* UserItemView.swift in Sources */,
 				B22E237423CC4C9C00D63F77 /* TextFieldModifier.swift in Sources */,
 				B2B226FA23D1A1BC00420C8E /* KeyboardManager.swift in Sources */,
 				B26A3D6323CD95F100FAAC0D /* DetailConversationScreen.swift in Sources */,
@@ -606,6 +627,7 @@
 				856DC99521F01C09003BEAAD /* BaseViewController.swift in Sources */,
 				B2BA299423D06999005E79EA /* SplashScreen.swift in Sources */,
 				B22E236A23CC47B200D63F77 /* LoginScreen.swift in Sources */,
+				B284350323D80067008CC363 /* UserItemView.swift in Sources */,
 				B209961D23D5566200098678 /* String+Extension.swift in Sources */,
 				B2701F8123CC759E001DC21C /* ContactScreen.swift in Sources */,
 				B226ABDE23CE1FEB00BEC69C /* Utils.swift in Sources */,
@@ -613,6 +635,7 @@
 				B2701F8323CC75A9001DC21C /* ProfileScreen.swift in Sources */,
 				8562184A21E706B3004D53A7 /* AppDelegate.swift in Sources */,
 				B226ABE423CE221300BEC69C /* ConfirmationViewModel.swift in Sources */,
+				B2CC719123D7EEFF00163620 /* ListContactView.swift in Sources */,
 				B26A3D7223CDB8CA00FAAC0D /* PhoneCodeModel.swift in Sources */,
 				85E1A19121EDB9A50097DA19 /* Session.swift in Sources */,
 				B22E237923CC5B2900D63F77 /* TabbarScreen.swift in Sources */,
@@ -631,6 +654,7 @@
 				B2BA299223D0663A005E79EA /* GrowTextView.swift in Sources */,
 				B26A3D6823CDADC000FAAC0D /* DetailConversationViewModel.swift in Sources */,
 				B209961F23D5AAFD00098678 /* CustomScrollView.swift in Sources */,
+				B2CC719423D7EF3A00163620 /* ListContactViewModel.swift in Sources */,
 				8562186C21E75D6B004D53A7 /* Constants.swift in Sources */,
 				856DC99B21F01D4E003BEAAD /* ReceiverTextMessageCell.swift in Sources */,
 				B2701F8523CC7977001DC21C /* Extension.swift in Sources */,

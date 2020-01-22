@@ -60,6 +60,7 @@ struct MessageItemView: View {
             }
         }
         .padding(isOwner ? .leading : .trailing , 70)
+        .animation(.default)
     }
 }
 

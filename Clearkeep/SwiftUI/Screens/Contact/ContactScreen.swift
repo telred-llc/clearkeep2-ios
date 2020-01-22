@@ -9,7 +9,7 @@
 import SwiftUI
 
 struct ContactScreen: View {
-    @ObservedObject private var viewModel = UserViewModel()
+    @ObservedObject private var viewModel = ContactViewModel()
     
     private var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
     
@@ -26,20 +26,13 @@ struct ContactScreen: View {
             }
             ScrollView(.vertical, showsIndicators: true) {
                 ForEach(viewModel.users , id: \.id) { (data: UserModel) in
-                    UserItemView(model: data).onTapGesture {
+                    ContactItemView(model: data, didSelected: { id in
                         Utils.showAlert(viewHosting: UIHostingController(rootView: CreateConversationPopup(type: .normal, createConversation: { (roomName) in
-                            //Create conversation link with name
                             self.viewModel.createConversationAndLink(name: roomName, ownerId: Session.shared.meData?.id ?? "", otherUserId: data.id) { (success, result) in
-                                if let model = self.meData?.conversations?.items?.first(where: { $0?.id == result?.id }) {
-                                    self.viewModel.modelDetail = model
-                                    self.viewModel.isSuccess = success
-                                } else {
-                                    self.viewModel.creatingConversationLink = result
-                                }
                                 print("Create Conversation with user finish:", success)
                             }
                         })))
-                    }
+                    })
                 }
             }
         }

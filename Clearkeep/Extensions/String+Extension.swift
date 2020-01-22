@@ -38,4 +38,14 @@ extension String {
         }
         return messUnwrap
     }
+    
+    func toDate() -> Date? {
+        let format = DateFormatter()
+        format.dateFormat = Constant.globalDateFormat
+        let date = format.date(from: self)
+        guard let dateUnwrap = date else {
+            return nil
+        }
+        return dateUnwrap
+    }
 }

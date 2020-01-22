@@ -26,6 +26,14 @@ struct ConversationScreen: View {
             NavigationLink(destination: DetailConversationScreen(conversation: viewModel.newConvModel), isActive: $viewModel.showDetail) {
                 Text("").frame(maxHeight: 0)
             }
+            NavigationLink(destination: ListContactView(idConversation: "", done: { (ids) in
+                var members = [self.viewModel.meData?.id].compactMap({ $0 })
+                members.append(contentsOf: ids)
+                self.viewModel.createConversationAndLink(name: self.viewModel.roomName, members: members)
+            }), isActive: $viewModel.showUsers) {
+                Text("").frame(maxHeight: 0)
+            }
+            
             GeometryReader { geometry in
                 ScrollView(isNoConversation ? [] : .vertical, showsIndicators: true) {
                     if isNoConversation {
@@ -45,8 +53,18 @@ struct ConversationScreen: View {
                 }
             }
         }
-        .navigationBarItems(trailing: Text(""))
-        .navigationBarTitle(Text("Conversations"), displayMode: .inline)
+        .navigationBarItems(trailing:
+            Image(systemName: "plus")
+                .onTapGesture {
+                    Utils.showAlert(viewHosting: UIHostingController(rootView: CreateConversationPopup(type: .normal, createConversation: { (roomName) in
+                        self.viewModel.roomName = roomName
+                        self.viewModel.showUsers = true
+                    })))
+            }
+            .frame(width: 50, height: 50)
+            .offset(x: 12, y: 0)
+        )
+            .navigationBarTitle(Text("Conversations"), displayMode: .inline)
     }
     
 }
