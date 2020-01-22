@@ -44,6 +44,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                   userPoolsAuthProvider: self,
                                                                   cacheConfiguration: cacheConfiguration)
             self.appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
+            self.appSyncClient?.apolloClient?.cacheKeyForObject = { $0["id"] }
+
             print("Initialized appsync client.")
         } catch {
             print("Error initializing appsync client. \(error)")

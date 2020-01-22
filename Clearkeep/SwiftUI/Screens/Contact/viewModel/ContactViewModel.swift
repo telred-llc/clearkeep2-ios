@@ -13,7 +13,7 @@ import AWSMobileClient
 import AWSAppSync
 
 typealias UserModel = ListUsersQuery.Data.ListUser.Item
-class UserViewModel: ObservableObject {
+class ContactViewModel: ObservableObject {
     @Published var users: [UserModel] = []
     @Published var isSuccess = false
 
@@ -30,12 +30,12 @@ class UserViewModel: ObservableObject {
             self.discardAllUsers?.cancel()
             firstly { () -> PromiseKit.Promise<[ListUsersQuery.Data.ListUser.Item]?>  in
                 if animated {
-//                    Utils.showProgressHub()
+                    Utils.showProgressHub()
                 }
                 return self.fetchAllUsers()
             }.done({ (users) in
                 self.users = users?.filter({ $0.id != self.meData?.id }) ?? []
-                print("Found:", self.users.count)
+                Session.shared.users = self.users
 
             }).ensure {
                 Utils.hideProgressHub()

@@ -13,11 +13,12 @@ struct ProfileScreen: View {
     private let meData: GetUserQuery.Data.GetUser? = Session.shared.meData
     
     var body: some View {
-        ScrollView {
+        let firstCharacter = String(meData?.username.prefix(1) ?? "")
+        return ScrollView {
             VStack {
                 Spacer()
                 ZStack {
-                    Text("V")
+                    Text(firstCharacter)
                         .font(.system(size: 30, weight: .bold))
                 }
                 .frame(minWidth: 100,minHeight: 100)

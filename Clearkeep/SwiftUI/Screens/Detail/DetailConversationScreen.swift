@@ -20,15 +20,15 @@ struct DetailConversationScreen: View {
     var body: some View {
         let datas = viewModel.conversationData?.messages?.items?.reversed().compactMap({$0}) ?? []
         return VStack {
-            List(datas.enumerated().map({ $0 }), id: \.1.id) { (index: Int, message: MessageModel) in
+            List(datas.enumerated().map({$0}), id: \.1.id) { (index: Int, message: MessageModel) in
                 MessageItemView(model: message)
                     .scaleEffect(x: 1, y: -1)
-                .onAppear(perform: {
-                    if index == datas.count - 5 {
-                        // Loadmore here
-//                        self.viewModel.loadMore()
-                    }
-                })
+                    .onAppear(perform: {
+                        if index == datas.count - 5 {
+                            // Loadmore here
+                            //                        self.viewModel.loadMore()
+                        }
+                    })
                 
             }
             .scaleEffect(x: 1, y: -1)
@@ -61,24 +61,42 @@ struct DetailConversationScreen: View {
                 }
                 
             }
-            .frame(minHeight: 60)
+            .frame(minHeight: 50)
             .background(Color.clear)
+            .animation(.default)
         }
         .onAppear() {
-            UITableView.appearance().separatorColor = .clear
-            self.viewModel.idConversation = self.conversation?.conversation.id ?? ""
-            self.viewModel.subscribeNewMessage(conversationId: self.conversation?.conversation.id ?? "")
-            if self.viewModel.conversationData?.messages?.items?.isEmpty ?? true {
-                self.viewModel.refreshData(false)
-            }
+            self.setupScreen()
         }
+        .sheet(isPresented: $viewModel.showContact, content: {ListContactView(idConversation: self.viewModel.idConversation)})
         .navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: leadingView())
+        .navigationBarItems(leading: leadingView(), trailing: Text(""))
     }
     
+    private func setupScreen() {
+        UITableView.appearance().separatorColor = .clear
+        self.viewModel.idConversation = self.conversation?.conversation.id ?? ""
+        self.viewModel.subscribeNewMessage(conversationId: self.conversation?.conversation.id ?? "")
+        if self.viewModel.conversationData?.messages?.items?.isEmpty ?? true {
+            self.viewModel.refreshData(false)
+        }
+    }
+    
+    private func trailingView() -> some View {
+        Image(systemName: "person.badge.plus")
+            .scaledToFit()
+            .foregroundColor(Color("title_color"))
+            .frame(width: 50, height: 50)
+            .offset(x: 12, y: 0)
+            .onTapGesture {
+                // Add user
+                self.viewModel.showContact = true
+                
+        }
+    }
     
     private func leadingView() -> some View {
-
+        
         return HStack {
             Image("back")
                 .scaledToFit()

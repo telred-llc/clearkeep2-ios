@@ -14,14 +14,15 @@ import PromiseKit
 
 typealias MessageModel = GetConvoQuery.Data.GetConvo.Message.Item
 class DetailConversationViewModel: ObservableObject {
-    
-    var idConversation: GraphQLID = ""
-    private var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
     private var nextToken: String?
+    private lazy var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
     private lazy var dateFormatter = DateFormatter.init()
     private let numberOfItemsPerPage: Int = 20
-    @Published var conversationData: GetConvoQuery.Data.GetConvo?
     private var discardMessages: Cancellable?
+    
+    @Published var conversationData: GetConvoQuery.Data.GetConvo?
+    @Published var showContact = false
+    var idConversation: GraphQLID = ""
     
     func refreshData(_ animated: Bool = true) {
         if idConversation.isEmpty {
@@ -57,7 +58,7 @@ class DetailConversationViewModel: ObservableObject {
         return PromiseKit.Promise<GetConvoQuery.Data.GetConvo?> { (resolver) in
             
             let query = GetConvoQuery.init(id: conversationId)
-            Utils.appSyncClient?.fetch(query: query, cachePolicy: CachePolicy.fetchIgnoringCacheData, resultHandler: { (result, error) in
+            Utils.appSyncClient?.fetch(query: query, cachePolicy: CachePolicy.returnCacheDataAndFetch, resultHandler: { (result, error) in
                 if let error = error {
                     resolver.reject(error)
                 } else {
@@ -78,7 +79,9 @@ class DetailConversationViewModel: ObservableObject {
         self.dateFormatter.dateFormat = Constant.globalDateFormat
         let createdAt = self.dateFormatter.string(from: date)
         let id = createdAt + "_" + UUID().uuidString
-        
+     
+//        let conv = GetConvoQuery.Data.GetConvo.Message.Item.Conversation(id: <#T##GraphQLID#>, name: <#T##String#>, members: <#T##[String]#>)
+//        let tempMessage = GetConvoQuery.Data.GetConvo.Message.Item(id: id, author: nil, authorId: meData?.id, content: content, conversation: nil, messageConversationId: idConversation, createdAt: createdAt, updatedAt: nil)
         let createMessageMutaion = CreateMessageMutation.init(input: CreateMessageInput.init(id: id, authorId: self.meData?.id, content: content, messageConversationId: idConversation, createdAt: createdAt, updatedAt: nil))
         Utils.appSyncClient?.perform(mutation: createMessageMutaion, resultHandler: { (result, error) in
             if let result = result {

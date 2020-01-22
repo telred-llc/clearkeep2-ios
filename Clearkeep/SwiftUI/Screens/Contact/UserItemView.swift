@@ -7,9 +7,15 @@
 //
 
 import SwiftUI
+enum UserItemViewType {
+    case contact, addUser
+}
 
-struct UserItemView: View {
+struct ContactItemView: View {
     @State var model: UserModel?
+    @State var isSelected = false
+    var type: UserItemViewType = .contact
+    var didSelected: ((_ id: String) -> Void)?
     
     var body: some View {
         let first = String(model?.username.prefix(1) ?? "").uppercased()
@@ -32,16 +38,27 @@ struct UserItemView: View {
                         .foregroundColor(Color("title_color"))
                 }
                 Spacer()
-                Text("+")
+                if type == .contact {
+                    Text("+")
+                        .font(.system(size: 18, weight: .bold))
+                        .frame(minWidth: 35, maxWidth: 35, minHeight: 35,maxHeight: 35, alignment: .center)
+                        .padding(.horizontal, 16)
+                } else {
+                    Image(systemName: (isSelected ? "largecircle.fill.circle" : "circle"))
                     .font(.system(size: 18, weight: .bold))
                     .frame(minWidth: 35, maxWidth: 35, minHeight: 35,maxHeight: 35, alignment: .center)
-                    .padding(.horizontal, 16)                
+                    .padding(.horizontal, 16)
+                }
+                
             }
             .frame(minHeight: 50,maxHeight: 50, alignment: .center)
             .background(Color("message_view"))
             .cornerRadius(25)
             .padding(8)
-            
+            .onTapGesture {
+                self.isSelected.toggle()
+                self.didSelected?(self.model?.id ?? "")
+            }
         }
         
     }
@@ -49,6 +66,6 @@ struct UserItemView: View {
 
 struct UserItemView_Previews: PreviewProvider {
     static var previews: some View {
-        UserItemView()
+        ContactItemView()
     }
 }
