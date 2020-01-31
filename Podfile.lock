@@ -4,22 +4,22 @@ PODS:
     - ReachabilitySwift (~> 5.0.0)
     - SQLite.swift (~> 0.12.2)
     - Starscream (~> 3.0.2)
-  - AWSAuthCore (2.12.6):
-    - AWSCore (= 2.12.6)
-  - AWSCognito (2.12.6):
-    - AWSCore (= 2.12.6)
-  - AWSCognitoIdentityProvider (2.12.6):
+  - AWSAuthCore (2.12.5):
+    - AWSCore (= 2.12.5)
+  - AWSCognito (2.12.5):
+    - AWSCore (= 2.12.5)
+  - AWSCognitoIdentityProvider (2.12.5):
     - AWSCognitoIdentityProviderASF (= 1.0.1)
-    - AWSCore (= 2.12.6)
+    - AWSCore (= 2.12.5)
   - AWSCognitoIdentityProviderASF (1.0.1)
-  - AWSCore (2.12.6)
-  - AWSMobileClient (2.12.6):
-    - AWSAuthCore (= 2.12.6)
-    - AWSCognitoIdentityProvider (= 2.12.6)
+  - AWSCore (2.12.5)
+  - AWSMobileClient (2.12.5):
+    - AWSAuthCore (= 2.12.5)
+    - AWSCognitoIdentityProvider (= 2.12.5)
   - CRRefresh (1.1.3)
   - DropDown (2.3.13)
   - GrowingTextView (0.7.2)
-  - IQKeyboardManagerSwift (6.5.5)
+  - IQKeyboardManagerSwift (6.5.4)
   - Material (3.1.8):
     - Material/Core (= 3.1.8)
   - Material/Core (3.1.8):
@@ -30,14 +30,14 @@ PODS:
   - NVActivityIndicatorView (4.8.0):
     - NVActivityIndicatorView/Presenter (= 4.8.0)
   - NVActivityIndicatorView/Presenter (4.8.0)
-  - PromiseKit (6.13.1):
-    - PromiseKit/CorePromise (= 6.13.1)
-    - PromiseKit/Foundation (= 6.13.1)
-    - PromiseKit/UIKit (= 6.13.1)
-  - PromiseKit/CorePromise (6.13.1)
-  - PromiseKit/Foundation (6.13.1):
+  - PromiseKit (6.12.0):
+    - PromiseKit/CorePromise (= 6.12.0)
+    - PromiseKit/Foundation (= 6.12.0)
+    - PromiseKit/UIKit (= 6.12.0)
+  - PromiseKit/CorePromise (6.12.0)
+  - PromiseKit/Foundation (6.12.0):
     - PromiseKit/CorePromise
-  - PromiseKit/UIKit (6.13.1):
+  - PromiseKit/UIKit (6.12.0):
     - PromiseKit/CorePromise
   - QuickLayout (3.0.0)
   - ReachabilitySwift (5.0.0)
@@ -93,20 +93,20 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AWSAppSync: 04f615ce0c3a0c815b7bf1ca3d47362a22ed12ca
-  AWSAuthCore: d981abe8fb987a1caa7ac6c76c428de12387dcf4
-  AWSCognito: bad96ee62a670ae0e3d5b6cb93cff04154538272
-  AWSCognitoIdentityProvider: 9502438e528185a2c61b97baf66e2fd2ac6833f3
+  AWSAuthCore: 6b81b748f2fc0b315cda0acdf55f3a540eb8f9b7
+  AWSCognito: c17db6fff09d0338b8fc72810cb13b185d106bfb
+  AWSCognitoIdentityProvider: 7c8cbd6477fd84ccce33a349a46fb44d07edb252
   AWSCognitoIdentityProviderASF: f94f1a502e72ef3d0a1de93e10bf7a79c8698118
-  AWSCore: 48bb8d477d8137377e86b2ade9eb34a761f42df5
-  AWSMobileClient: d752ed540a75d45516c8d5b2054b3f3b6b9e7e65
+  AWSCore: 543d1c281ad08401d0a99e181526aa529051a8ad
+  AWSMobileClient: 5ce94de58005c3042e99d51c2e6bec7956ef2b36
   CRRefresh: 1415d4ae06837fa7bb064c44f2e102f3ef517044
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   GrowingTextView: 876bf42005b5e4a4fd740597db12caaf41f0fe6c
-  IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
+  IQKeyboardManagerSwift: 2dde0fc70110e8eac7ccce2a46fdbec6a850b414
   Material: a2a3f400a3b549d53ef89e56c58c4535b29db387
   Motion: cf1e060e489f6661126374d5c60dbd2ed991605c
   NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
-  PromiseKit: 28fda91c973cc377875d8c0ea4f973013c05b6db
+  PromiseKit: c06835ba442ce5454ce3cdde470232804a6e4ff8
   QuickLayout: 07b45a72b10083fee3f095990cfed1c1e7b27f0a
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
   SQLite.swift: d2b4642190917051ce6bd1d49aab565fe794eea3

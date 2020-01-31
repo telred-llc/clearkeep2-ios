@@ -9,7 +9,7 @@ struct ContactScreen: View {
     init() {
         UINavigationBar.appearance().barTintColor = UIColor(named: "background_view")
         NotificationCenter.default.addObserver(forName: NSNotification.Name.init("DidReceiveNewCoversation"), object: nil, queue: nil, using: self.didReceiveConver(noti:))
-        self.viewModel.getAllUser(animated: false)
+        self.viewModel.getUser()
     }
     
     var body: some View {
@@ -21,7 +21,7 @@ struct ContactScreen: View {
                 ForEach(viewModel.users , id: \.id) { (data: UserModel) in
                     ContactItemView(model: data, didSelected: { id in
                         Utils.showAlert(viewHosting: UIHostingController(rootView: CreateConversationPopup(type: .normal, createConversation: { (roomName) in
-                            self.viewModel.createConversationAndLink(name: roomName, ownerId: Session.shared.meData?.id ?? "", otherUserId: data.id) { (success, result) in
+                            self.viewModel.createCVandLink(name: roomName, ownerId: Session.shared.meData?.id ?? "", otherUserId: data.id) { (success, result) in
                                 print("Create Conversation with user finish:", success)
                             }
                         })))
@@ -34,7 +34,7 @@ struct ContactScreen: View {
         .navigationBarItems(trailing: Text(""))
         .onAppear() {
             if self.viewModel.users.isEmpty {
-                self.viewModel.getAllUser(animated: false)
+                self.viewModel.getUser()
             }
         }
         

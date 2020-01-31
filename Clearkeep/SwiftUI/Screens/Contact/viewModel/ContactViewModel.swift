@@ -1,59 +1,43 @@
 
 import Foundation
-import PromiseKit
 import SwiftUI
 import AWSMobileClient
 import AWSAppSync
+import Combine
 
 typealias UserModel = ListUsersQuery.Data.ListUser.Item
 class ContactViewModel: ObservableObject {
     @Published var users: [UserModel] = []
     @Published var isSuccess = false
-
+    private var userCancellable = Set<AnyCancellable>()
+    private var convCancellable = Set<AnyCancellable>()
     private var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
-    var discardAllUsers: Cancellable?
+    
     var modelDetail: ConversationModel?
     var creatingConversationLink: CreateConvoLinkMutation.Data.CreateConvoLink?
     typealias CreateConvoResult = (CreateConvoMutation.Data.CreateConvo, CreateConvoLinkMutation.Data.CreateConvoLink?)
-
-    func getAllUser(animated: Bool = true) {
-        DispatchQueue.main.async {
-            self.discardAllUsers?.cancel()
-            // fetch users
-            self.discardAllUsers?.cancel()
-            firstly { () -> PromiseKit.Promise<[ListUsersQuery.Data.ListUser.Item]?>  in
-                if animated {
-                    Utils.showProgressHub()
-                }
-                return self.fetchAllUsers()
-            }.done({ (users) in
-                self.users = users?.filter({ $0.id != self.meData?.id }) ?? []
-                Session.shared.users = self.users
-
-            }).ensure {
-                Utils.hideProgressHub()
-                
-            }.catch { (error) in
-                MessageUtils.showErrorMessage(error: error)
-            }
-        }
-        
-    }
     
-    private func fetchAllUsers() -> PromiseKit.Promise<[ListUsersQuery.Data.ListUser.Item]?> {
-        
-        return PromiseKit.Promise<[ListUsersQuery.Data.ListUser.Item]?> { (resolver) in
-            DispatchQueue.main.async {
-                Utils.appSyncClient?.fetch(query: ListUsersQuery(), cachePolicy: CachePolicy.fetchIgnoringCacheData, resultHandler: { (result, error) in
-                    if let error = error {
-                        resolver.reject(error)
-                        MessageUtils.showErrorMessage(error: error)
-                    } else {
-                        resolver.fulfill(result?.data?.listUsers?.items?.compactMap({ $0 }))
-                    }
-                })
-            }
+    func getUser() {
+        Utils.showProgressHub()
+        _ = Future<[UserModel], Error> { promise in
+            Utils.appSyncClient?.fetch(query: ListUsersQuery(), cachePolicy: CachePolicy.fetchIgnoringCacheData, resultHandler: { (result, error) in
+                Utils.hideProgressHub()
+                if let error = error {
+                    promise(.failure(error))
+                    MessageUtils.showErrorMessage(error: error)
+                } else {
+                    let items = result?.data?.listUsers?.items?.compactMap({ $0 }) ?? []
+                    promise(.success(items))
+                }
+            })
         }
+        .receive(on: DispatchQueue.main)
+        .sink(receiveCompletion: { _ in }) { (users) in
+            self.users = users.filter({ $0.id != self.meData?.id })
+            Session.shared.users = self.users
+        }
+        .store(in: &userCancellable)
+        
     }
     
     private func fetchAllUserFromLocal() {
@@ -66,54 +50,51 @@ class ContactViewModel: ObservableObject {
         })
     }
     
-    func createConversationAndLink(name: String, ownerId: String, otherUserId: String, completion: ((Bool, CreateConvoLinkMutation.Data.CreateConvoLink?) -> Void)?) {
-           firstly { () -> PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> in
-               Utils.showProgressHub()
-            return createConversation(name: name, members: [ownerId, otherUserId])
-               }.then({ (createdConv) -> PromiseKit.Promise<CreateConvoResult> in
-                   return self.createConversationLink(conv: createdConv, userId: otherUserId)
-               }).then({ (result) -> PromiseKit.Promise<CreateConvoResult> in
-                   return self.createConversationLink(conv: result.0, userId: ownerId)
-               }).done({ (result) in
-                   completion?(true, result.1)
-               }).ensure {
-                   Utils.hideProgressHub()
-               }.catch { (error) in
-                   print(error)
-                   completion?(false, nil)
-           }
-       }
-       
-       func createConversation(name: String, members: [String]) -> PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> {
-           return PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> { (resolver) in
+    func createCV(name: String, members: [String]) -> Future<CreateConvoMutation.Data.CreateConvo, Error> {
+        Future<CreateConvoMutation.Data.CreateConvo, Error> { promise in
+            Utils.showProgressHub()
             Utils.appSyncClient?.perform(mutation: CreateConvoMutation.init(input: CreateConversationInput.init(name: name, members: members)), queue: DispatchQueue.main, resultHandler: { (result, error) in
-                   if let error = error {
-                       resolver.reject(error)
-                   } else {
-                       if let createdConvo = result?.data?.createConvo {
-                           resolver.fulfill(createdConvo)
-                       } else {
-                           resolver.reject(CQLError.unknownError)
-                       }
-                   }
-               })
-           }
-       }
-
-       func createConversationLink(conv: CreateConvoMutation.Data.CreateConvo, userId: String) -> PromiseKit.Promise<CreateConvoResult> {
-           return PromiseKit.Promise<CreateConvoResult> { (resolver) in
-               let id = UUID().uuidString
-               let createdAt = "\(Int64(Date.init().timeIntervalSince1970 * 1000))"
-
+                Utils.hideProgressHub()
+                if let error = error {
+                    promise(.failure(error))
+                    MessageUtils.showErrorMessage(error: error)
+                } else {
+                    if let createdConvo = result?.data?.createConvo {
+                        promise(.success(createdConvo))
+                    } else {
+                        promise(.failure(CQLError.unknownError))
+                    }
+                }
+            })
+        }
+    }
+    
+    func createCVLink(conv: CreateConvoMutation.Data.CreateConvo, userId: String) -> Future<CreateConvoResult, Error> {
+        Future<CreateConvoResult, Error> { promise in
+            Utils.showProgressHub()
+            let id = UUID().uuidString
+            let createdAt = "\(Int64(Date.init().timeIntervalSince1970 * 1000))"
+            
             Utils.appSyncClient?.perform(mutation: CreateConvoLinkMutation.init(input: CreateConvoLinkInput.init(id: id, convoLinkUserId: userId, convoLinkConversationId: conv.id, createdAt: createdAt, updatedAt: nil)), queue: DispatchQueue.main, resultHandler: { (result, error) in
-                   if let error = error {
-                       resolver.reject(error)
-                   } else {
-                       resolver.fulfill((conv, result?.data?.createConvoLink))
-                   }
-               })
-           }
-       }
-       
+                Utils.hideProgressHub()
+                if let error = error {
+                    promise(.failure(error))
+                    MessageUtils.showErrorMessage(error: error)
+                } else {
+                    promise(.success((conv, result?.data?.createConvoLink)))
+                }
+            })
+        }
+    }
+    
+    func createCVandLink(name: String, ownerId: String, otherUserId: String, completion: @escaping (Bool, CreateConvoLinkMutation.Data.CreateConvoLink?) -> Void) {
+        _ = createCV(name: name, members: [ownerId, otherUserId])
+            .flatMap({self.createCVLink(conv: $0, userId: ownerId)})
+            .flatMap({self.createCVLink(conv: $0.0, userId: otherUserId)})
+            .sink(receiveCompletion: {_ in }, receiveValue: { result in
+                completion(true, result.1)
+            })
+        .store(in: &convCancellable)
+    }
 }
 
