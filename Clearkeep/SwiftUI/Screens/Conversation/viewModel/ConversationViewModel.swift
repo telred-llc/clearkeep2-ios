@@ -1,10 +1,4 @@
-//
-//  RoomViewModel.swift
-//  CKAppSycn
-//
-//  Created by Vu Vuong on 1/9/20.
-//  Copyright © 2020 klinh. All rights reserved.
-//
+
 
 import Foundation
 import SwiftUI

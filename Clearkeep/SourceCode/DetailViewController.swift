@@ -141,7 +141,7 @@ class DetailViewController: BaseViewController {
     }
     
     func addNewMessage(message: GetConvoQuery.Data.GetConvo.Message.Item) {
-        if let indexOfExistingMessage = self.conversationData?.messages?.items?.index(where: { $0?.id == message.id }) {
+        if let indexOfExistingMessage = self.conversationData?.messages?.items?.firstIndex(where: { $0?.id == message.id }) {
             self.conversationData?.messages?.items?[indexOfExistingMessage] = message
             self.messagesTableView?.reloadRows(at: [IndexPath.init(row: indexOfExistingMessage, section: 0)], with: .none)
         } else {

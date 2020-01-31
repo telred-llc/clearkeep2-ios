@@ -1,10 +1,3 @@
-//
-//  MessageItemView.swift
-//  SwiftUI-Macos
-//
-//  Created by Vu Vuong on 1/8/20.
-//  Copyright © 2020 Vu Vuong. All rights reserved.
-//
 
 import SwiftUI
 

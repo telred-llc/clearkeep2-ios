@@ -1,10 +1,4 @@
-//
-//  LoadingView.swift
-//  Clearkeep
-//
-//  Created by Dat Nguyen on 1/17/19.
-//  Copyright © 2019 Pham Hoa. All rights reserved.
-//
+
 
 import UIKit
 class LoadingView: UIView {

@@ -1,10 +1,3 @@
-//
-//  CreateConversationPopup.swift
-//  Clearkeep
-//
-//  Created by Vu Vuong on 1/16/20.
-//  Copyright © 2020 Pham Hoa. All rights reserved.
-//
 
 import SwiftUI
 import Foundation

@@ -1,10 +1,3 @@
-//
-//  ListContactView.swift
-//  Clearkeep
-//
-//  Created by Vu Vuong on 1/22/20.
-//  Copyright © 2020 Pham Hoa. All rights reserved.
-//
 
 import SwiftUI
 

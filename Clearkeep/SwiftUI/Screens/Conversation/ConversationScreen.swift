@@ -1,10 +1,3 @@
-//
-//  ConversationScreen.swift
-//  Clearkeep
-//
-//  Created by Vu Vuong on 1/13/20.
-//  Copyright © 2020 Pham Hoa. All rights reserved.
-//
 
 import SwiftUI
 import AWSAppSync
@@ -29,7 +22,8 @@ struct ConversationScreen: View {
             NavigationLink(destination: ListContactView(idConversation: "", done: { (ids) in
                 var members = [self.viewModel.meData?.id].compactMap({ $0 })
                 members.append(contentsOf: ids)
-                self.viewModel.createConversationAndLink(name: self.viewModel.roomName, members: members)
+//                self.viewModel.createConversationAndLink(name: self.viewModel.roomName, members: members)
+                self.viewModel.createCVAndLink(members: members)
             }), isActive: $viewModel.showUsers) {
                 Text("").frame(maxHeight: 0)
             }

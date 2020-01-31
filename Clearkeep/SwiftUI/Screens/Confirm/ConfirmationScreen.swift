@@ -1,10 +1,3 @@
-//
-//  ConfirmationView.swift
-//  AWS-Ring
-//
-//  Created by Vu Vuong on 11/15/19.
-//  Copyright © 2019 Pham Hoa. All rights reserved.
-//
 
 import SwiftUI
 

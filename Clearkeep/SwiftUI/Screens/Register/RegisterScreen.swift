@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  SwiftUI Test
-//
-//  Created by Vu Vuong on 11/11/19.
-//  Copyright © 2019 Vu Vuong. All rights reserved.
-//
 
 import SwiftUI
 import AWSMobileClient

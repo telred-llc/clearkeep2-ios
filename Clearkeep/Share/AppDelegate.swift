@@ -1,10 +1,3 @@
-//
-//  AppDelegate.swift
-//  Clearkeep
-//
-//  Created by Pham Hoa on 1/10/19.
-//  Copyright © 2019 Pham Hoa. All rights reserved.
-//
 
 import UIKit
 import AWSAppSync

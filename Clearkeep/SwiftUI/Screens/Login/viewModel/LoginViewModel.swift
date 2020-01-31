@@ -1,10 +1,3 @@
-//
-//  LoginViewModel.swift
-//  CKAppSycn
-//
-//  Created by klinh on 1/8/20.
-//  Copyright © 2020 klinh. All rights reserved.
-//
 
 import Foundation
 import AWSCognitoIdentityProvider
