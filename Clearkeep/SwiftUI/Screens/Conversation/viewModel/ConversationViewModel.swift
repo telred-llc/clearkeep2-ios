@@ -109,12 +109,8 @@ final class ConversationViewModel: ObservableObject {
     func createCVLinks(conv: CreateConvoMutation.Data.CreateConvo, members: [String]) -> Future<[CreateConvoResult], Error> {
         Future<[CreateConvoResult], Error> { promise in
             var cancellable = Set<AnyCancellable>()
-
-            let a = members.map { (id) -> Future<CreateConvoResult, Error> in
-                return self.createCVLink(conv: conv, userId: id)
-            }
-            let new = Publishers.MergeMany(a).collect()
-            _ = new.sink(receiveCompletion: {_ in }, receiveValue: { (results) in
+            let publishers = Publishers.MergeMany(members.map({self.createCVLink(conv: conv, userId: $0)})).collect()
+            _ = publishers.sink(receiveCompletion: {_ in }, receiveValue: { (results) in
                 promise(.success(results))
                 }).store(in: &cancellable)
         }

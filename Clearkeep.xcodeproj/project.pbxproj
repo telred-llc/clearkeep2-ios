@@ -8,31 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		3DA109329AF7A5AD00FFAF02 /* Pods_Clearkeep.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B97F7CF2B31FABCFE245444 /* Pods_Clearkeep.framework */; };
-		855DE38421EC893000567D53 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 855DE38321EC893000567D53 /* DetailViewController.swift */; };
 		8562184A21E706B3004D53A7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562184921E706B3004D53A7 /* AppDelegate.swift */; };
-		8562184C21E706B3004D53A7 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562184B21E706B3004D53A7 /* LoginViewController.swift */; };
 		8562184F21E706B3004D53A7 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8562184D21E706B3004D53A7 /* Main.storyboard */; };
 		8562185121E706B5004D53A7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8562185021E706B5004D53A7 /* Assets.xcassets */; };
 		8562185421E706B5004D53A7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8562185221E706B5004D53A7 /* LaunchScreen.storyboard */; };
 		8562185D21E70B1F004D53A7 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 8562185B21E70B1F004D53A7 /* awsconfiguration.json */; };
-		8562186221E7387E004D53A7 /* RegisterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562186121E7387E004D53A7 /* RegisterViewController.swift */; };
-		8562186421E73DA5004D53A7 /* ConfirmationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562186321E73DA5004D53A7 /* ConfirmationViewController.swift */; };
 		8562186621E74703004D53A7 /* Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562186521E74703004D53A7 /* Switcher.swift */; };
-		8562186821E748FE004D53A7 /* MasterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562186721E748FE004D53A7 /* MasterViewController.swift */; };
 		8562186C21E75D6B004D53A7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562186B21E75D6B004D53A7 /* Constants.swift */; };
-		856DC99021EF4DF4003BEAAD /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856DC98F21EF4DF4003BEAAD /* SplashViewController.swift */; };
 		856DC99421F01C09003BEAAD /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856DC99221F01C09003BEAAD /* BaseTableViewCell.swift */; };
 		856DC99521F01C09003BEAAD /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856DC99321F01C09003BEAAD /* BaseViewController.swift */; };
-		856DC99B21F01D4E003BEAAD /* ReceiverTextMessageCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856DC99721F01D4E003BEAAD /* ReceiverTextMessageCell.swift */; };
-		856DC99C21F01D4E003BEAAD /* ReceiverTextMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856DC99821F01D4E003BEAAD /* ReceiverTextMessageCell.xib */; };
-		856DC99E21F01D4E003BEAAD /* SenderTextMessageCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 856DC99A21F01D4E003BEAAD /* SenderTextMessageCell.xib */; };
 		8570377A23CAD10100DDCA01 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570377923CAD10100DDCA01 /* API.swift */; };
 		85DE7F0A21F06DDC00F74D0D /* CQLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DE7F0921F06DDC00F74D0D /* CQLError.swift */; };
-		85E1A18F21EDB3740097DA19 /* ChatNodeTextTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E1A18E21EDB3740097DA19 /* ChatNodeTextTableViewCell.swift */; };
 		85E1A19121EDB9A50097DA19 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E1A19021EDB9A50097DA19 /* Session.swift */; };
 		AAB3DBBE21F0407B00B22A78 /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3DBBD21F0407B00B22A78 /* LoadingView.swift */; };
-		AAB3DBC121F16B0C00B22A78 /* ForgotPasswordViewControlller.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3DBC021F16B0C00B22A78 /* ForgotPasswordViewControlller.swift */; };
-		AAB3DBC421F16B5F00B22A78 /* ConfirmForgotPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAB3DBC321F16B5F00B22A78 /* ConfirmForgotPasswordViewController.swift */; };
 		B209961B23D5555500098678 /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209961A23D5555500098678 /* Date+Extension.swift */; };
 		B209961D23D5566200098678 /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209961C23D5566200098678 /* String+Extension.swift */; };
 		B209961F23D5AAFD00098678 /* CustomScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B209961E23D5AAFD00098678 /* CustomScrollView.swift */; };
@@ -75,33 +63,21 @@
 		0B97F7CF2B31FABCFE245444 /* Pods_Clearkeep.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clearkeep.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		432AD3C8DCE125E3B64D2618 /* Pods-ChatQL.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatQL.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ChatQL/Pods-ChatQL.debug.xcconfig"; sourceTree = "<group>"; };
 		563E6DDB53E02CC23B40DD4E /* Pods-ChatQL.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ChatQL.release.xcconfig"; path = "Pods/Target Support Files/Pods-ChatQL/Pods-ChatQL.release.xcconfig"; sourceTree = "<group>"; };
-		855DE38321EC893000567D53 /* DetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		8562184621E706B3004D53A7 /* Clearkeep v2.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Clearkeep v2.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		8562184921E706B3004D53A7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		8562184B21E706B3004D53A7 /* LoginViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		8562184E21E706B3004D53A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		8562185021E706B5004D53A7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8562185321E706B5004D53A7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8562185521E706B5004D53A7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		8562185B21E70B1F004D53A7 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = SOURCE_ROOT; };
-		8562186121E7387E004D53A7 /* RegisterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterViewController.swift; sourceTree = "<group>"; };
-		8562186321E73DA5004D53A7 /* ConfirmationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmationViewController.swift; sourceTree = "<group>"; };
 		8562186521E74703004D53A7 /* Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switcher.swift; sourceTree = "<group>"; };
-		8562186721E748FE004D53A7 /* MasterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MasterViewController.swift; sourceTree = "<group>"; };
 		8562186B21E75D6B004D53A7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		856DC98F21EF4DF4003BEAAD /* SplashViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		856DC99221F01C09003BEAAD /* BaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
 		856DC99321F01C09003BEAAD /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
-		856DC99721F01D4E003BEAAD /* ReceiverTextMessageCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ReceiverTextMessageCell.swift; sourceTree = "<group>"; };
-		856DC99821F01D4E003BEAAD /* ReceiverTextMessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ReceiverTextMessageCell.xib; sourceTree = "<group>"; };
-		856DC99A21F01D4E003BEAAD /* SenderTextMessageCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SenderTextMessageCell.xib; sourceTree = "<group>"; };
 		8570377923CAD10100DDCA01 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = SOURCE_ROOT; };
 		85DE7F0921F06DDC00F74D0D /* CQLError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CQLError.swift; sourceTree = "<group>"; };
-		85E1A18E21EDB3740097DA19 /* ChatNodeTextTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatNodeTextTableViewCell.swift; sourceTree = "<group>"; };
 		85E1A19021EDB9A50097DA19 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
 		AAB3DBBD21F0407B00B22A78 /* LoadingView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		AAB3DBC021F16B0C00B22A78 /* ForgotPasswordViewControlller.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordViewControlller.swift; sourceTree = "<group>"; };
-		AAB3DBC321F16B5F00B22A78 /* ConfirmForgotPasswordViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmForgotPasswordViewController.swift; sourceTree = "<group>"; };
 		B209961A23D5555500098678 /* Date+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+Extension.swift"; sourceTree = "<group>"; };
 		B209961C23D5566200098678 /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		B209961E23D5AAFD00098678 /* CustomScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomScrollView.swift; sourceTree = "<group>"; };
@@ -177,7 +153,6 @@
 			children = (
 				B209961923D5554200098678 /* Extensions */,
 				B22E236723CC478600D63F77 /* SwiftUI */,
-				8562186F21E8498B004D53A7 /* SourceCode */,
 				8562186E21E84982004D53A7 /* Share */,
 				8562186D21E84979004D53A7 /* Resources */,
 				8562185B21E70B1F004D53A7 /* awsconfiguration.json */,
@@ -200,6 +175,7 @@
 		8562186E21E84982004D53A7 /* Share */ = {
 			isa = PBXGroup;
 			children = (
+				85E1A19021EDB9A50097DA19 /* Session.swift */,
 				B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */,
 				AAB3DBBD21F0407B00B22A78 /* LoadingView.swift */,
 				85DE7F0921F06DDC00F74D0D /* CQLError.swift */,
@@ -213,24 +189,6 @@
 			path = Share;
 			sourceTree = "<group>";
 		};
-		8562186F21E8498B004D53A7 /* SourceCode */ = {
-			isa = PBXGroup;
-			children = (
-				AAB3DBC221F16B3F00B22A78 /* ConfirmForgotPassword */,
-				AAB3DBBF21F16AA400B22A78 /* ForgotPassword */,
-				856DC99621F01D4E003BEAAD /* Cells */,
-				8562184B21E706B3004D53A7 /* LoginViewController.swift */,
-				8562186121E7387E004D53A7 /* RegisterViewController.swift */,
-				8562186321E73DA5004D53A7 /* ConfirmationViewController.swift */,
-				8562186721E748FE004D53A7 /* MasterViewController.swift */,
-				855DE38321EC893000567D53 /* DetailViewController.swift */,
-				85E1A18E21EDB3740097DA19 /* ChatNodeTextTableViewCell.swift */,
-				85E1A19021EDB9A50097DA19 /* Session.swift */,
-				856DC98F21EF4DF4003BEAAD /* SplashViewController.swift */,
-			);
-			path = SourceCode;
-			sourceTree = "<group>";
-		};
 		856DC99121F01C09003BEAAD /* Base */ = {
 			isa = PBXGroup;
 			children = (
@@ -238,16 +196,6 @@
 				856DC99321F01C09003BEAAD /* BaseViewController.swift */,
 			);
 			path = Base;
-			sourceTree = "<group>";
-		};
-		856DC99621F01D4E003BEAAD /* Cells */ = {
-			isa = PBXGroup;
-			children = (
-				856DC99721F01D4E003BEAAD /* ReceiverTextMessageCell.swift */,
-				856DC99821F01D4E003BEAAD /* ReceiverTextMessageCell.xib */,
-				856DC99A21F01D4E003BEAAD /* SenderTextMessageCell.xib */,
-			);
-			path = Cells;
 			sourceTree = "<group>";
 		};
 		A517F056FFF0077D1DDE349C /* Pods */ = {
@@ -259,22 +207,6 @@
 				EF3489B7E4111C5F61185490 /* Pods-Clearkeep.release.xcconfig */,
 			);
 			name = Pods;
-			sourceTree = "<group>";
-		};
-		AAB3DBBF21F16AA400B22A78 /* ForgotPassword */ = {
-			isa = PBXGroup;
-			children = (
-				AAB3DBC021F16B0C00B22A78 /* ForgotPasswordViewControlller.swift */,
-			);
-			path = ForgotPassword;
-			sourceTree = "<group>";
-		};
-		AAB3DBC221F16B3F00B22A78 /* ConfirmForgotPassword */ = {
-			isa = PBXGroup;
-			children = (
-				AAB3DBC321F16B5F00B22A78 /* ConfirmForgotPasswordViewController.swift */,
-			);
-			path = ConfirmForgotPassword;
 			sourceTree = "<group>";
 		};
 		B209961923D5554200098678 /* Extensions */ = {
@@ -553,12 +485,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				856DC99C21F01D4E003BEAAD /* ReceiverTextMessageCell.xib in Resources */,
 				8562185D21E70B1F004D53A7 /* awsconfiguration.json in Resources */,
 				8562185421E706B5004D53A7 /* LaunchScreen.storyboard in Resources */,
 				8562185121E706B5004D53A7 /* Assets.xcassets in Resources */,
 				8562184F21E706B3004D53A7 /* Main.storyboard in Resources */,
-				856DC99E21F01D4E003BEAAD /* SenderTextMessageCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -608,16 +538,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				B2C935DA23CD6CB500202204 /* ConversationViewModel.swift in Sources */,
-				8562186421E73DA5004D53A7 /* ConfirmationViewController.swift in Sources */,
 				8570377A23CAD10100DDCA01 /* API.swift in Sources */,
 				B22E237123CC4A4600D63F77 /* LoginViewModel.swift in Sources */,
 				B26A3D6523CDA9AF00FAAC0D /* MessageItemView.swift in Sources */,
-				8562184C21E706B3004D53A7 /* LoginViewController.swift in Sources */,
 				B22E236D23CC497300D63F77 /* FlatTextField.swift in Sources */,
-				85E1A18F21EDB3740097DA19 /* ChatNodeTextTableViewCell.swift in Sources */,
 				85DE7F0A21F06DDC00F74D0D /* CQLError.swift in Sources */,
 				AAB3DBBE21F0407B00B22A78 /* LoadingView.swift in Sources */,
-				8562186221E7387E004D53A7 /* RegisterViewController.swift in Sources */,
 				B2BA299823D06B57005E79EA /* CreateConversationPopup.swift in Sources */,
 				B2BA299D23D06CEC005E79EA /* ContactViewModel.swift in Sources */,
 				B226ABE123CE21EE00BEC69C /* ConfirmationScreen.swift in Sources */,
@@ -632,7 +558,6 @@
 				B209961D23D5566200098678 /* String+Extension.swift in Sources */,
 				B2701F8123CC759E001DC21C /* ContactScreen.swift in Sources */,
 				B226ABDE23CE1FEB00BEC69C /* Utils.swift in Sources */,
-				856DC99021EF4DF4003BEAAD /* SplashViewController.swift in Sources */,
 				B2701F8323CC75A9001DC21C /* ProfileScreen.swift in Sources */,
 				8562184A21E706B3004D53A7 /* AppDelegate.swift in Sources */,
 				B226ABE423CE221300BEC69C /* ConfirmationViewModel.swift in Sources */,
@@ -640,14 +565,11 @@
 				B26A3D7223CDB8CA00FAAC0D /* PhoneCodeModel.swift in Sources */,
 				85E1A19121EDB9A50097DA19 /* Session.swift in Sources */,
 				B22E237923CC5B2900D63F77 /* TabbarScreen.swift in Sources */,
-				8562186821E748FE004D53A7 /* MasterViewController.swift in Sources */,
 				B26A3D7423CDC76000FAAC0D /* MessageUtils.swift in Sources */,
-				AAB3DBC121F16B0C00B22A78 /* ForgotPasswordViewControlller.swift in Sources */,
 				B283DEFE23D6A2D20045690D /* ConfirmForgotPassScreen.swift in Sources */,
 				B2C935D823CD6C6B00202204 /* ChatConversationItemView.swift in Sources */,
 				B26A3D6E23CDB87C00FAAC0D /* RegisterViewModel.swift in Sources */,
 				B22E237623CC4D3100D63F77 /* ButtonModifier.swift in Sources */,
-				855DE38421EC893000567D53 /* DetailViewController.swift in Sources */,
 				856DC99421F01C09003BEAAD /* BaseTableViewCell.swift in Sources */,
 				B26A3D6C23CDB86800FAAC0D /* RegisterScreen.swift in Sources */,
 				B283DEFB23D69F7D0045690D /* ForgotPasswordScreen.swift in Sources */,
@@ -657,11 +579,9 @@
 				B209961F23D5AAFD00098678 /* CustomScrollView.swift in Sources */,
 				B2CC719423D7EF3A00163620 /* ListContactViewModel.swift in Sources */,
 				8562186C21E75D6B004D53A7 /* Constants.swift in Sources */,
-				856DC99B21F01D4E003BEAAD /* ReceiverTextMessageCell.swift in Sources */,
 				B2701F8523CC7977001DC21C /* Extension.swift in Sources */,
 				B26A3D7023CDB8C500FAAC0D /* CountryPicker.swift in Sources */,
 				B2BA299A23D06B6F005E79EA /* ConversationScreen.swift in Sources */,
-				AAB3DBC421F16B5F00B22A78 /* ConfirmForgotPasswordViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

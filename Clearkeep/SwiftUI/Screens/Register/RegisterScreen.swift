@@ -2,7 +2,9 @@
 import SwiftUI
 import AWSMobileClient
 import AWSAppSync
-
+enum ConfirmationType {
+    case signin, signup
+}
 struct RegisterScreen: View {
     
     @State private var isShowPicker = false
@@ -84,7 +86,7 @@ struct RegisterScreen: View {
         }
     }
     
-    private func showConfirmationVC(type: ConfirmationViewController.ConfirmationType) {
+    private func showConfirmationVC(type: ConfirmationType) {
         //           self.viewModel.showAlert(title: "PUSH", mess: "Goto ConfirmationScreen", data: nil)
         
     }

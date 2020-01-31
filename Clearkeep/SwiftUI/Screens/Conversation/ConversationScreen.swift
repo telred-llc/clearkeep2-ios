@@ -9,6 +9,7 @@ struct ConversationScreen: View {
     @State private var creatingConversationLink: CreateConvoLinkMutation.Data.CreateConvoLink?
     
     init() {
+        NotificationCenter.default.addObserver(forName: NSNotification.Name.init("DidReceiveNewCoversation"), object: nil, queue: nil, using: self.didReceiveConver(noti:))
         self.viewModel.subscribeNewConvLink(userId: Session.shared.meData?.id ?? "")
     }
     var body: some View {
@@ -60,6 +61,17 @@ struct ConversationScreen: View {
             .navigationBarTitle(Text("Conversations"), displayMode: .inline)
     }
     
+    private func didReceiveConver(noti: Notification) {
+        if let data = noti.userInfo {
+            if let model = data["newConversation"] as? ConversationModel {
+                DispatchQueue.main.async {
+                    self.viewModel.modelDetail = model
+                    self.viewModel.showDetail = true
+                    
+                }
+            }
+        }
+    }
 }
 
 struct ConversationScreen_Previews: PreviewProvider {
