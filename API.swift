@@ -9496,7 +9496,7 @@ public final class ListUsersQuery: GraphQLQuery {
 
 public final class GetConvoQuery: GraphQLQuery {
   public static let operationString =
-    "query GetConvo($id: ID!) {\n  getConvo(id: $id) {\n    __typename\n    id\n    messages(limit: 1000) {\n      __typename\n      items {\n        __typename\n        id\n        author {\n          __typename\n          id\n          username\n          createdAt\n          updatedAt\n        }\n        authorId\n        content\n        conversation {\n          __typename\n          id\n          name\n          members\n          createdAt\n          updatedAt\n        }\n        messageConversationId\n        createdAt\n        updatedAt\n      }\n      nextToken\n    }\n    associated {\n      __typename\n      items {\n        __typename\n        id\n        user {\n          __typename\n          id\n          username\n          createdAt\n          updatedAt\n        }\n        convoLinkUserId\n        conversation {\n          __typename\n          id\n          name\n          members\n          createdAt\n          updatedAt\n        }\n        convoLinkConversationId\n        createdAt\n        updatedAt\n      }\n      nextToken\n    }\n    name\n    members\n    createdAt\n    updatedAt\n  }\n}"
+    "query GetConvo($id: ID!) {\n  getConvo(id: $id) {\n    __typename\n    id\n    messages(limit: 5000) {\n      __typename\n      items {\n        __typename\n        id\n        author {\n          __typename\n          id\n          username\n          createdAt\n          updatedAt\n        }\n        authorId\n        content\n        conversation {\n          __typename\n          id\n          name\n          members\n          createdAt\n          updatedAt\n        }\n        messageConversationId\n        createdAt\n        updatedAt\n      }\n      nextToken\n    }\n    associated {\n      __typename\n      items {\n        __typename\n        id\n        user {\n          __typename\n          id\n          username\n          createdAt\n          updatedAt\n        }\n        convoLinkUserId\n        conversation {\n          __typename\n          id\n          name\n          members\n          createdAt\n          updatedAt\n        }\n        convoLinkConversationId\n        createdAt\n        updatedAt\n      }\n      nextToken\n    }\n    name\n    members\n    createdAt\n    updatedAt\n  }\n}"
 
   public var id: GraphQLID
 
@@ -9540,7 +9540,7 @@ public final class GetConvoQuery: GraphQLQuery {
       public static let selections: [GraphQLSelection] = [
         GraphQLField("__typename", type: .nonNull(.scalar(String.self))),
         GraphQLField("id", type: .nonNull(.scalar(GraphQLID.self))),
-        GraphQLField("messages", arguments: ["limit": 1000], type: .object(Message.selections)),
+        GraphQLField("messages", arguments: ["limit": 5000], type: .object(Message.selections)),
         GraphQLField("associated", type: .object(Associated.selections)),
         GraphQLField("name", type: .nonNull(.scalar(String.self))),
         GraphQLField("members", type: .nonNull(.list(.nonNull(.scalar(String.self))))),
