@@ -5,6 +5,7 @@ import SwiftUI
 import AWSMobileClient
 import AWSAppSync
 import PromiseKit
+import Combine
 
 typealias ConversationModel = GetUserQuery.Data.GetUser.Conversation.Item
 
@@ -14,10 +15,11 @@ final class ConversationViewModel: ObservableObject {
     @Published var showDetail = false
     @Published var showUsers = false
     @Published var modelDetail: ConversationModel?
-    var discardAllUsers: Cancellable?
+    private var convCancellable = Set<AnyCancellable>()
+    var discardAllUsers: AWSAppSync.Cancellable?
     var roomName = ""
     var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
-    var discardConvLink: Cancellable?
+    var discardConvLink: AWSAppSync.Cancellable?
     var creatingConversationLink: CreateConvoLinkMutation.Data.CreateConvoLink?
     var newConvModel: ConversationModel?
     typealias CreateConvoResult = (CreateConvoMutation.Data.CreateConvo, CreateConvoLinkMutation.Data.CreateConvoLink?)
@@ -67,13 +69,61 @@ final class ConversationViewModel: ObservableObject {
         }
     }
     
-        func createConversationAndLink(name: String, members: [String]) {
-            firstly { () -> PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> in
-                Utils.showProgressHub()
-                return createConversation(name: name, members: members)
-            }.then({ (createdConv) -> PromiseKit.Promise<[CreateConvoResult]> in
-                return self.createConversationLinks(conv: createdConv, members: members)
-            }).done({ (results) in
+    func createCV(name: String, members: [String]) -> Future<CreateConvoMutation.Data.CreateConvo, Error> {
+        Future<CreateConvoMutation.Data.CreateConvo, Error> { promise in
+            Utils.showProgressHub()
+            Utils.appSyncClient?.perform(mutation: CreateConvoMutation.init(input: CreateConversationInput.init(name: name, members: members)), queue: DispatchQueue.main, resultHandler: { (result, error) in
+                Utils.hideProgressHub()
+                if let error = error {
+                    promise(.failure(error))
+                    MessageUtils.showErrorMessage(error: error)
+                } else {
+                    if let createdConvo = result?.data?.createConvo {
+                        promise(.success(createdConvo))
+                    } else {
+                        promise(.failure(CQLError.unknownError))
+                    }
+                }
+            })
+        }
+    }
+    
+    func createCVLink(conv: CreateConvoMutation.Data.CreateConvo, userId: String) -> Future<CreateConvoResult, Error> {
+        Future<CreateConvoResult, Error> { promise in
+            Utils.showProgressHub()
+            let id = UUID().uuidString
+            let createdAt = "\(Int64(Date.init().timeIntervalSince1970 * 1000))"
+            
+            Utils.appSyncClient?.perform(mutation: CreateConvoLinkMutation.init(input: CreateConvoLinkInput.init(id: id, convoLinkUserId: userId, convoLinkConversationId: conv.id, createdAt: createdAt, updatedAt: nil)), queue: DispatchQueue.main, resultHandler: { (result, error) in
+                Utils.hideProgressHub()
+                if let error = error {
+                    promise(.failure(error))
+                    MessageUtils.showErrorMessage(error: error)
+                } else {
+                    promise(.success((conv, result?.data?.createConvoLink)))
+                }
+            })
+        }
+    }
+    
+    func createCVLinks(conv: CreateConvoMutation.Data.CreateConvo, members: [String]) -> Future<[CreateConvoResult], Error> {
+        Future<[CreateConvoResult], Error> { promise in
+            var cancellable = Set<AnyCancellable>()
+
+            let a = members.map { (id) -> Future<CreateConvoResult, Error> in
+                return self.createCVLink(conv: conv, userId: id)
+            }
+            let new = Publishers.MergeMany(a).collect()
+            _ = new.sink(receiveCompletion: {_ in }, receiveValue: { (results) in
+                promise(.success(results))
+                }).store(in: &cancellable)
+        }
+    }
+    
+    func createCVandLink(name: String, members: [String]) {
+        _ = createCV(name: name, members: members)
+            .flatMap({self.createCVLinks(conv: $0, members: members)})
+            .sink(receiveCompletion: {_ in }) { (results) in
                 let result = results.first?.1
                 if let model = self.meData?.conversations?.items?.first(where: { $0?.id == result?.id }) {
                     self.modelDetail = model
@@ -81,56 +131,8 @@ final class ConversationViewModel: ObservableObject {
                 } else {
                     self.creatingConversationLink = result
                 }
-                //            completion?(true, results.first?.1)
-            }).ensure {
-                Utils.hideProgressHub()
-            }.catch { (error) in
-                print(error)
-                //            completion?(false, nil)
-            }
         }
-    
-        func createConversation(name: String, members: [String]) -> PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> {
-            return PromiseKit.Promise<CreateConvoMutation.Data.CreateConvo> { (resolver) in
-                Utils.appSyncClient?.perform(mutation: CreateConvoMutation.init(input: CreateConversationInput.init(name: name, members: members)), queue: DispatchQueue.main, resultHandler: { (result, error) in
-                    if let error = error {
-                        resolver.reject(error)
-                    } else {
-                        if let createdConvo = result?.data?.createConvo {
-                            resolver.fulfill(createdConvo)
-                        } else {
-                            resolver.reject(CQLError.unknownError)
-                        }
-                    }
-                })
-            }
-        }
-    
-        func createConversationLinks(conv: CreateConvoMutation.Data.CreateConvo, members: [String]) -> PromiseKit.Promise<[CreateConvoResult]> {
-            var thenables: [PromiseKit.Promise<CreateConvoResult>] = []
-    
-            for member in members {
-                let result = createConversationLink(conv: conv, userId: member)
-                thenables.append(result)
-            }
-    
-            return when(fulfilled: thenables)
-        }
-    
-        func createConversationLink(conv: CreateConvoMutation.Data.CreateConvo, userId: String) -> PromiseKit.Promise<CreateConvoResult> {
-            return PromiseKit.Promise<CreateConvoResult> { (resolver) in
-                let id = UUID().uuidString
-                let createdAt = "\(Int64(Date.init().timeIntervalSince1970 * 1000))"
-                Utils.appSyncClient?.perform(mutation: CreateConvoLinkMutation.init(input: CreateConvoLinkInput.init(id: id, convoLinkUserId: userId, convoLinkConversationId: conv.id, createdAt: createdAt, updatedAt: nil)), queue: DispatchQueue.main, resultHandler: { (result, error) in
-                    if let error = error {
-                        resolver.reject(error)
-                    } else {
-                        print(id)
-                        resolver.fulfill((conv, result?.data?.createConvoLink))
-                    }
-                })
-            }
-        }
-    
+        .store(in: &convCancellable)
+    }
 }
 

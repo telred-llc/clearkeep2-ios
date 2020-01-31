@@ -22,7 +22,7 @@ struct ConversationScreen: View {
             NavigationLink(destination: ListContactView(idConversation: "", done: { (ids) in
                 var members = [self.viewModel.meData?.id].compactMap({ $0 })
                 members.append(contentsOf: ids)
-                self.viewModel.createConversationAndLink(name: self.viewModel.roomName, members: members)
+                self.viewModel.createCVandLink(name: self.viewModel.roomName, members: members)
             }), isActive: $viewModel.showUsers) {
                 Text("").frame(maxHeight: 0)
             }
