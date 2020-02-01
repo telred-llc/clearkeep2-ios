@@ -71,7 +71,7 @@ struct DetailConversationScreen: View {
         self.viewModel.idConversation = self.conversation?.conversation.id ?? ""
         self.viewModel.subscribeNewMessage(conversationId: self.conversation?.conversation.id ?? "")
         if self.viewModel.conversationData?.messages?.items?.isEmpty ?? true {
-            self.viewModel.refreshData(false)
+            self.viewModel.getData()
         }
     }
     

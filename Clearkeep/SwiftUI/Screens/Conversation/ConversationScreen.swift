@@ -7,7 +7,8 @@ struct ConversationScreen: View {
     @State private var isShowPopup = false
     @State private var showDetail = false
     @State private var creatingConversationLink: CreateConvoLinkMutation.Data.CreateConvoLink?
-    
+
+
     init() {
         NotificationCenter.default.addObserver(forName: NSNotification.Name.init("DidReceiveNewCoversation"), object: nil, queue: nil, using: self.didReceiveConver(noti:))
         self.viewModel.subscribeNewConvLink(userId: Session.shared.meData?.id ?? "")
