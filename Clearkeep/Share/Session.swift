@@ -1,11 +1,3 @@
-//
-//  Session.swift
-//  Clearkeep
-//
-//  Created by Pham Hoa on 1/15/19.
-//  Copyright © 2019 Pham Hoa. All rights reserved.
-//
-
 import Foundation
 
 class Session {

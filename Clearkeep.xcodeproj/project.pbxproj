@@ -15,8 +15,6 @@
 		8562185D21E70B1F004D53A7 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = 8562185B21E70B1F004D53A7 /* awsconfiguration.json */; };
 		8562186621E74703004D53A7 /* Switcher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562186521E74703004D53A7 /* Switcher.swift */; };
 		8562186C21E75D6B004D53A7 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8562186B21E75D6B004D53A7 /* Constants.swift */; };
-		856DC99421F01C09003BEAAD /* BaseTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856DC99221F01C09003BEAAD /* BaseTableViewCell.swift */; };
-		856DC99521F01C09003BEAAD /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856DC99321F01C09003BEAAD /* BaseViewController.swift */; };
 		8570377A23CAD10100DDCA01 /* API.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8570377923CAD10100DDCA01 /* API.swift */; };
 		85DE7F0A21F06DDC00F74D0D /* CQLError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85DE7F0921F06DDC00F74D0D /* CQLError.swift */; };
 		85E1A19121EDB9A50097DA19 /* Session.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85E1A19021EDB9A50097DA19 /* Session.swift */; };
@@ -72,8 +70,6 @@
 		8562185B21E70B1F004D53A7 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = SOURCE_ROOT; };
 		8562186521E74703004D53A7 /* Switcher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Switcher.swift; sourceTree = "<group>"; };
 		8562186B21E75D6B004D53A7 /* Constants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
-		856DC99221F01C09003BEAAD /* BaseTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseTableViewCell.swift; sourceTree = "<group>"; };
-		856DC99321F01C09003BEAAD /* BaseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseViewController.swift; sourceTree = "<group>"; };
 		8570377923CAD10100DDCA01 /* API.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = API.swift; sourceTree = SOURCE_ROOT; };
 		85DE7F0921F06DDC00F74D0D /* CQLError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CQLError.swift; sourceTree = "<group>"; };
 		85E1A19021EDB9A50097DA19 /* Session.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Session.swift; sourceTree = "<group>"; };
@@ -179,7 +175,6 @@
 				B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */,
 				AAB3DBBD21F0407B00B22A78 /* LoadingView.swift */,
 				85DE7F0921F06DDC00F74D0D /* CQLError.swift */,
-				856DC99121F01C09003BEAAD /* Base */,
 				8562184921E706B3004D53A7 /* AppDelegate.swift */,
 				8562186521E74703004D53A7 /* Switcher.swift */,
 				8562186B21E75D6B004D53A7 /* Constants.swift */,
@@ -187,15 +182,6 @@
 				B226ABDD23CE1FEB00BEC69C /* Utils.swift */,
 			);
 			path = Share;
-			sourceTree = "<group>";
-		};
-		856DC99121F01C09003BEAAD /* Base */ = {
-			isa = PBXGroup;
-			children = (
-				856DC99221F01C09003BEAAD /* BaseTableViewCell.swift */,
-				856DC99321F01C09003BEAAD /* BaseViewController.swift */,
-			);
-			path = Base;
 			sourceTree = "<group>";
 		};
 		A517F056FFF0077D1DDE349C /* Pods */ = {
@@ -551,7 +537,6 @@
 				B2B226FA23D1A1BC00420C8E /* KeyboardManager.swift in Sources */,
 				B26A3D6323CD95F100FAAC0D /* DetailConversationScreen.swift in Sources */,
 				8562186621E74703004D53A7 /* Switcher.swift in Sources */,
-				856DC99521F01C09003BEAAD /* BaseViewController.swift in Sources */,
 				B2BA299423D06999005E79EA /* SplashScreen.swift in Sources */,
 				B22E236A23CC47B200D63F77 /* LoginScreen.swift in Sources */,
 				B284350323D80067008CC363 /* UserItemView.swift in Sources */,
@@ -570,7 +555,6 @@
 				B2C935D823CD6C6B00202204 /* ChatConversationItemView.swift in Sources */,
 				B26A3D6E23CDB87C00FAAC0D /* RegisterViewModel.swift in Sources */,
 				B22E237623CC4D3100D63F77 /* ButtonModifier.swift in Sources */,
-				856DC99421F01C09003BEAAD /* BaseTableViewCell.swift in Sources */,
 				B26A3D6C23CDB86800FAAC0D /* RegisterScreen.swift in Sources */,
 				B283DEFB23D69F7D0045690D /* ForgotPasswordScreen.swift in Sources */,
 				B209961B23D5555500098678 /* Date+Extension.swift in Sources */,
