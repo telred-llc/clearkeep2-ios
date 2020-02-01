@@ -1,5 +1,8 @@
-# Chat app using AWS AppSync + SwiftUI
-This is a Chatting app using end-to-end encryption
+# ClearKeep-iOS
+This is a Chat app using:
+1. AWS AppSync
+2. SwiftUI
+3. end-to-end encryption
 
 ## Installation
 This project requires the latest version of Xcode, which you can install from the [Mac App Store](https://itunes.apple.com/en/app/xcode/id497799835?mt=12).
