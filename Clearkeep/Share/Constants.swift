@@ -1,7 +1,9 @@
 
 import Foundation
+import AWSCognitoIdentityProvider
 
 struct Constant {
+    static let cognitoIdentityUserPoolRegion = AWSRegionType.USWest2
     
     static let globalDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     

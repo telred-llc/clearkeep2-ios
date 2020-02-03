@@ -3,6 +3,7 @@ import Foundation
 class Session {
     static let shared = Session()
     
+    var lastConvLink: CreateConvoLinkMutation.Data.CreateConvoLink?
     var meData: GetUserQuery.Data.GetUser?
     var users: [UserModel]?
     var lastCredential: (String?, String?)? {

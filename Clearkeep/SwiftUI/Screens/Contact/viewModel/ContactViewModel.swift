@@ -14,7 +14,6 @@ class ContactViewModel: ObservableObject {
     private var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
     
     var modelDetail: ConversationModel?
-    var creatingConversationLink: CreateConvoLinkMutation.Data.CreateConvoLink?
     typealias CreateConvoResult = (CreateConvoMutation.Data.CreateConvo, CreateConvoLinkMutation.Data.CreateConvoLink?)
     
     func getUser() {
@@ -81,7 +80,15 @@ class ContactViewModel: ObservableObject {
                     promise(.failure(error))
                     MessageUtils.showErrorMessage(error: error)
                 } else {
-                    promise(.success((conv, result?.data?.createConvoLink)))
+                    let convLink = result?.data?.createConvoLink
+                    if let existingConvLink = self.meData?.conversations?.items?.first(where: { $0?.id == convLink?.conversation.id }) {
+                        if let modelUnwrap = existingConvLink {
+                            NotificationCenter.default.post(name: NSNotification.Name.init("DidReceiveNewCoversation"), object: nil, userInfo: ["newConversation": modelUnwrap])
+                        }
+                    } else {
+                        Session.shared.lastConvLink = convLink
+                    }
+                    promise(.success((conv, convLink)))
                 }
             })
         }

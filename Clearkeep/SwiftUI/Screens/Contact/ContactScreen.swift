@@ -32,12 +32,9 @@ struct ContactScreen: View {
         .navigationBarTitle(Text("Users"), displayMode: .inline)
         .navigationBarItems(trailing: Text(""))
         .onAppear() {
-            NotificationCenter.default.addObserver(forName: NSNotification.Name.init("DidReceiveNewCoversation"), object: nil, queue: nil, using: self.didReceiveConver(noti:))
             if self.viewModel.users.isEmpty {
                 self.viewModel.getUser()
             }
-        }.onDisappear() {
-            NotificationCenter.default.removeObserver(self)
         }
         
     }

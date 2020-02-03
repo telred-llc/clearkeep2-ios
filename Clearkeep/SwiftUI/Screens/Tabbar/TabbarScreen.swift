@@ -25,12 +25,18 @@ struct TabbarScreen: View {
     private let conversationScreen = ConversationScreen()
     private let contactScreen = ContactScreen()
     private let profileScreen = ProfileScreen()
-    
+    @State private var detailModel: ConversationModel?
+    @State private var isShowDetail = false
+    @ObservedObject private var detailMananger = DetailMananger.shared
     
     var body: some View {
         NavigationView {
             ZStack {
                 Color("background_view").edgesIgnoringSafeArea(.all)
+                NavigationLink(destination: DetailConversationScreen(conversation: detailMananger.modelDetail), isActive: $detailMananger.isShowDetail) {
+                    Text("").frame(maxHeight: 0)
+                }
+                
                 VStack(spacing: 0) {
                     // Tabbar contentView
                     renderPageView().frame(minHeight: 0, maxHeight: .infinity)

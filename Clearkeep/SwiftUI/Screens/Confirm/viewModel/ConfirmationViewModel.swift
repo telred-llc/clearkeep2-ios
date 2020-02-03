@@ -16,7 +16,7 @@ final class ConfirmationViewModel: ObservableObject {
                 case .confirmed:
                     MessageUtils.showMess(type: .success, string: "Your account has been successfully verified!")
                     DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
-                        Switcher.updateRootVC(logined: true)
+                        Switcher.updateRootVC(logined: false)
                         
                     }
                 case .unconfirmed:

@@ -15,7 +15,6 @@ class ListContactViewModel: ObservableObject {
     init() {
         if searchValue.isEmpty {
             self.users = Session.shared.users ?? []
-            print("get new data")
         } else {
             self.users = Session.shared.users ?? [].filter({$0.username.contains(searchValue)})
         }

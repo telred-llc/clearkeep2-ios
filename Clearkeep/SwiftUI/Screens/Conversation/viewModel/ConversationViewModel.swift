@@ -19,7 +19,6 @@ final class ConversationViewModel: ObservableObject {
     var roomName = ""
     var meData: GetUserQuery.Data.GetUser? = Session.shared.meData
     var discardConvLink: AWSAppSync.Cancellable?
-    var creatingConversationLink: CreateConvoLinkMutation.Data.CreateConvoLink?
     var newConvModel: ConversationModel?
     typealias CreateConvoResult = (CreateConvoMutation.Data.CreateConvo, CreateConvoLinkMutation.Data.CreateConvoLink?)
     
@@ -53,12 +52,18 @@ final class ConversationViewModel: ObservableObject {
                             return lTime > rTime
                         }
                         
-                        if let model = self.meData?.conversations?.items?.first(where: { $0?.id == newConvLink.id }) {
-                            if let modelUnwrap = model {
-                                self.newConvModel = model
-                                NotificationCenter.default.post(name: NSNotification.Name.init("DidReceiveNewCoversation"), object: nil, userInfo: ["newConversation": modelUnwrap])
+                        if let creatingConversationLink = Session.shared.lastConvLink,
+                            creatingConversationLink.convoLinkUserId == newConvoLink.convoLinkUserId {
+                            if let model = self.meData?.conversations?.items?.first(where: { $0?.id == newConvLink.id }) {
+                                if let modelUnwrap = model {
+                                    DetailMananger.shared.isShowDetail = true
+                                    DetailMananger.shared.modelDetail = modelUnwrap
+                                    self.newConvModel = model
+                                }
                             }
                         }
+                        
+                        
                         
                     }
                 }
@@ -99,7 +104,14 @@ final class ConversationViewModel: ObservableObject {
                     promise(.failure(error))
                     MessageUtils.showErrorMessage(error: error)
                 } else {
-                    promise(.success((conv, result?.data?.createConvoLink)))
+                    let convLink = result?.data?.createConvoLink
+                    if let model = self.meData?.conversations?.items?.first(where: { $0?.id == convLink?.id }) {
+                        self.modelDetail = model
+                        self.showDetail = true
+                    } else {
+                        Session.shared.lastConvLink = convLink
+                    }
+                    promise(.success((conv, convLink)))
                 }
             })
         }
@@ -111,7 +123,7 @@ final class ConversationViewModel: ObservableObject {
             let publishers = Publishers.MergeMany(members.map({self.createCVLink(conv: conv, userId: $0)})).collect()
             _ = publishers.sink(receiveCompletion: {_ in }, receiveValue: { (results) in
                 promise(.success(results))
-                }).store(in: &cancellable)
+            }).store(in: &cancellable)
         }
     }
     
@@ -120,12 +132,6 @@ final class ConversationViewModel: ObservableObject {
             .flatMap({self.createCVLinks(conv: $0, members: members)})
             .sink(receiveCompletion: {_ in }) { (results) in
                 let result = results.first?.1
-                if let model = self.meData?.conversations?.items?.first(where: { $0?.id == result?.id }) {
-                    self.modelDetail = model
-                    self.showDetail = true
-                } else {
-                    self.creatingConversationLink = result
-                }
         }
         .store(in: &convCancellable)
     }

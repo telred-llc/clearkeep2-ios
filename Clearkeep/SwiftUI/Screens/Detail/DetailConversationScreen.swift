@@ -3,6 +3,12 @@ import SwiftUI
 import AWSAppSync
 import SwiftDate
 
+class DetailMananger: ObservableObject {
+    @ObservedObject static var shared = DetailMananger()
+    @Published var isShowDetail = false
+    @Published var modelDetail: ConversationModel?
+}
+
 struct DetailConversationScreen: View {
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @ObservedObject private var viewModel = DetailConversationViewModel()

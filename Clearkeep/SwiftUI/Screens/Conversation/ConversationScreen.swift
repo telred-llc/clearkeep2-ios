@@ -7,10 +7,6 @@ struct ConversationScreen: View {
     @State private var isShowPopup = false
     @State private var showDetail = false
     @State private var creatingConversationLink: CreateConvoLinkMutation.Data.CreateConvoLink?
-
-    init() {
-        self.viewModel.subscribeNewConvLink(userId: Session.shared.meData?.id ?? "")
-    }
     
     var body: some View {
         let isNoConversation = viewModel.conversations.isEmpty
@@ -59,12 +55,6 @@ struct ConversationScreen: View {
             .offset(x: 12, y: 0)
         )
             .navigationBarTitle(Text("Conversations"), displayMode: .inline)
-            .onAppear() {
-                NotificationCenter.default.addObserver(forName: NSNotification.Name.init("DidReceiveNewCoversation"), object: nil, queue: nil, using: self.didReceiveConver(noti:))
-        }
-        .onDisappear() {
-            NotificationCenter.default.removeObserver(self)
-        }
     }
     
     private func didReceiveConver(noti: Notification) {

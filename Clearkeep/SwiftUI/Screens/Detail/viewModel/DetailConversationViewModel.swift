@@ -59,7 +59,6 @@ class DetailConversationViewModel: ObservableObject {
             return
         }
         
-        
         let date = Date.init()
         self.dateFormatter.dateFormat = Constant.globalDateFormat
         let createdAt = self.dateFormatter.string(from: date)
@@ -93,5 +92,5 @@ class DetailConversationViewModel: ObservableObject {
             print("Error starting subscription.")
         }
     }
-    
+
 }
