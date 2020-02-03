@@ -3,7 +3,6 @@
 import Foundation
 import AWSMobileClient
 import AWSAppSync
-import PromiseKit
 
 class ListContactViewModel: ObservableObject {
     @Published var searchValue = ""

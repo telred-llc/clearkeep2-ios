@@ -8,7 +8,6 @@ struct ContactScreen: View {
     
     init() {
         UINavigationBar.appearance().barTintColor = UIColor(named: "background_view")
-        NotificationCenter.default.addObserver(forName: NSNotification.Name.init("DidReceiveNewCoversation"), object: nil, queue: nil, using: self.didReceiveConver(noti:))
         self.viewModel.getUser()
     }
     
@@ -33,9 +32,12 @@ struct ContactScreen: View {
         .navigationBarTitle(Text("Users"), displayMode: .inline)
         .navigationBarItems(trailing: Text(""))
         .onAppear() {
+            NotificationCenter.default.addObserver(forName: NSNotification.Name.init("DidReceiveNewCoversation"), object: nil, queue: nil, using: self.didReceiveConver(noti:))
             if self.viewModel.users.isEmpty {
                 self.viewModel.getUser()
             }
+        }.onDisappear() {
+            NotificationCenter.default.removeObserver(self)
         }
         
     }
