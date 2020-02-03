@@ -4,7 +4,6 @@ import Foundation
 import SwiftUI
 import AWSMobileClient
 import AWSAppSync
-import PromiseKit
 import Combine
 
 typealias ConversationModel = GetUserQuery.Data.GetUser.Conversation.Item
