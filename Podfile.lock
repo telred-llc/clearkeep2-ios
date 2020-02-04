@@ -4,24 +4,24 @@ PODS:
     - ReachabilitySwift (~> 5.0.0)
     - SQLite.swift (~> 0.12.2)
     - Starscream (~> 3.0.2)
-  - AWSAuthCore (2.12.5):
-    - AWSCore (= 2.12.5)
-  - AWSCognito (2.12.5):
-    - AWSCore (= 2.12.5)
-  - AWSCognitoIdentityProvider (2.12.5):
+  - AWSAuthCore (2.12.6):
+    - AWSCore (= 2.12.6)
+  - AWSCognito (2.12.6):
+    - AWSCore (= 2.12.6)
+  - AWSCognitoIdentityProvider (2.12.6):
     - AWSCognitoIdentityProviderASF (= 1.0.1)
-    - AWSCore (= 2.12.5)
+    - AWSCore (= 2.12.6)
   - AWSCognitoIdentityProviderASF (1.0.1)
-  - AWSCore (2.12.5)
-  - AWSKinesisVideo (2.12.5):
-    - AWSCore (= 2.12.5)
-  - AWSMobileClient (2.12.5):
-    - AWSAuthCore (= 2.12.5)
-    - AWSCognitoIdentityProvider (= 2.12.5)
+  - AWSCore (2.12.6)
+  - AWSKinesisVideo (2.12.6):
+    - AWSCore (= 2.12.6)
+  - AWSMobileClient (2.12.6):
+    - AWSAuthCore (= 2.12.6)
+    - AWSCognitoIdentityProvider (= 2.12.6)
   - DropDown (2.3.13)
   - GoogleWebRTC (1.1.29400)
   - GrowingTextView (0.7.2)
-  - IQKeyboardManagerSwift (6.5.4)
+  - IQKeyboardManagerSwift (6.5.5)
   - NVActivityIndicatorView (4.8.0):
     - NVActivityIndicatorView/Presenter (= 4.8.0)
   - NVActivityIndicatorView/Presenter (4.8.0)
@@ -76,17 +76,17 @@ SPEC REPOS:
 
 SPEC CHECKSUMS:
   AWSAppSync: 04f615ce0c3a0c815b7bf1ca3d47362a22ed12ca
-  AWSAuthCore: 6b81b748f2fc0b315cda0acdf55f3a540eb8f9b7
-  AWSCognito: c17db6fff09d0338b8fc72810cb13b185d106bfb
-  AWSCognitoIdentityProvider: 7c8cbd6477fd84ccce33a349a46fb44d07edb252
+  AWSAuthCore: d981abe8fb987a1caa7ac6c76c428de12387dcf4
+  AWSCognito: bad96ee62a670ae0e3d5b6cb93cff04154538272
+  AWSCognitoIdentityProvider: 9502438e528185a2c61b97baf66e2fd2ac6833f3
   AWSCognitoIdentityProviderASF: f94f1a502e72ef3d0a1de93e10bf7a79c8698118
-  AWSCore: 543d1c281ad08401d0a99e181526aa529051a8ad
-  AWSKinesisVideo: 74504b3e52f6b0e104368897e0534ecabfec8f58
-  AWSMobileClient: 5ce94de58005c3042e99d51c2e6bec7956ef2b36
+  AWSCore: 48bb8d477d8137377e86b2ade9eb34a761f42df5
+  AWSKinesisVideo: e9a81a5d261fef241be982a325c2c13fd86bd6c7
+  AWSMobileClient: d752ed540a75d45516c8d5b2054b3f3b6b9e7e65
   DropDown: 8a2116376c1981888557f72ec2ffc9a5e0e456ec
   GoogleWebRTC: cfb83bc346435a17fe06bb05f04ad826b858a7fb
   GrowingTextView: 876bf42005b5e4a4fd740597db12caaf41f0fe6c
-  IQKeyboardManagerSwift: 2dde0fc70110e8eac7ccce2a46fdbec6a850b414
+  IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
   NVActivityIndicatorView: d24b7ebcf80af5dcd994adb650e2b6c93379270f
   QuickLayout: 07b45a72b10083fee3f095990cfed1c1e7b27f0a
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
