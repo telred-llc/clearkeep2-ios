@@ -39,7 +39,12 @@ struct ContactScreen: View {
                     Image(systemName: "video.fill")
                         .onTapGesture {
                             Utils.showAlert(viewHosting: UIHostingController(rootView: VideoCallPopup(type: .join, done: { (roomName) in
-                                
+                                VideoCallMananger.shared.joinRoom(name: roomName) { (isSuccess, result: VideoRespone?) in
+                                    if let result = result {
+                                        self.viewModel.isShowVideoCall = isSuccess
+                                        self.videoResponse = result
+                                    }
+                                }
                             })))
                     }
                     .frame(width: 50, height: 50)
