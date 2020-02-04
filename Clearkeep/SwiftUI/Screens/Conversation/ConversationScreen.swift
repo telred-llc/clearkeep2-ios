@@ -8,6 +8,10 @@ struct ConversationScreen: View {
     @State private var showDetail = false
     @State private var creatingConversationLink: CreateConvoLinkMutation.Data.CreateConvoLink?
     
+    init() {
+        self.viewModel.subscribeNewConvLink(userId: Session.shared.meData?.id ?? "")
+    }
+    
     var body: some View {
         let isNoConversation = viewModel.conversations.isEmpty
         
@@ -45,7 +49,7 @@ struct ConversationScreen: View {
         }
         .navigationBarItems(trailing:
             HStack(spacing: 0) {
-               
+                
                 Image(systemName: "plus")
                     .onTapGesture {
                         Utils.showAlert(viewHosting: UIHostingController(rootView: CreateConversationPopup(type: .normal, createConversation: { (roomName) in

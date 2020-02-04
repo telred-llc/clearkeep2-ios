@@ -17,6 +17,7 @@ final class MessageUtils {
         DispatchQueue.main.async {
             var attributes = EKAttributes()
             attributes.displayMode = .inferred
+            attributes.displayDuration = 3
             attributes.positionConstraints = .fullWidth
             attributes.hapticFeedbackType = .success
             attributes.positionConstraints.safeArea = .empty(fillSafeArea: true)

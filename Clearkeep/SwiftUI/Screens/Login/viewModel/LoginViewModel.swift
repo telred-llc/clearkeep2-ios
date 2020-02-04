@@ -112,4 +112,18 @@ public class LoginViewModel: ObservableObject {
         }
         
     }
+    func logout() {
+        Utils.showProgressHub()
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) {
+            AWSMobileClient.default().signOut { (error) in
+                Utils.hideProgressHub()
+                if let error = error {
+                    MessageUtils.showErrorMessage(error: error)
+                } else {
+                    Session.shared.logout()
+                }
+            }
+        }
+    }
+    
 }
