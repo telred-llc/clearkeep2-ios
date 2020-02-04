@@ -5,6 +5,7 @@ import AWSMobileClient
 import AWSCognitoIdentityProvider
 import WebRTC
 import AWSCore
+import AWSKinesisVideoSignaling
 
 typealias VideoRespone = (webRTC: WebRTCClient, signaling: SignalingClient, localSenderId: String, isMaster: Bool)
 

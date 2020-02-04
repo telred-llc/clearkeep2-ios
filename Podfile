@@ -5,13 +5,14 @@ target 'Clearkeep' do
   # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
   use_frameworks!
   inhibit_all_warnings!
-  $awsVersion = '~> 2.11.1'
 
   pod 'AWSAppSync'
   pod 'AWSCognito'
   pod 'AWSCognitoIdentityProvider'
-  pod 'AWSMobileClient', $awsVersion
+  pod 'AWSMobileClient'
+  pod 'AWSKinesisVideo'
   pod 'IQKeyboardManagerSwift'
+  pod 'AWSKinesisVideoSignaling'
   pod 'GoogleWebRTC', '~> 1.1'
   pod 'Toast-Swift'
   pod 'DropDown'
@@ -19,5 +20,5 @@ target 'Clearkeep' do
   pod 'SwiftEntryKit', '1.2.3' , :inhibit_warnings => true
   pod 'GrowingTextView'
   pod 'SwiftDate', '~> 5.0', :inhibit_warnings => true
-  pod 'Starscream'
+  pod 'Starscream', '~> 3.0'
 end

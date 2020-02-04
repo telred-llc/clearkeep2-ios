@@ -69,9 +69,6 @@ final class SignalingClient {
 
 // Mark: Websocket
 extension SignalingClient: WebSocketDelegate {
-    func didReceive(event: WebSocketEvent, client: WebSocket) {
-        
-    }
     
     func websocketDidConnect(socket _: WebSocketClient) {
         delegate?.signalClientDidConnect(self)
