@@ -27,5 +27,6 @@ class Session {
     func logout() {
         Session.shared.meData = nil
         Session.shared.lastCredential = nil
+        Switcher.updateRootVC(logined: false)
     }
 }

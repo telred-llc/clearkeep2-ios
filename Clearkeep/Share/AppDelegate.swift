@@ -6,15 +6,16 @@ import IQKeyboardManagerSwift
 import AWSMobileClient
 import Toast_Swift
 import SwiftUI
+import AWSKinesisVideo
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
     
     var window: UIWindow?
     var appSyncClient: AWSAppSyncClient?
-
+    
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-        
+        setupCognito()
         setupAppSyncInitialization()
         setupIQKeyboardMananger()
         ToastManager.shared.isQueueEnabled = false
@@ -30,7 +31,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         do {
             // You can choose the directory in which AppSync stores its persistent cache databases
             let cacheConfiguration = try AWSAppSyncCacheConfiguration()
-
+            
             // AppSync configuration & client initialization
             let appSyncServiceConfig = try AWSAppSyncServiceConfig()
             let appSyncConfig = try AWSAppSyncClientConfiguration(appSyncServiceConfig: appSyncServiceConfig,
@@ -38,22 +39,39 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                                                                   cacheConfiguration: cacheConfiguration)
             self.appSyncClient = try AWSAppSyncClient(appSyncConfig: appSyncConfig)
             self.appSyncClient?.apolloClient?.cacheKeyForObject = { $0["id"] }
-
+            
             print("Initialized appsync client.")
         } catch {
             print("Error initializing appsync client. \(error)")
         }
+    }
+    
+    func setupCognito() {
         
-        // State tracking
-        AWSMobileClient.default().addUserStateListener(self) { (userState, info) in
-            switch (userState) {
+        let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USWest2,
+                                                                identityPoolId: Constant.CognitoIdentityPoolID)
+        let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialsProvider)
+        AWSServiceManager.default().defaultServiceConfiguration = configuration
+        // setup service configuration
+        let serviceConfiguration = AWSServiceConfiguration(region: Constant.CognitoIdentityUserPoolRegion, credentialsProvider: nil)
+        
+        // create pool configuration
+        let poolConfiguration = AWSCognitoIdentityUserPoolConfiguration(clientId: Constant.CognitoIdentityUserPoolAppClientId,
+                                                                        clientSecret: Constant.CognitoIdentityUserPoolAppClientSecret,
+                                                                        poolId: Constant.CognitoIdentityUserPoolId)
+        
+        // initialize user pool client
+        AWSCognitoIdentityUserPool.register(with: serviceConfiguration, userPoolConfiguration: poolConfiguration, forKey: Constant.AWSCognitoUserPoolsSignInProviderKey)
+        
+        AWSMobileClient.default().initialize { (state, error) in
+            switch state {
             case .signedIn:
                 print("user is signed in.")
-                print(info)
             default:
                 Switcher.updateRootVC(logined: false)
             }
         }
+     
     }
     
     func setupIQKeyboardMananger() {

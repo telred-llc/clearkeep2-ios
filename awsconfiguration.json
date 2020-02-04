@@ -1,25 +1,25 @@
 {
     "UserAgent": "aws-amplify/cli",
-    "Version": "0.1.0",
-    "IdentityManager": {
-        "Default": {}
-    },
-    "CredentialsProvider": {
-        "CognitoIdentity": {
-            "Default": {
-                "PoolId": "us-west-2:15ca6845-8457-4344-8722-a3207bb58fa7",
-                "Region": "us-west-2"
-            }
-        }
-    },
-    "CognitoUserPool": {
-        "Default": {
-            "PoolId": "us-west-2_aPJPmiYme",
-            "AppClientId": "6e64simkbl26gkl70429jtu9kn",
-            "AppClientSecret": "19tahbccjg2cjk30bkvl8r0d98rhj2vhmje1v2k2f4ku4aesf42g",
-            "Region": "us-west-2"
-        }
-    },
+    "Version": "1.0",
+     "IdentityManager": {
+         "Default": {}
+     },
+     "CredentialsProvider": {
+         "CognitoIdentity": {
+             "Default": {
+                 "PoolId": "us-west-2:15ca6845-8457-4344-8722-a3207bb58fa7",
+                 "Region": "us-west-2"
+             }
+         }
+     },
+     "CognitoUserPool": {
+         "Default": {
+             "PoolId": "us-west-2_aPJPmiYme",
+             "AppClientId": "6e64simkbl26gkl70429jtu9kn",
+             "AppClientSecret": "19tahbccjg2cjk30bkvl8r0d98rhj2vhmje1v2k2f4ku4aesf42g",
+             "Region": "us-west-2"
+         }
+     },
     "Auth": {
         "Default": {
             "authenticationFlowType": "USER_SRP_AUTH"

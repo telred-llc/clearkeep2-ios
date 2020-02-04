@@ -45,7 +45,18 @@
 		B283DEFB23D69F7D0045690D /* ForgotPasswordScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B283DEFA23D69F7D0045690D /* ForgotPasswordScreen.swift */; };
 		B283DEFE23D6A2D20045690D /* ConfirmForgotPassScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B283DEFD23D6A2D20045690D /* ConfirmForgotPassScreen.swift */; };
 		B284350323D80067008CC363 /* UserItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B284350123D80067008CC363 /* UserItemView.swift */; };
+		B299FE9F23E8150500FD9536 /* VideoCallPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299FE9E23E8150500FD9536 /* VideoCallPopup.swift */; };
+		B299FEA223E8191300FD9536 /* VideoCallManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299FEA123E8191300FD9536 /* VideoCallManager.swift */; };
+		B299FEA423E8284D00FD9536 /* KVSSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299FEA323E8284D00FD9536 /* KVSSigner.swift */; };
+		B299FEAA23E830F300FD9536 /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299FEA923E830F300FD9536 /* WebRTCClient.swift */; };
+		B299FEAC23E830FC00FD9536 /* SignalingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299FEAB23E830FC00FD9536 /* SignalingClient.swift */; };
 		B2B226FA23D1A1BC00420C8E /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */; };
+		B2B8E4B823E906CC00EE1F55 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B8E4B723E906CC00EE1F55 /* Message.swift */; };
+		B2B8E4BA23E906E100EE1F55 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B8E4B923E906E100EE1F55 /* Event.swift */; };
+		B2B8E4D123E9101100EE1F55 /* AWSKinesisVideo.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = B2B8E4D023E9101100EE1F55 /* AWSKinesisVideo.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		B2B8E4D323E9148000EE1F55 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B8E4D223E9148000EE1F55 /* VideoViewController.swift */; };
+		B2B8E4D623E914CA00EE1F55 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B8E4D523E914CA00EE1F55 /* VideoView.swift */; };
+		B2B8E4D823E9543600EE1F55 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B8E4D723E9543600EE1F55 /* VideoViewController.xib */; };
 		B2BA299223D0663A005E79EA /* GrowTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299123D06639005E79EA /* GrowTextView.swift */; };
 		B2BA299423D06999005E79EA /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299323D06999005E79EA /* SplashScreen.swift */; };
 		B2BA299823D06B57005E79EA /* CreateConversationPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299723D06B57005E79EA /* CreateConversationPopup.swift */; };
@@ -56,6 +67,20 @@
 		B2CC719123D7EEFF00163620 /* ListContactView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CC719023D7EEFF00163620 /* ListContactView.swift */; };
 		B2CC719423D7EF3A00163620 /* ListContactViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2CC719323D7EF3A00163620 /* ListContactViewModel.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		B2B8E4CA23E90DA800EE1F55 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				B2B8E4D123E9101100EE1F55 /* AWSKinesisVideo.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		0B97F7CF2B31FABCFE245444 /* Pods_Clearkeep.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Clearkeep.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -100,7 +125,18 @@
 		B283DEFA23D69F7D0045690D /* ForgotPasswordScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordScreen.swift; sourceTree = "<group>"; };
 		B283DEFD23D6A2D20045690D /* ConfirmForgotPassScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmForgotPassScreen.swift; sourceTree = "<group>"; };
 		B284350123D80067008CC363 /* UserItemView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserItemView.swift; path = Clearkeep/SwiftUI/Screens/Contact/UserItemView.swift; sourceTree = SOURCE_ROOT; };
+		B299FE9E23E8150500FD9536 /* VideoCallPopup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallPopup.swift; sourceTree = "<group>"; };
+		B299FEA123E8191300FD9536 /* VideoCallManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoCallManager.swift; sourceTree = "<group>"; };
+		B299FEA323E8284D00FD9536 /* KVSSigner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVSSigner.swift; sourceTree = "<group>"; };
+		B299FEA923E830F300FD9536 /* WebRTCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
+		B299FEAB23E830FC00FD9536 /* SignalingClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalingClient.swift; sourceTree = "<group>"; };
 		B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
+		B2B8E4B723E906CC00EE1F55 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
+		B2B8E4B923E906E100EE1F55 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
+		B2B8E4D023E9101100EE1F55 /* AWSKinesisVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = AWSKinesisVideo.framework; sourceTree = "<group>"; };
+		B2B8E4D223E9148000EE1F55 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
+		B2B8E4D523E914CA00EE1F55 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
+		B2B8E4D723E9543600EE1F55 /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
 		B2BA299123D06639005E79EA /* GrowTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrowTextView.swift; sourceTree = "<group>"; };
 		B2BA299323D06999005E79EA /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashScreen.swift; path = Clearkeep/SwiftUI/Screens/Login/SplashScreen.swift; sourceTree = SOURCE_ROOT; };
 		B2BA299723D06B57005E79EA /* CreateConversationPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateConversationPopup.swift; sourceTree = "<group>"; };
@@ -235,6 +271,7 @@
 		B22E236823CC47A000D63F77 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				B299FEA023E8190000FD9536 /* VideoCall */,
 				B2CC718F23D7EEDC00163620 /* AddUser */,
 				B283DEF923D69F640045690D /* ForgotPassword */,
 				B226ABDF23CE21DB00BEC69C /* Confirm */,
@@ -256,6 +293,7 @@
 				B2BA299123D06639005E79EA /* GrowTextView.swift */,
 				B22E236C23CC497300D63F77 /* FlatTextField.swift */,
 				B209961E23D5AAFD00098678 /* CustomScrollView.swift */,
+				B299FE9E23E8150500FD9536 /* VideoCallPopup.swift */,
 			);
 			path = BaseComponents;
 			sourceTree = "<group>";
@@ -377,6 +415,30 @@
 			path = ConfirmForgot;
 			sourceTree = "<group>";
 		};
+		B299FEA023E8190000FD9536 /* VideoCall */ = {
+			isa = PBXGroup;
+			children = (
+				B2B8E4D423E9148600EE1F55 /* Supportfile */,
+				B2B8E4D523E914CA00EE1F55 /* VideoView.swift */,
+			);
+			path = VideoCall;
+			sourceTree = "<group>";
+		};
+		B2B8E4D423E9148600EE1F55 /* Supportfile */ = {
+			isa = PBXGroup;
+			children = (
+				B2B8E4D723E9543600EE1F55 /* VideoViewController.xib */,
+				B2B8E4D223E9148000EE1F55 /* VideoViewController.swift */,
+				B2B8E4B923E906E100EE1F55 /* Event.swift */,
+				B2B8E4B723E906CC00EE1F55 /* Message.swift */,
+				B299FEAB23E830FC00FD9536 /* SignalingClient.swift */,
+				B299FEA923E830F300FD9536 /* WebRTCClient.swift */,
+				B299FEA323E8284D00FD9536 /* KVSSigner.swift */,
+				B299FEA123E8191300FD9536 /* VideoCallManager.swift */,
+			);
+			path = Supportfile;
+			sourceTree = "<group>";
+		};
 		B2BA299B23D06CDC005E79EA /* viewModel */ = {
 			isa = PBXGroup;
 			children = (
@@ -405,6 +467,7 @@
 		B9094B545BFE044A8999A56B /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				B2B8E4D023E9101100EE1F55 /* AWSKinesisVideo.framework */,
 				0B97F7CF2B31FABCFE245444 /* Pods_Clearkeep.framework */,
 			);
 			name = Frameworks;
@@ -422,6 +485,7 @@
 				8562184321E706B3004D53A7 /* Frameworks */,
 				8562184421E706B3004D53A7 /* Resources */,
 				748F2E215DCCEE9989557CD3 /* [CP] Embed Pods Frameworks */,
+				B2B8E4CA23E90DA800EE1F55 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -474,6 +538,7 @@
 				8562185D21E70B1F004D53A7 /* awsconfiguration.json in Resources */,
 				8562185421E706B5004D53A7 /* LaunchScreen.storyboard in Resources */,
 				8562185121E706B5004D53A7 /* Assets.xcassets in Resources */,
+				B2B8E4D823E9543600EE1F55 /* VideoViewController.xib in Resources */,
 				8562184F21E706B3004D53A7 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -529,10 +594,13 @@
 				B26A3D6523CDA9AF00FAAC0D /* MessageItemView.swift in Sources */,
 				B22E236D23CC497300D63F77 /* FlatTextField.swift in Sources */,
 				85DE7F0A21F06DDC00F74D0D /* CQLError.swift in Sources */,
+				B299FE9F23E8150500FD9536 /* VideoCallPopup.swift in Sources */,
 				AAB3DBBE21F0407B00B22A78 /* LoadingView.swift in Sources */,
+				B2B8E4D323E9148000EE1F55 /* VideoViewController.swift in Sources */,
 				B2BA299823D06B57005E79EA /* CreateConversationPopup.swift in Sources */,
 				B2BA299D23D06CEC005E79EA /* ContactViewModel.swift in Sources */,
 				B226ABE123CE21EE00BEC69C /* ConfirmationScreen.swift in Sources */,
+				B2B8E4D623E914CA00EE1F55 /* VideoView.swift in Sources */,
 				B22E237423CC4C9C00D63F77 /* TextFieldModifier.swift in Sources */,
 				B2B226FA23D1A1BC00420C8E /* KeyboardManager.swift in Sources */,
 				B26A3D6323CD95F100FAAC0D /* DetailConversationScreen.swift in Sources */,
@@ -544,9 +612,13 @@
 				B2701F8123CC759E001DC21C /* ContactScreen.swift in Sources */,
 				B226ABDE23CE1FEB00BEC69C /* Utils.swift in Sources */,
 				B2701F8323CC75A9001DC21C /* ProfileScreen.swift in Sources */,
+				B299FEA223E8191300FD9536 /* VideoCallManager.swift in Sources */,
 				8562184A21E706B3004D53A7 /* AppDelegate.swift in Sources */,
+				B2B8E4BA23E906E100EE1F55 /* Event.swift in Sources */,
 				B226ABE423CE221300BEC69C /* ConfirmationViewModel.swift in Sources */,
 				B2CC719123D7EEFF00163620 /* ListContactView.swift in Sources */,
+				B299FEA423E8284D00FD9536 /* KVSSigner.swift in Sources */,
+				B2B8E4B823E906CC00EE1F55 /* Message.swift in Sources */,
 				B26A3D7223CDB8CA00FAAC0D /* PhoneCodeModel.swift in Sources */,
 				85E1A19121EDB9A50097DA19 /* Session.swift in Sources */,
 				B22E237923CC5B2900D63F77 /* TabbarScreen.swift in Sources */,
@@ -562,6 +634,8 @@
 				B26A3D6823CDADC000FAAC0D /* DetailConversationViewModel.swift in Sources */,
 				B209961F23D5AAFD00098678 /* CustomScrollView.swift in Sources */,
 				B2CC719423D7EF3A00163620 /* ListContactViewModel.swift in Sources */,
+				B299FEAA23E830F300FD9536 /* WebRTCClient.swift in Sources */,
+				B299FEAC23E830FC00FD9536 /* SignalingClient.swift in Sources */,
 				8562186C21E75D6B004D53A7 /* Constants.swift in Sources */,
 				B2701F8523CC7977001DC21C /* Extension.swift in Sources */,
 				B26A3D7023CDB8C500FAAC0D /* CountryPicker.swift in Sources */,
@@ -718,6 +792,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = H4C7478UQW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Clearkeep/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -741,6 +819,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = H4C7478UQW;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = "$(SRCROOT)/Clearkeep/Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (

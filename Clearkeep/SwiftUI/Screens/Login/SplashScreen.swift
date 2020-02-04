@@ -19,7 +19,7 @@ struct SplashScreen: View {
         DispatchQueue.main.async {
             switch AWSMobileClient.default().currentUserState {
             case .signedIn:
-                Switcher.updateRootVC(logined: true)
+                self.viewModel.checkIfUserExists(username: Session.shared.lastCredential?.0 ?? "")
             default:
                 // auto signin
                 if let lastCredential = Session.shared.lastCredential,

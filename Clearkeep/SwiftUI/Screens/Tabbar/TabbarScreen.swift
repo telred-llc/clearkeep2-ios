@@ -25,8 +25,6 @@ struct TabbarScreen: View {
     private let conversationScreen = ConversationScreen()
     private let contactScreen = ContactScreen()
     private let profileScreen = ProfileScreen()
-    @State private var detailModel: ConversationModel?
-    @State private var isShowDetail = false
     @ObservedObject private var detailMananger = DetailMananger.shared
     
     var body: some View {

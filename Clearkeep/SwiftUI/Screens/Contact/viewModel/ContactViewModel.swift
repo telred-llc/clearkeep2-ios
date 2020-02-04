@@ -9,6 +9,7 @@ typealias UserModel = ListUsersQuery.Data.ListUser.Item
 class ContactViewModel: ObservableObject {
     @Published var users: [UserModel] = []
     @Published var isSuccess = false
+    @Published var isShowVideoCall = false
     private var userCancellable = Set<AnyCancellable>()
     private var convCancellable = Set<AnyCancellable>()
     private var meData: GetUserQuery.Data.GetUser? = Session.shared.meData

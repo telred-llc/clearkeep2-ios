@@ -1,43 +1,32 @@
 
 import SwiftUI
 import Foundation
-
-enum ConversationPopupType {
-    case normal, user
+enum VideoCallPopupType {
+    case create, join
 }
-struct CreateConversationPopup: View {
+
+struct VideoCallPopup: View {
     @ObservedObject private var keyboard = KeyboardManager()
     @State private var text: String = ""
     @State private var isAnima = false
-    var type: ConversationPopupType?
-    var createConversation: ((_ roomName: String) -> Void)?
+    var type: VideoCallPopupType?
+    var done: ((_ roomName: String) -> Void)?
     
-    init(type: ConversationPopupType) {
+    init(type: VideoCallPopupType) {
         self.type = type
     }
     
-    init(type: ConversationPopupType, createConversation: ((_ roomName: String) -> Void)? = nil) {
+    init(type: VideoCallPopupType, done: ((_ roomName: String) -> Void)? = nil) {
         self.type = type
-        self.createConversation = createConversation
+        self.done = done
     }
     var body: some View {
         
         VStack {
-            Text("Create new conversation").font(.system(size: 18, weight: .bold))
-            if type == ConversationPopupType.normal {
-                
-                FlatTextField(title: "Conversation name", text: $text)
-                    .font(.system(size: 12, weight: .medium))
-                    .modifier(TextFieldLoginModifier())
-                
-            } else {
-                Text("Create a conversation with this user")
-                    .font(.system(size: 12, weight: .medium))
-                    .padding()
-                FlatTextField(title: "Conversation name", text: $text)
+            Text(type == VideoCallPopupType.create ? "Create Video Room" : "Join Room").font(.system(size: 18, weight: .bold))
+            FlatTextField(title: "Room name", text: $text)
                 .font(.system(size: 12, weight: .medium))
                 .modifier(TextFieldLoginModifier())
-            }
             
             HStack {
                 Text("CANCEL")
@@ -56,11 +45,11 @@ struct CreateConversationPopup: View {
                     .background(Color("cyanColor"))
                     .cornerRadius(5)
                     .onTapGesture {
-                        self.createConversation?(self.text)
+                        self.done?(self.text)
                         Utils.dismissAlert()
                 }
             }
-            .padding(.vertical, 8)            
+            .padding(.vertical, 8)
             
         }
         .onAppear() {

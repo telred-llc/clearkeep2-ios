@@ -44,14 +44,17 @@ struct ConversationScreen: View {
             }
         }
         .navigationBarItems(trailing:
-            Image(systemName: "plus")
-                .onTapGesture {
-                    Utils.showAlert(viewHosting: UIHostingController(rootView: CreateConversationPopup(type: .normal, createConversation: { (roomName) in
-                        self.viewModel.roomName = roomName
-                        self.viewModel.showUsers = true
-                    })))
+            HStack(spacing: 0) {
+               
+                Image(systemName: "plus")
+                    .onTapGesture {
+                        Utils.showAlert(viewHosting: UIHostingController(rootView: CreateConversationPopup(type: .normal, createConversation: { (roomName) in
+                            self.viewModel.roomName = roomName
+                            self.viewModel.showUsers = true
+                        })))
+                }
+                .frame(width: 50, height: 50)
             }
-            .frame(width: 50, height: 50)
             .offset(x: 12, y: 0)
         )
             .navigationBarTitle(Text("Conversations"), displayMode: .inline)
