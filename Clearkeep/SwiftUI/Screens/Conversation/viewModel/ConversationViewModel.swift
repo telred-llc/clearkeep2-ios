@@ -25,7 +25,7 @@ final class ConversationViewModel: ObservableObject {
     init() {
         self.conversations = self.meData?.conversations?.items?.compactMap({$0}) ?? []
         self.conversations.sort { (lItem, rItem) -> Bool in
-            guard let lTime = lItem.createdAt?.toDate(), let rTime = rItem.createdAt?.toDate() else {
+            guard let lTime = Int(lItem.createdAt ?? ""), let rTime = Int(rItem.createdAt ?? "") else {
                 return false
             }
             return lTime > rTime
@@ -44,13 +44,13 @@ final class ConversationViewModel: ObservableObject {
                         }
                         let newConvLink = GetUserQuery.Data.GetUser.Conversation.Item.init(snapshot: newConvoLink.snapshot)
                         self.meData?.conversations?.items?.append(newConvLink)
-                        self.conversations = self.meData?.conversations?.items?.compactMap({$0}) ?? []
-                        self.conversations.sort { (lItem, rItem) -> Bool in
-                            guard let lTime = lItem.createdAt?.toDate(), let rTime = rItem.createdAt?.toDate() else {
+                        self.meData?.conversations?.items?.sort { (lItem, rItem) -> Bool in
+                            guard let lTime = Int(lItem?.createdAt ?? ""), let rTime = Int(rItem?.createdAt ?? "") else {
                                 return false
                             }
                             return lTime > rTime
                         }
+                        self.conversations = self.meData?.conversations?.items?.compactMap({$0}) ?? []
                         
                         if let creatingConversationLink = Session.shared.lastConvLink,
                             creatingConversationLink.convoLinkUserId == newConvoLink.convoLinkUserId {
