@@ -63,18 +63,6 @@ struct ConversationScreen: View {
         )
             .navigationBarTitle(Text("Conversations"), displayMode: .inline)
     }
-    
-    private func didReceiveConver(noti: Notification) {
-        if let data = noti.userInfo {
-            if let model = data["newConversation"] as? ConversationModel {
-                DispatchQueue.main.async {
-                    self.viewModel.modelDetail = model
-                    self.viewModel.showDetail = true
-                    
-                }
-            }
-        }
-    }
 }
 
 struct ConversationScreen_Previews: PreviewProvider {

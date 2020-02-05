@@ -13,10 +13,11 @@ struct ForgotPasswordScreen: View {
                 .modifier(TextFieldLoginModifier())
                 .padding(.top, 70)
             
-            Button("SUBMIT") {
-                self.submit()
+            Button("SUBMIT") {}
+                .modifier(ButtonLoginModifier())
+                .onTapGesture {
+                    self.submit()
             }
-            .modifier(ButtonLoginModifier())
             Spacer()
         }
         .padding(30)

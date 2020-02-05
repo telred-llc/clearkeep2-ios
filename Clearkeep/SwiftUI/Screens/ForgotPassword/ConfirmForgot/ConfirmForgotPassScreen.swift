@@ -16,10 +16,11 @@ struct ConfirmForgotPassScreen: View {
                 FlatTextField(title: "New Password", text: $newPass)
                     .modifier(TextFieldLoginModifier())
                 
-                Button("Submit") {
-                    self.submit()
+                Button("Submit") {}
+                    .modifier(ButtonLoginModifier())
+                    .onTapGesture {
+                        self.submit()
                 }
-                .modifier(ButtonLoginModifier())
                 
                 Button("Resend verifycation code") {
                     self.resendCode()
@@ -31,7 +32,7 @@ struct ConfirmForgotPassScreen: View {
         }
         .padding(30)
         .navigationBarTitle("Confirm Password", displayMode: .inline)
-
+        
     }
     
     private func resendCode() {

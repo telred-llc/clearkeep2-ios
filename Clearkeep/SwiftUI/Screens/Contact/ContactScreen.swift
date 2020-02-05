@@ -73,17 +73,6 @@ struct ContactScreen: View {
         }
         
     }
-    
-    private func didReceiveConver(noti: Notification) {
-        if let data = noti.userInfo {
-            if let model = data["newConversation"] as? ConversationModel {
-                DispatchQueue.main.async {
-                    self.viewModel.modelDetail = model
-                    self.viewModel.isSuccess = true
-                }
-            }
-        }
-    }
 }
 
 struct ContactScreen_Previews: PreviewProvider {

@@ -43,7 +43,7 @@ struct CreateConversationPopup: View {
                 Text("CANCEL")
                     .font(.system(size: 14, weight: .medium))
                     .frame(maxWidth: .infinity, maxHeight: 50)
-                    .background(Color.gray.opacity(0.2))
+                    .background(Color("background_textfield"))
                     .cornerRadius(5)
                     .onTapGesture {
                         Utils.dismissAlert()
@@ -53,7 +53,7 @@ struct CreateConversationPopup: View {
                     .font(.system(size: 14, weight: .medium))
                     .foregroundColor(Color.white)
                     .frame(maxWidth: .infinity, maxHeight: 50)
-                    .background(Color("cyanColor"))
+                    .background(Color("background_textfield"))
                     .cornerRadius(5)
                     .onTapGesture {
                         self.createConversation?(self.text)

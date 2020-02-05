@@ -15,11 +15,11 @@ struct LoginScreen: View {
                     }
                     LogoImage().padding(.bottom, 20)
                     FlatTextField(title: "Username", text: $viewModel.username)
+                        .padding(.vertical, 8)
                         .modifier(TextFieldLoginModifier())
-                    
                     FlatTextField(title: "Password", text: $viewModel.password, isSecure: true)
+                        .padding(.vertical, 8)
                         .modifier(TextFieldLoginModifier())
-                    
                     Text("LOGIN")
                         .modifier(ButtonLoginModifier())
                         .onTapGesture {

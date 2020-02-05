@@ -42,10 +42,11 @@ struct RegisterScreen: View {
                     FlatTextField(title: "Phone*", text: $viewModel.phone)
                         .modifier(TextFieldLoginModifier())
                     
-                    Button("REGISTER") {
+                    Button("REGISTER") {}
+                    .modifier(ButtonLoginModifier())
+                    .onTapGesture {
                         self.viewModel.register()
                     }
-                    .modifier(ButtonLoginModifier())
                     
                     HStack(spacing: 4) {
                         Text("Dou you have an account?")
