@@ -56,6 +56,7 @@
 		B2B8E4D323E9148000EE1F55 /* VideoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B8E4D223E9148000EE1F55 /* VideoViewController.swift */; };
 		B2B8E4D623E914CA00EE1F55 /* VideoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B8E4D523E914CA00EE1F55 /* VideoView.swift */; };
 		B2B8E4D823E9543600EE1F55 /* VideoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B2B8E4D723E9543600EE1F55 /* VideoViewController.xib */; };
+		B2B8E4DA23EA9A6C00EE1F55 /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B8E4D923EA9A6C00EE1F55 /* View+Extension.swift */; };
 		B2BA299223D0663A005E79EA /* GrowTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299123D06639005E79EA /* GrowTextView.swift */; };
 		B2BA299423D06999005E79EA /* SplashScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299323D06999005E79EA /* SplashScreen.swift */; };
 		B2BA299823D06B57005E79EA /* CreateConversationPopup.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2BA299723D06B57005E79EA /* CreateConversationPopup.swift */; };
@@ -134,6 +135,7 @@
 		B2B8E4D223E9148000EE1F55 /* VideoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoViewController.swift; sourceTree = "<group>"; };
 		B2B8E4D523E914CA00EE1F55 /* VideoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoView.swift; sourceTree = "<group>"; };
 		B2B8E4D723E9543600EE1F55 /* VideoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = VideoViewController.xib; sourceTree = "<group>"; };
+		B2B8E4D923EA9A6C00EE1F55 /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		B2BA299123D06639005E79EA /* GrowTextView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = GrowTextView.swift; sourceTree = "<group>"; };
 		B2BA299323D06999005E79EA /* SplashScreen.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SplashScreen.swift; path = Clearkeep/SwiftUI/Screens/Login/SplashScreen.swift; sourceTree = SOURCE_ROOT; };
 		B2BA299723D06B57005E79EA /* CreateConversationPopup.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CreateConversationPopup.swift; sourceTree = "<group>"; };
@@ -234,6 +236,7 @@
 				B2701F8423CC7977001DC21C /* Extension.swift */,
 				B209961A23D5555500098678 /* Date+Extension.swift */,
 				B209961C23D5566200098678 /* String+Extension.swift */,
+				B2B8E4D923EA9A6C00EE1F55 /* View+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -619,6 +622,7 @@
 				85E1A19121EDB9A50097DA19 /* Session.swift in Sources */,
 				B22E237923CC5B2900D63F77 /* TabbarScreen.swift in Sources */,
 				B26A3D7423CDC76000FAAC0D /* MessageUtils.swift in Sources */,
+				B2B8E4DA23EA9A6C00EE1F55 /* View+Extension.swift in Sources */,
 				B283DEFE23D6A2D20045690D /* ConfirmForgotPassScreen.swift in Sources */,
 				B2C935D823CD6C6B00202204 /* ChatConversationItemView.swift in Sources */,
 				B26A3D6E23CDB87C00FAAC0D /* RegisterViewModel.swift in Sources */,

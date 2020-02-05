@@ -52,10 +52,10 @@ struct ConversationScreen: View {
                 
                 Image(systemName: "plus")
                     .onTapGesture {
-                        Utils.showAlert(viewHosting: UIHostingController(rootView: CreateConversationPopup(type: .normal, createConversation: { (roomName) in
+                        Utils.showAlert(view: CreateConversationPopup(type: .normal, createConversation: { (roomName) in
                             self.viewModel.roomName = roomName
                             self.viewModel.showUsers = true
-                        })))
+                            }).asAnyView())
                 }
                 .frame(width: 50, height: 50)
             }

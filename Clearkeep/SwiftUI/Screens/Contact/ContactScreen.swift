@@ -20,11 +20,11 @@ struct ContactScreen: View {
             ScrollView(.vertical, showsIndicators: true) {
                 ForEach(viewModel.users , id: \.id) { (data: UserModel) in
                     ContactItemView(model: data, didSelected: { id in
-                        Utils.showAlert(viewHosting: UIHostingController(rootView: CreateConversationPopup(type: .user, createConversation: { (roomName) in
+                        Utils.showAlert(view: CreateConversationPopup(type: .user, createConversation: { (roomName) in
                             self.viewModel.createCVandLink(name: roomName, ownerId: Session.shared.meData?.id ?? "", otherUserId: data.id) { (success, result) in
                                 print("Create Conversation with user finish:", success)
                             }
-                        })))
+                            }).asAnyView())
                     })
                 }
             }
@@ -38,20 +38,20 @@ struct ContactScreen: View {
                 HStack(spacing: 0) {
                     Image(systemName: "video.fill")
                         .onTapGesture {
-                            Utils.showAlert(viewHosting: UIHostingController(rootView: VideoCallPopup(type: .join, done: { (roomName) in
+                            Utils.showAlert(view: VideoCallPopup(type: .join, done: { (roomName) in
                                 VideoCallMananger.shared.joinRoom(name: roomName) { (isSuccess, result: VideoRespone?) in
                                     if let result = result {
                                         self.viewModel.isShowVideoCall = isSuccess
                                         self.videoResponse = result
                                     }
                                 }
-                            })))
+                            }).asAnyView())
                     }
                     .frame(width: 50, height: 50)
                     
                     Image(systemName: "video.badge.plus.fill")
                         .onTapGesture {
-                            Utils.showAlert(viewHosting: UIHostingController(rootView: VideoCallPopup(type: .create, done: { (roomName) in
+                            Utils.showAlert(view: VideoCallPopup(type: .create, done: { (roomName) in
                                 VideoCallMananger.shared.createRoom(name: roomName) { (isSuccess, result: VideoRespone?) in
                                     if let result = result {
                                         self.viewModel.isShowVideoCall = isSuccess
@@ -59,7 +59,7 @@ struct ContactScreen: View {
                                     }
                                     
                                 }
-                            })))
+                                }).asAnyView())
                     }
                     .frame(width: 50, height: 50)
                     .offset(x: 0, y: 2)
@@ -80,4 +80,3 @@ struct ContactScreen_Previews: PreviewProvider {
         ContactScreen()
     }
 }
-

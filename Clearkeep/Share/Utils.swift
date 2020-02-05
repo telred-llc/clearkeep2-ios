@@ -40,9 +40,10 @@ class Utils {
         }
     }
     
-    static func showAlert(viewHosting: UIViewController) {
+    static func showAlert(view: AnyView) {
         //        viewHosting.view.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(Utils.dissmissAlert)))
-        viewHosting.view.backgroundColor = UIColor.black.withAlphaComponent(0.3)
+        let viewHosting = UIHostingController(rootView: view)
+        viewHosting.view.backgroundColor = UIColor.black.withAlphaComponent(0.7)
         viewHosting.modalTransitionStyle = .crossDissolve
         viewHosting.modalPresentationStyle = UIModalPresentationStyle.overCurrentContext
         UIApplication.shared.windows.first?.rootViewController?.present(viewHosting, animated: true)
