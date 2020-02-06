@@ -34,44 +34,46 @@ struct ContactScreen: View {
         })
             .frame(maxWidth: .infinity, maxHeight: .infinity)
             .navigationBarTitle(Text("Users"), displayMode: .inline)
-            .navigationBarItems(trailing:
-                HStack(spacing: 0) {
-                    Image(systemName: "video.fill")
-                        .onTapGesture {
-                            Utils.showAlert(view: VideoCallPopup(type: .join, done: { (roomName) in
-                                VideoCallMananger.shared.joinRoom(name: roomName) { (isSuccess, result: VideoRespone?) in
-                                    if let result = result {
-                                        self.viewModel.isShowVideoCall = isSuccess
-                                        self.videoResponse = result
-                                    }
-                                }
-                            }).asAnyView())
-                    }
-                    .frame(width: 50, height: 50)
-                    
-                    Image(systemName: "video.badge.plus.fill")
-                        .onTapGesture {
-                            Utils.showAlert(view: VideoCallPopup(type: .create, done: { (roomName) in
-                                VideoCallMananger.shared.createRoom(name: roomName) { (isSuccess, result: VideoRespone?) in
-                                    if let result = result {
-                                        self.viewModel.isShowVideoCall = isSuccess
-                                        self.videoResponse = result
-                                    }
-                                    
-                                }
-                                }).asAnyView())
-                    }
-                    .frame(width: 50, height: 50)
-                    .offset(x: 0, y: 2)
-                }
-                .offset(x: 12, y: 0)
-        )
+            .navigationBarItems(trailing: Text(""))
             .onAppear() {
                 if self.viewModel.users.isEmpty {
                     self.viewModel.getUser()
                 }
         }
         
+    }
+    
+    func renderItem() -> some View {
+        HStack(spacing: 0) {
+            Image(systemName: "video.fill")
+                .onTapGesture {
+                    Utils.showAlert(view: VideoCallPopup(type: .join, done: { (roomName) in
+                        VideoCallMananger.shared.joinRoom(name: roomName) { (isSuccess, result) in
+                            if let result = result {
+                                self.viewModel.isShowVideoCall = isSuccess
+                                self.videoResponse = result
+                            }
+                        }
+                        
+                    }).asAnyView())
+            }
+            .frame(width: 50, height: 50)
+            
+            Image(systemName: "video.badge.plus.fill")
+                .onTapGesture {
+                    Utils.showAlert(view: VideoCallPopup(type: .create, done: { (roomName) in
+                        VideoCallMananger.shared.joinRoom(name: roomName) { (isSuccess, result) in
+                            if let result = result {
+                                self.viewModel.isShowVideoCall = isSuccess
+                                self.videoResponse = result
+                            }
+                        }
+                        }).asAnyView())
+            }
+            .frame(width: 50, height: 50)
+            .offset(x: 0, y: 2)
+        }
+        .offset(x: 12, y: 0)
     }
 }
 

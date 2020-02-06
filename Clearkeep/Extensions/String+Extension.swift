@@ -41,4 +41,8 @@ extension String {
         }
         return dateUnwrap
     }
+    
+    func trim() -> String {
+        return trimmingCharacters(in: NSCharacterSet.whitespaces)
+    }
 }

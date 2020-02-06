@@ -5,22 +5,22 @@ import AWSCognitoIdentityProvider
 struct Constant {
     static let globalDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
     
-    static let CognitoIdentityUserPoolRegion = AWSRegionType.USWest2
-    static let CognitoIdentityUserPoolId = "us-west-2_aPJPmiYme"
-    static let CognitoIdentityUserPoolAppClientId = "6e64simkbl26gkl70429jtu9kn"
-    static let CognitoIdentityUserPoolAppClientSecret = "19tahbccjg2cjk30bkvl8r0d98rhj2vhmje1v2k2f4ku4aesf42g"
-
-    static let AWSCognitoUserPoolsSignInProviderKey = "UserPool"
-    static let CognitoIdentityPoolID = "us-west-2:15ca6845-8457-4344-8722-a3207bb58fa7"
-
-    static let AWSKinesisVideoEndpoint = "https://kinesisvideo.us-west-2.amazonaws.com"
-    static let AWSKinesisVideoKey = "kinesisvideo"
-    
-    static let videoProtocols =  ["WSS", "HTTPS"]
-    static let ConnectAsMaster = "connect-as-master"
-    static let ConnectAsViewer = "connect-as-viewer"
-    static let MasterRole = "MASTER"
-    static let ViewerRole = "VIEWER"
+//    static let CognitoIdentityUserPoolRegion = AWSRegionType.USWest2
+//    static let CognitoIdentityUserPoolId = "us-west-2_aPJPmiYme"
+//    static let CognitoIdentityUserPoolAppClientId = "6e64simkbl26gkl70429jtu9kn"
+//    static let CognitoIdentityUserPoolAppClientSecret = "19tahbccjg2cjk30bkvl8r0d98rhj2vhmje1v2k2f4ku4aesf42g"
+//
+//    static let AWSCognitoUserPoolsSignInProviderKey = "UserPool"
+//    static let CognitoIdentityPoolID = "us-west-2:15ca6845-8457-4344-8722-a3207bb58fa7"
+//
+//    static let AWSKinesisVideoEndpoint = "https://kinesisvideo.us-west-2.amazonaws.com"
+//    static let AWSKinesisVideoKey = "kinesisvideo"
+//    
+//    static let videoProtocols =  ["WSS", "HTTPS"]
+//    static let ConnectAsMaster = "connect-as-master"
+//    static let ConnectAsViewer = "connect-as-viewer"
+//    static let MasterRole = "MASTER"
+//    static let ViewerRole = "VIEWER"
     
     static let countries = ["AF": ["Afghanistan","93"],
                      "AX": ["Aland Islands","358"],
@@ -271,3 +271,52 @@ struct Constant {
                      "ZM": ["Zambia","260"],
                      "ZW": ["Zimbabwe","263"]]
 }
+
+
+// AWSv4 signer constants
+let signerAlgorithm = "AWS4-HMAC-SHA256"
+let awsRequestTypeKey = "aws4_request"
+let xAmzAlgorithm = "X-Amz-Algorithm"
+let xAmzCredential = "X-Amz-Credential"
+let xAmzDate = "X-Amz-Date"
+let xAmzExpiresKey = "X-Amz-Expires"
+let xAmzExpiresValue = "299"
+let xAmzSecurityToken = "X-Amz-Security-Token"
+let xAmzSignature = "X-Amz-Signature"
+let xAmzSignedHeaders = "X-Amz-SignedHeaders"
+let newlineDelimiter = "\n"
+let slashDelimiter = "/"
+let colonDelimiter = ":"
+let plusDelimiter = "+"
+let equalsDelimiter = "="
+let ampersandDelimiter = "&"
+let restMethod = "GET"
+let utcDateFormatter = "yyyyMMdd'T'HHmmss'Z'"
+let utcTimezone = "UTC"
+
+let hostKey = "host"
+let wssKey = "wss"
+
+let plusEncoding = "%2B"
+let equalsEncoding = "%3D"
+
+// Cognito constants
+let AwsCognitoUserPoolsSignInProviderKey = "UserPool"
+
+let CognitoIdentityUserPoolRegion = AWSRegionType.USWest2 //  <- REPLACE ME!
+let CognitoIdentityUserPoolId = "us-west-2_aPJPmiYme"
+let CognitoIdentityUserPoolAppClientId = "6e64simkbl26gkl70429jtu9kn"
+let CognitoIdentityUserPoolAppClientSecret = "19tahbccjg2cjk30bkvl8r0d98rhj2vhmje1v2k2f4ku4aesf42g"
+let CognitoIdentityPoolId = "us-west-2:15ca6845-8457-4344-8722-a3207bb58fa7"
+
+// KinesisVideo constants
+let AwsKinesisVideoKey = "kinesisvideo"
+let videoProtocols =  ["WSS", "HTTPS"]
+
+// Connection constants
+let connectAsMasterKey = "connect-as-master"
+let connectAsViewerKey = "connect-as-viewer"
+
+let masterRole = "MASTER"
+let viewerRole = "VIEWER"
+let connectAsViewClientId = "ConsumerViewer"

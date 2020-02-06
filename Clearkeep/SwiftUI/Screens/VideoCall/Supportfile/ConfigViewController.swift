@@ -1,16 +1,24 @@
-
-import Foundation
-import AWSKinesisVideo
-import AWSMobileClient
-import AWSCognitoIdentityProvider
-import WebRTC
 import AWSCore
+import AWSCognitoIdentityProvider
+import AWSKinesisVideo
 import AWSKinesisVideoSignaling
+import AWSMobileClient
+import Foundation
+import WebRTC
+import SwiftUI
 
-typealias VideoRespone = (webRTC: WebRTCClient, signaling: SignalingClient, localSenderId: String, isMaster: Bool)
-
-final class VideoCallMananger {
-    static let shared = VideoCallMananger()
+struct CallView: UIViewControllerRepresentable {
+    func makeUIViewController(context: Context) -> UIViewController {
+        let vc = ConfigViewController()
+        return vc
+    }
+    
+    func updateUIViewController(_ uiViewController: UIViewController, context: UIViewControllerRepresentableContext<CallView>) {
+        
+    }
+}
+class ConfigViewController: UIViewController, UITextFieldDelegate {
+    @IBOutlet weak var channelName: UITextField!
     
     var userListDevicesResponse: AWSCognitoIdentityUserListDevicesResponse?
     var user: AWSCognitoIdentityUser?
@@ -22,79 +30,140 @@ final class VideoCallMananger {
     var signalingClient: SignalingClient?
     var channelARN: String?
     var isMaster: Bool?
+    
     var webRTCClient: WebRTCClient?
     var iceServerList: [AWSKinesisVideoSignalingIceServer]?
     var vc: VideoViewController?
     var awsRegionType: AWSRegionType = .Unknown
     var signalingConnected: Bool = false
     var sendAudioEnabled: Bool = true
+
     var remoteSenderClientId: String?
     lazy var localSenderId: String = {
         return connectAsViewClientId
     }()
-    var channelName = ""
-    var awsRegionValue = "us-west-2"
     var peerConnection: RTCPeerConnection?
+    var regionName = "us-west-2"
+    var clientID = ""
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(true)
+        self.signalingConnected = false
+        updateConnectionLabel()
+    }
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        self.signalingConnected = false
+        updateConnectionLabel()
 
-    func createRoom(name: String, completed: @escaping ((_ isComplete: Bool, _ result: VideoRespone?) -> Void)) {
-        self.channelName = name
-        self.isMaster = true
-        connectAsRole(role: masterRole, connectAsUser: connectAsMasterKey, completed: completed)
+        channelName.delegate = self
+    }
+
+    func textFieldShouldReturn(_: UITextField) -> Bool {
+        view.endEditing(true)
+        return false
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setToolbarHidden(true, animated: true)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setToolbarHidden(true, animated: true)
+    }
+
+    @IBAction func connectAsViewer(_sender _: AnyObject) {
+        isMaster = false
+        connectAsRole(role: viewerRole, connectAsUser: (connectAsViewerKey))
+        
     }
     
-    func joinRoom(name: String, completed: @escaping ((_ isComplete: Bool, _ result: VideoRespone?) -> Void)) {
-        self.channelName = name
-        self.isMaster = false
-        connectAsRole(role: viewerRole, connectAsUser: connectAsViewerKey, completed: completed)
-
+    @IBAction func connectAsMaster(_: AnyObject) {
+        isMaster = true
+        connectAsRole(role: masterRole, connectAsUser: (connectAsMasterKey))
     }
-    //MARK: - Configuration function
-    func connectAsRole(role: String, connectAsUser: String, completed: @escaping ((_ isComplete: Bool, _ result: VideoRespone?) -> Void)) {
-        
-        
+
+
+    func connectAsRole(role: String, connectAsUser: String) {
+        Utils.showProgressHub()
+        guard let channelNameValue = self.channelName.text?.trim(), !channelNameValue.isEmpty else {
+            let alertController = UIAlertController(title: "Missing Required Fields",
+                                                    message: "Channel name is required for WebRTC connection",
+                                                    preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alertController.addAction(okAction)
+
+            present(alertController, animated: true, completion: nil)
+            return
+        }
+        let awsRegionValue = self.regionName.trim()
+        guard !awsRegionValue.isEmpty else {
+            let alertController = UIAlertController(title: "Missing Required Fields",
+                                                    message: "Region name is required for WebRTC connection",
+                                                    preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+            return
+        }
+
         self.awsRegionType = awsRegionValue.aws_regionTypeValue()
-        
-        self.localSenderId = NSUUID().uuidString.lowercased()
-        print("Generated clientID is \(self.localSenderId)")
+        if (self.awsRegionType == .Unknown) {
+            let alertController = UIAlertController(title: "Invalid Region Field",
+                                                    message: "Enter a valid AWS region name",
+                                                    preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alertController.addAction(okAction)
+
+            self.present(alertController, animated: true, completion: nil)
+            return
+        }
+        if (self.clientID.isEmpty) {
+            self.localSenderId = NSUUID().uuidString.lowercased()
+            print("Generated clientID is \(self.localSenderId)")
+        }
         // Kinesis Video Client Configuration
         let configuration = AWSServiceConfiguration(region: self.awsRegionType, credentialsProvider: AWSMobileClient.default())
         AWSKinesisVideo.register(with: configuration!, forKey: AwsKinesisVideoKey)
-        
-        retrieveChannelARN(channelName: channelName)
+
+        retrieveChannelARN(channelName: channelNameValue)
         if self.channelARN == nil {
-            createChannel(channelName: channelName)
+            createChannel(channelName: channelNameValue)
         }
         getSignedWSSUrl(channelARN: self.channelARN!, role: role, connectAs: connectAsUser, region: awsRegionValue)
         print("WSS URL :", wssURL?.absoluteString as Any)
-        
+
         var RTCIceServersList = [RTCIceServer]()
-        
+
         for iceServers in self.iceServerList! {
             RTCIceServersList.append(RTCIceServer.init(urlStrings: iceServers.uris!, username: iceServers.username, credential: iceServers.password))
         }
-        
-        RTCIceServersList.append(RTCIceServer.init(urlStrings: ["stun:stun.kinesisvideo." + awsRegionValue + ".amazonaws.com:443"]))
+
+        RTCIceServersList.append(RTCIceServer.init(urlStrings: ["stun:stun.kinesisvideo." + self.regionName + ".amazonaws.com:443"]))
         webRTCClient = WebRTCClient(iceServers: RTCIceServersList, isAudioOn: sendAudioEnabled)
         webRTCClient!.delegate = self
-        
+
         print("Connecting to web socket from channel config")
         signalingClient = SignalingClient(serverUrl: wssURL!)
         signalingClient!.delegate = self
         signalingClient!.connect()
-        
+
         let seconds = 2.0
         DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
-            guard let webRTC = self.webRTCClient, let signal = self.signalingClient, let isMaster = self.isMaster else {
-                completed(false, nil)
-                return
-            }
-            let result = (webRTC, signal, self.localSenderId, isMaster)
-            completed(true, result)
-            
+            Utils.hideProgressHub()
+            self.updateConnectionLabel()
+            self.vc = VideoViewController(webRTCClient: self.webRTCClient!, signalingClient: self.signalingClient!, localSenderClientID: self.localSenderId, isMaster: self.isMaster!)
+            self.present(self.vc!, animated: true, completion: nil)
         }
     }
-    
-    private func createChannel(channelName:String) {
+
+    func updateConnectionLabel() {
+        
+    }
+
+    func createChannel(channelName: String) {
         let kvsClient = AWSKinesisVideo(forKey: AwsKinesisVideoKey)
         let createSigalingChannelInput = AWSKinesisVideoCreateSignalingChannelInput.init()
         createSigalingChannelInput?.channelName = channelName
@@ -108,26 +177,41 @@ final class VideoCallMananger {
             }
         }).waitUntilFinished()
         if (self.channelARN == nil) {
-            MessageUtils.showMess(type: .failed, string: "Please validate all fields")
+            let alertController = UIAlertController(title: "Unable to create channel",
+                                                    message: "Please validate all the input fields",
+                                                    preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alertController.addAction(okAction)
+
+            self.present(alertController, animated: true, completion: nil)
             return
         }
     }
-    
-    private func retrieveChannelARN(channelName: String) {
-        let describeInput = AWSKinesisVideoDescribeSignalingChannelInput()
-        describeInput?.channelName = channelName
-        let kvsClient = AWSKinesisVideo(forKey: AwsKinesisVideoKey)
-        kvsClient.describeSignalingChannel(describeInput!).continueWith(block: { (task) -> Void in
-            if let error = task.error {
-                print("Error describing channel: \(error)")
-            } else {
-                self.channelARN = task.result?.channelInfo?.channelARN
-                print("Channel ARN : ", task.result!.channelInfo!.channelARN)
-            }
-        }).waitUntilFinished()
-        usleep(10)
+
+    func retrieveChannelARN(channelName: String) {
+        if !channelName.isEmpty {
+            let describeInput = AWSKinesisVideoDescribeSignalingChannelInput()
+            describeInput?.channelName = channelName
+            let kvsClient = AWSKinesisVideo(forKey: AwsKinesisVideoKey)
+            kvsClient.describeSignalingChannel(describeInput!).continueWith(block: { (task) -> Void in
+                if let error = task.error {
+                    print("Error describing channel: \(error)")
+                } else {
+                    self.channelARN = task.result?.channelInfo?.channelARN
+                    print("Channel ARN : ", task.result!.channelInfo!.channelARN ?? "Channel ARN empty.")
+                }
+            }).waitUntilFinished()
+        } else {
+            let alertController = UIAlertController(title: "Channel Name is Empty",
+                                                    message: "Valid Channel Name is required.",
+                                                    preferredStyle: .alert)
+            let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+            alertController.addAction(okAction)
+            present(alertController, animated: true, completion: nil)
+            return
+        }
     }
-    
+
     func getSingleMasterChannelEndpointRole() -> AWSKinesisVideoChannelRole {
         if isMaster! {
             return .master
@@ -143,20 +227,26 @@ final class VideoCallMananger {
         var httpResourceEndpointItem = AWSKinesisVideoResourceEndpointListItem()
         var wssResourceEndpointItem = AWSKinesisVideoResourceEndpointListItem()
         let kvsClient = AWSKinesisVideo(forKey: AwsKinesisVideoKey)
-        
+
         let signalingEndpointInput = AWSKinesisVideoGetSignalingChannelEndpointInput()
         signalingEndpointInput?.channelARN = channelARN
         signalingEndpointInput?.singleMasterChannelEndpointConfiguration = singleMasterChannelEndpointConfiguration
-        
+
         kvsClient.getSignalingChannelEndpoint(signalingEndpointInput!).continueWith(block: { (task) -> Void in
             if let error = task.error {
-                print("Error to get channel endpoint: \(error)")
+               print("Error to get channel endpoint: \(error)")
             } else {
                 print("Resource Endpoint List : ", task.result!.resourceEndpointList!)
             }
-            
+
             guard (task.result?.resourceEndpointList) != nil else {
-                MessageUtils.showMess(type: .failed, string: "Invalid region")
+                let alertController = UIAlertController(title: "Invalid Region Field",
+                                                        message: "No endpoints found",
+                                                        preferredStyle: .alert)
+                let okAction = UIAlertAction(title: "Ok", style: .default, handler: nil)
+                alertController.addAction(okAction)
+
+                self.present(alertController, animated: true, completion: nil)
                 return
             }
             for endpoint in task.result!.resourceEndpointList! {
@@ -165,14 +255,14 @@ final class VideoCallMananger {
                     httpResourceEndpointItem = endpoint
                 case .wss:
                     wssResourceEndpointItem = endpoint
-                default:
+                case .unknown:
                     print("Error: Unknown endpoint protocol ", endpoint.protocols, "for endpoint" + endpoint.description())
                 }
             }
             AWSMobileClient.default().getAWSCredentials { credentials, _ in
                 self.AWSCredentials = credentials
             }
-            
+
             var httpURlString = (wssResourceEndpointItem?.resourceEndpoint!)!
                 + "?X-Amz-ChannelARN=" + self.channelARN!
             if !self.isMaster! {
@@ -188,9 +278,9 @@ final class VideoCallMananger {
                       sessionToken: (self.AWSCredentials?.sessionKey)!,
                       wssRequest: wssRequestURL!,
                       region: region)
-            
+
             // Get the List of Ice Server Config and store it in the self.iceServerList.
-            
+
             let endpoint =
                 AWSEndpoint(region: self.awsRegionType,
                             service: .KinesisVideo,
@@ -201,9 +291,9 @@ final class VideoCallMananger {
                                         credentialsProvider: AWSMobileClient.default())
             AWSKinesisVideoSignaling.register(with: configuration!, forKey: AwsKinesisVideoKey)
             let kvsSignalingClient = AWSKinesisVideoSignaling(forKey: AwsKinesisVideoKey)
-            
+
             let iceServerConfigRequest = AWSKinesisVideoSignalingGetIceServerConfigRequest.init()
-            
+
             iceServerConfigRequest?.channelARN = channelARN
             iceServerConfigRequest?.clientId = self.localSenderId
             kvsSignalingClient.getIceServerConfig(iceServerConfigRequest!).continueWith(block: { (task) -> Void in
@@ -214,21 +304,58 @@ final class VideoCallMananger {
                     print("ICE Server List : ", task.result!.iceServerList!)
                 }
             }).waitUntilFinished()
-            
+
         }).waitUntilFinished()
     }
-    
 }
 
-extension VideoCallMananger: WebRTCClientDelegate {
-    
-    func webRTCClient(_: WebRTCClient, didGenerate candidate: RTCIceCandidate) {
-        print("Generated local candidate")
-        signalingClient?.sendIceCandidate(rtcIceCandidate: candidate, master: isMaster!,
-                                          recipientClientId: remoteSenderClientId ?? "",
-                                          senderClientId: self.localSenderId)
+extension ConfigViewController: SignalClientDelegate {
+    func signalClientDidConnect(_: SignalingClient) {
+        signalingConnected = true
+    }
+
+    func signalClientDidDisconnect(_: SignalingClient) {
+        signalingConnected = false
+    }
+
+    func setRemoteSenderClientId() {
+        if self.remoteSenderClientId == nil {
+            remoteSenderClientId = connectAsViewClientId
+        }
     }
     
+    func signalClient(_: SignalingClient, senderClientId: String, didReceiveRemoteSdp sdp: RTCSessionDescription) {
+        print("Received remote sdp from [\(senderClientId)]")
+        if !senderClientId.isEmpty {
+            remoteSenderClientId = senderClientId
+        }
+        setRemoteSenderClientId()
+        webRTCClient!.set(remoteSdp: sdp) { _ in
+            print("Setting remote sdp and sending answer.")
+            self.vc!.sendAnswer(recipientClientID: self.remoteSenderClientId!)
+
+        }
+    }
+
+    func signalClient(_: SignalingClient, senderClientId: String, didReceiveCandidate candidate: RTCIceCandidate) {
+        print("Received remote candidate from [\(senderClientId)]")
+        if !senderClientId.isEmpty {
+            remoteSenderClientId = senderClientId
+        }
+        setRemoteSenderClientId()
+        webRTCClient!.set(remoteCandidate: candidate)
+    }
+}
+
+extension ConfigViewController: WebRTCClientDelegate {
+    func webRTCClient(_: WebRTCClient, didGenerate candidate: RTCIceCandidate) {
+        print("Generated local candidate")
+        setRemoteSenderClientId()
+        signalingClient?.sendIceCandidate(rtcIceCandidate: candidate, master: isMaster!,
+                                          recipientClientId: remoteSenderClientId!,
+                                          senderClientId: self.localSenderId)
+    }
+
     func webRTCClient(_: WebRTCClient, didChangeConnectionState state: RTCIceConnectionState) {
         switch state {
         case .connected, .completed:
@@ -249,37 +376,8 @@ extension VideoCallMananger: WebRTCClientDelegate {
             print("WebRTC unknown state")
         }
     }
-    
+
     func webRTCClient(_: WebRTCClient, didReceiveData _: Data) {
         print("Received local data")
-    }
-}
-
-extension VideoCallMananger: SignalClientDelegate {
-    func signalClientDidConnect(_: SignalingClient) {
-        print("Did Connect")
-    }
-    
-    func signalClientDidDisconnect(_: SignalingClient) {
-        print("Did Disconnect")
-    }
-    
-    func signalClient(_: SignalingClient, senderClientId: String, didReceiveRemoteSdp sdp: RTCSessionDescription) {
-        print("Received remote sdp from [\(senderClientId)]")
-        if !senderClientId.isEmpty {
-            remoteSenderClientId = senderClientId
-        }
-        webRTCClient!.set(remoteSdp: sdp) { _ in
-            print("Set remote sdp")
-            
-        }
-    }
-    
-    func signalClient(_: SignalingClient, senderClientId: String, didReceiveCandidate candidate: RTCIceCandidate) {
-        print("Received remote candidate from [\(senderClientId)]")
-        if !senderClientId.isEmpty {
-            remoteSenderClientId = senderClientId
-        }
-        webRTCClient!.set(remoteCandidate: candidate)
     }
 }

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="15702" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15704"/>
+        <capability name="Named colors" minToolsVersion="9.0"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ConfigViewController" customModule="Clearkeep_v2" customModuleProvider="target">
+            <connections>
+                <outlet property="channelName" destination="Yqv-sr-rcs" id="rMd-hs-uJc"/>
+                <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
+            </connections>
+        </placeholder>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <view clearsContextBeforeDrawing="NO" contentMode="scaleToFill" id="i5M-Pr-FkT">
+            <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+            <subviews>
+                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Room name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Yqv-sr-rcs">
+                    <rect key="frame" x="30" y="94" width="354" height="50"/>
+                    <color key="backgroundColor" name="background_textfield"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="50" id="qkg-Nc-aUX"/>
+                    </constraints>
+                    <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                    <textInputTraits key="textInputTraits"/>
+                </textField>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hLG-SI-pVN">
+                    <rect key="frame" x="30" y="194" width="354" height="40"/>
+                    <color key="backgroundColor" red="0.42333502169999998" green="0.6389757452" blue="0.69412726160000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="l3e-Mg-g4T"/>
+                    </constraints>
+                    <state key="normal" title="Create Room">
+                        <color key="titleColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    </state>
+                    <connections>
+                        <action selector="connectAsMaster:" destination="-1" eventType="touchUpInside" id="OWe-bM-Ekt"/>
+                    </connections>
+                </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HIY-i4-UMA">
+                    <rect key="frame" x="30" y="254" width="354" height="40"/>
+                    <color key="backgroundColor" red="0.42333502169999998" green="0.6389757452" blue="0.69412726160000005" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="40" id="hVX-QV-kg0"/>
+                    </constraints>
+                    <state key="normal" title="Join Room">
+                        <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                    </state>
+                    <connections>
+                        <action selector="connectAsViewerWith_sender:" destination="-1" eventType="touchUpInside" id="HO2-yL-y0q"/>
+                    </connections>
+                </button>
+            </subviews>
+            <color key="backgroundColor" name="background_view"/>
+            <constraints>
+                <constraint firstItem="Yqv-sr-rcs" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="50" id="553-67-4SZ"/>
+                <constraint firstItem="HIY-i4-UMA" firstAttribute="top" secondItem="hLG-SI-pVN" secondAttribute="bottom" constant="20" id="GVd-rg-KYu"/>
+                <constraint firstItem="HIY-i4-UMA" firstAttribute="trailing" secondItem="fnl-2z-Ty3" secondAttribute="trailing" constant="-30" id="W4N-ge-b25"/>
+                <constraint firstItem="HIY-i4-UMA" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="ZS8-dR-07D"/>
+                <constraint firstItem="hLG-SI-pVN" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="boV-2s-Iai"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="hLG-SI-pVN" secondAttribute="trailing" constant="30" id="hAa-8g-py5"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="Yqv-sr-rcs" secondAttribute="trailing" constant="30" id="mTE-mR-cZP"/>
+                <constraint firstItem="hLG-SI-pVN" firstAttribute="top" secondItem="Yqv-sr-rcs" secondAttribute="bottom" constant="50" id="yoQ-iQ-B75"/>
+                <constraint firstItem="Yqv-sr-rcs" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="30" id="zyl-TI-sj6"/>
+            </constraints>
+            <viewLayoutGuide key="safeArea" id="fnl-2z-Ty3"/>
+            <point key="canvasLocation" x="132" y="151"/>
+        </view>
+    </objects>
+    <resources>
+        <namedColor name="background_textfield">
+            <color red="0.88599997758865356" green="0.88599997758865356" blue="0.88599997758865356" alpha="0.60100001096725464" colorSpace="custom" customColorSpace="displayP3"/>
+        </namedColor>
+        <namedColor name="background_view">
+            <color red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+        </namedColor>
+    </resources>
+</document>

@@ -49,19 +49,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func setupCognito() {
         
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USWest2,
-                                                                identityPoolId: Constant.CognitoIdentityPoolID)
+                                                                identityPoolId: CognitoIdentityPoolId)
         let configuration = AWSServiceConfiguration(region: .USWest2, credentialsProvider: credentialsProvider)
         AWSServiceManager.default().defaultServiceConfiguration = configuration
         // setup service configuration
-        let serviceConfiguration = AWSServiceConfiguration(region: Constant.CognitoIdentityUserPoolRegion, credentialsProvider: nil)
+        let serviceConfiguration = AWSServiceConfiguration(region: CognitoIdentityUserPoolRegion, credentialsProvider: nil)
         
         // create pool configuration
-        let poolConfiguration = AWSCognitoIdentityUserPoolConfiguration(clientId: Constant.CognitoIdentityUserPoolAppClientId,
-                                                                        clientSecret: Constant.CognitoIdentityUserPoolAppClientSecret,
-                                                                        poolId: Constant.CognitoIdentityUserPoolId)
+        let poolConfiguration = AWSCognitoIdentityUserPoolConfiguration(clientId: CognitoIdentityUserPoolAppClientId,
+                                                                        clientSecret: CognitoIdentityUserPoolAppClientSecret,
+                                                                        poolId: CognitoIdentityUserPoolId)
         
         // initialize user pool client
-        AWSCognitoIdentityUserPool.register(with: serviceConfiguration, userPoolConfiguration: poolConfiguration, forKey: Constant.AWSCognitoUserPoolsSignInProviderKey)
+        AWSCognitoIdentityUserPool.register(with: serviceConfiguration, userPoolConfiguration: poolConfiguration, forKey: AwsCognitoUserPoolsSignInProviderKey)
         
         AWSMobileClient.default().initialize { (state, error) in
             switch state {

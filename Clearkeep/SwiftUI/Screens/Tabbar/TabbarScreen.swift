@@ -21,10 +21,13 @@ struct TabbarScreen: View {
     @State private var normalColor = Color("icon_menu")
     private let tabData = [TabbarItemModel(icon: Image("ic_chat"), title: "Conversations", id: 0, isSelect: true),
                            TabbarItemModel(icon: Image("ic_contact"), title: "Users", id: 1, isSelect: false),
-                           TabbarItemModel(icon: Image("ic_user"), title: "Profile", id: 2, isSelect: false)]
+                           TabbarItemModel(icon: Image("ic_call_video"), title: "Call", id: 2, isSelect: false),
+                           TabbarItemModel(icon: Image("ic_user"), title: "Profile", id: 3, isSelect: false)]
     private let conversationScreen = ConversationScreen()
     private let contactScreen = ContactScreen()
     private let profileScreen = ProfileScreen()
+    private let callScreen = CallView()
+
     @ObservedObject private var detailMananger = DetailMananger.shared
     
     var body: some View {
@@ -74,12 +77,13 @@ struct TabbarScreen: View {
     }
     
     private func renderPageView() -> some View {
-        
         return VStack {
             if selectedIndex == 0 {
                 conversationScreen
             } else if selectedIndex == 1 {
                 contactScreen
+            } else if selectedIndex == 2{
+                callScreen.navigationBarTitle("Call", displayMode: .inline).navigationBarItems(trailing: Text(""))
             } else {
                 profileScreen
             }

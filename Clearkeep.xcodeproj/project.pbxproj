@@ -50,6 +50,8 @@
 		B299FEA423E8284D00FD9536 /* KVSSigner.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299FEA323E8284D00FD9536 /* KVSSigner.swift */; };
 		B299FEAA23E830F300FD9536 /* WebRTCClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299FEA923E830F300FD9536 /* WebRTCClient.swift */; };
 		B299FEAC23E830FC00FD9536 /* SignalingClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B299FEAB23E830FC00FD9536 /* SignalingClient.swift */; };
+		B29EBAED23EBBF4500FCE450 /* ConfigViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B29EBAEB23EBBF4500FCE450 /* ConfigViewController.swift */; };
+		B29EBAEE23EBBF4500FCE450 /* ConfigViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = B29EBAEC23EBBF4500FCE450 /* ConfigViewController.xib */; };
 		B2B226FA23D1A1BC00420C8E /* KeyboardManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */; };
 		B2B8E4B823E906CC00EE1F55 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B8E4B723E906CC00EE1F55 /* Message.swift */; };
 		B2B8E4BA23E906E100EE1F55 /* Event.swift in Sources */ = {isa = PBXBuildFile; fileRef = B2B8E4B923E906E100EE1F55 /* Event.swift */; };
@@ -129,6 +131,8 @@
 		B299FEA323E8284D00FD9536 /* KVSSigner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = KVSSigner.swift; sourceTree = "<group>"; };
 		B299FEA923E830F300FD9536 /* WebRTCClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WebRTCClient.swift; sourceTree = "<group>"; };
 		B299FEAB23E830FC00FD9536 /* SignalingClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignalingClient.swift; sourceTree = "<group>"; };
+		B29EBAEB23EBBF4500FCE450 /* ConfigViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigViewController.swift; sourceTree = "<group>"; };
+		B29EBAEC23EBBF4500FCE450 /* ConfigViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ConfigViewController.xib; sourceTree = "<group>"; };
 		B2B226F923D1A1BC00420C8E /* KeyboardManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardManager.swift; sourceTree = "<group>"; };
 		B2B8E4B723E906CC00EE1F55 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		B2B8E4B923E906E100EE1F55 /* Event.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
@@ -435,6 +439,8 @@
 				B299FEA923E830F300FD9536 /* WebRTCClient.swift */,
 				B299FEA323E8284D00FD9536 /* KVSSigner.swift */,
 				B299FEA123E8191300FD9536 /* VideoCallManager.swift */,
+				B29EBAEB23EBBF4500FCE450 /* ConfigViewController.swift */,
+				B29EBAEC23EBBF4500FCE450 /* ConfigViewController.xib */,
 			);
 			path = Supportfile;
 			sourceTree = "<group>";
@@ -536,6 +542,7 @@
 			files = (
 				8562185D21E70B1F004D53A7 /* awsconfiguration.json in Resources */,
 				8562185421E706B5004D53A7 /* LaunchScreen.storyboard in Resources */,
+				B29EBAEE23EBBF4500FCE450 /* ConfigViewController.xib in Resources */,
 				8562185121E706B5004D53A7 /* Assets.xcassets in Resources */,
 				B2B8E4D823E9543600EE1F55 /* VideoViewController.xib in Resources */,
 				8562184F21E706B3004D53A7 /* Main.storyboard in Resources */,
@@ -590,6 +597,7 @@
 				B2C935DA23CD6CB500202204 /* ConversationViewModel.swift in Sources */,
 				8570377A23CAD10100DDCA01 /* API.swift in Sources */,
 				B22E237123CC4A4600D63F77 /* LoginViewModel.swift in Sources */,
+				B29EBAED23EBBF4500FCE450 /* ConfigViewController.swift in Sources */,
 				B26A3D6523CDA9AF00FAAC0D /* MessageItemView.swift in Sources */,
 				B22E236D23CC497300D63F77 /* FlatTextField.swift in Sources */,
 				85DE7F0A21F06DDC00F74D0D /* CQLError.swift in Sources */,
