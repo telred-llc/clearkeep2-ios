@@ -13,11 +13,11 @@ class DetailConversationViewModel: ObservableObject {
     private let numberOfItemsPerPage: Int = 20
     private var discardMessages = Set<AnyCancellable>()
     private var subcribeCancellable: AWSAppSync.Cancellable?
-
+    
     @Published var conversationData: GetConvoQuery.Data.GetConvo?
     @Published var showContact = false
     var idConversation: GraphQLID = ""
-    
+    var conversation: GetConvoQuery.Data.GetConvo.Message.Item.Conversation?
     func clearData() {
         self.conversationData?.messages?.items?.removeAll()
     }
@@ -30,12 +30,13 @@ class DetailConversationViewModel: ObservableObject {
     func getData() {
         if idConversation.isEmpty {
             MessageUtils.showMess(type: .failed, string: "Can't get message")
-
+            
         } else {
             _ = fetchCV(idCV: idConversation).sink(receiveCompletion: {_ in }) { (conversation) in
                 self.conversationData = conversation
                 let items = conversation?.messages?.items?.compactMap({ return $0 }) ?? []
                 self.conversationData?.messages?.items = items
+                self.conversation = items.first?.conversation
             }.store(in: &discardMessages)
         }
     }
@@ -63,7 +64,14 @@ class DetailConversationViewModel: ObservableObject {
         self.dateFormatter.dateFormat = Constant.globalDateFormat
         let createdAt = self.dateFormatter.string(from: date)
         let id = createdAt + "_" + UUID().uuidString
+        if let snap = conversationData?.snapshot {
+            let cvTemp = GetConvoQuery.Data.GetConvo.Message.Item.Conversation(snapshot: snap)
+            let newMessTem = GetConvoQuery.Data.GetConvo.Message.Item(id: id, authorId: meData?.id, content: content, conversation: cvTemp, messageConversationId: idConversation, createdAt: createdAt)
+            self.conversationData?.messages?.items?.append(newMessTem)
+        }
+        
         let createMessageMutaion = CreateMessageMutation.init(input: CreateMessageInput.init(id: id, authorId: self.meData?.id, content: content, messageConversationId: idConversation, createdAt: createdAt, updatedAt: nil))
+        
         Utils.appSyncClient?.perform(mutation: createMessageMutaion, resultHandler: { (result, error) in
             if let result = result {
                 if (result.data?.createMessage?.snapshot) != nil {
@@ -84,7 +92,12 @@ class DetailConversationViewModel: ObservableObject {
             subcribeCancellable = try Utils.appSyncClient?.subscribe(subscription: OnCreateMessageSubscription.init(messageConversationId: conversationId), queue: DispatchQueue.main, resultHandler: { (result, transaction, error) in
                 if let result = result {
                     if let snapshot = result.data?.onCreateMessage?.snapshot {
-                        self.conversationData?.messages?.items?.append(GetConvoQuery.Data.GetConvo.Message.Item.init(snapshot: snapshot))
+                        let newMess = GetConvoQuery.Data.GetConvo.Message.Item.init(snapshot: snapshot)
+                        if let indexOfExistMess = self.conversationData?.messages?.items?.firstIndex(where: {$0?.id == newMess.id}) {
+                            self.conversationData?.messages?.items?[indexOfExistMess] = newMess
+                        } else {
+                            self.conversationData?.messages?.items?.append(newMess)
+                        }
                     }
                 }
             })
@@ -92,5 +105,5 @@ class DetailConversationViewModel: ObservableObject {
             print("Error starting subscription.")
         }
     }
-
+    
 }
