@@ -31,7 +31,9 @@ class DetailConversationViewModel: ObservableObject {
     @objc func appsyncReachabilityChanged(note: Notification) {
         let connectionInfo = note.object as! AppSyncConnectionInfo
         let isReachable = connectionInfo.isConnectionAvailable
-        getData(isReachable: isReachable)
+        if isReachable {
+            getData(isReachable: isReachable)
+        }
     }
     
     func clearData() {
@@ -57,53 +59,20 @@ class DetailConversationViewModel: ObservableObject {
     func getData(isReachable: Bool = true) {
         if idConversation.isEmpty {
             return
-            
         } else {
-            if isReachable {
-                _ = fetchConversationFromServer(idCV: idConversation).sink(receiveCompletion: {_ in }) { (conversation) in
-                    self.conversationData = conversation
-                    let items = conversation?.messages?.items?.compactMap({ return $0 }) ?? []
-                    self.conversationData?.messages?.items = items
-                    self.conversation = items.first?.conversation
-                    
-                }.store(in: &discardMessages)
-            } else {
-                _ = fetchConversationFromLocal(idCV: idConversation).sink(receiveCompletion: {_ in }) { (conversation) in
-                    self.conversationData = conversation
-                    let items = conversation?.messages?.items?.compactMap({ return $0 }) ?? []
-                    self.conversationData?.messages?.items = items
-                    self.conversation = items.first?.conversation
-                    
-                }.store(in: &discardMessages)
-            }
-            
-        }
-    }
-    
-    func fetchConversationFromServer(idCV: String) -> Future<GetConvoQuery.Data.GetConvo?, Error> {
-        Future<GetConvoQuery.Data.GetConvo?, Error> { promise in
-            let query = GetConvoQuery.init(id: idCV)
-            Utils.appSyncClient?.fetch(query: query, cachePolicy: CachePolicy.fetchIgnoringCacheData, resultHandler: { (result, error) in
-                if let error = error {
-                    self.getData(isReachable: false)
-                    promise(.failure(error))
-                } else {
-                    promise(.success(result?.data?.getConvo))
-                }
-            })
-        }
-    }
-    
-    func fetchConversationFromLocal(idCV: String) -> Future<GetConvoQuery.Data.GetConvo?, Error> {
-        Future<GetConvoQuery.Data.GetConvo?, Error> { promise in
-            let query = GetConvoQuery.init(id: idCV)
+            let query = GetConvoQuery.init(id: idConversation)
             Utils.appSyncClient?.fetch(query: query, cachePolicy: CachePolicy.returnCacheDataAndFetch, resultHandler: { (result, error) in
                 if let error = error {
-                    promise(.failure(error))
+                    MessageUtils.showErrorMessage(error: error)
                 } else {
-                    promise(.success(result?.data?.getConvo))
+                    let conversation = result?.data?.getConvo
+                    self.conversationData = conversation
+                    let items = conversation?.messages?.items?.compactMap({ return $0 }) ?? []
+                    self.conversationData?.messages?.items = items
+                    self.conversation = items.first?.conversation
                 }
             })
+            
         }
     }
     
