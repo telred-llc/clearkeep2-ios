@@ -62,9 +62,6 @@ final class ConversationViewModel: ObservableObject {
                                 }
                             }
                         }
-                        
-                        
-                        
                     }
                 }
             })
@@ -131,7 +128,7 @@ final class ConversationViewModel: ObservableObject {
         _ = createCV(name: name, members: members)
             .flatMap({self.createCVLinks(conv: $0, members: members)})
             .sink(receiveCompletion: {_ in }) { (results) in
-                let result = results.first?.1
+                _ = results.first?.1
         }
         .store(in: &convCancellable)
     }

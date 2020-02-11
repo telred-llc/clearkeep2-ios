@@ -153,9 +153,11 @@ final class MessageUtils {
                 }
             } else if let appSyncError = error as? AWSAppSyncClientError {
                 switch appSyncError {
-                case .requestFailed(_ , let response, _):
+                case .requestFailed(_ , let response, let errorRequest):
                     if response?.statusCode == 401 {
                         errorMessage = "Token expired!"
+                    } else {
+                        errorMessage = errorRequest?.localizedDescription ?? ""
                     }
                 default:
                     break

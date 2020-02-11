@@ -19,34 +19,15 @@ class ContactViewModel: ObservableObject {
     
     func getUser() {
         Utils.showProgressHub()
-        _ = Future<[UserModel], Error> { promise in
-            Utils.appSyncClient?.fetch(query: ListUsersQuery(), cachePolicy: CachePolicy.fetchIgnoringCacheData, resultHandler: { (result, error) in
-                Utils.hideProgressHub()
-                if let error = error {
-                    promise(.failure(error))
-                    MessageUtils.showErrorMessage(error: error)
-                } else {
-                    let items = result?.data?.listUsers?.items?.compactMap({ $0 }) ?? []
-                    promise(.success(items))
-                }
-            })
-        }
-        .receive(on: DispatchQueue.main)
-        .sink(receiveCompletion: { _ in }) { (users) in
-            self.users = users.filter({ $0.id != self.meData?.id })
-            Session.shared.users = self.users
-            self.objectWillChange.send()
-        }
-        .store(in: &userCancellable)
-        
-    }
-    
-    private func fetchAllUserFromLocal() {
-        Utils.appSyncClient?.fetch(query: ListUsersQuery.init(), cachePolicy: CachePolicy.returnCacheDataDontFetch, resultHandler: { (result, error) in
+        Utils.appSyncClient?.fetch(query: ListUsersQuery(), cachePolicy: CachePolicy.returnCacheDataAndFetch, resultHandler: { (result, error) in
+            Utils.hideProgressHub()
             if let error = error {
-                print(error)
-            } else if let result = result {
-                self.users = result.data?.listUsers?.items?.compactMap({ $0 }).filter({ $0.id != self.meData?.id }) ?? []
+                MessageUtils.showErrorMessage(error: error)
+            } else {
+                let items = result?.data?.listUsers?.items?.compactMap({ $0 }) ?? []
+                self.users = items.filter({ $0.id != self.meData?.id })
+                Session.shared.users = self.users
+                self.objectWillChange.send()
             }
         })
     }
