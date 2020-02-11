@@ -35,6 +35,7 @@ class ContactViewModel: ObservableObject {
         .sink(receiveCompletion: { _ in }) { (users) in
             self.users = users.filter({ $0.id != self.meData?.id })
             Session.shared.users = self.users
+            self.objectWillChange.send()
         }
         .store(in: &userCancellable)
         

@@ -64,7 +64,7 @@ public class LoginViewModel: ObservableObject {
     func checkIfUserExists(username: String) {
         DispatchQueue.main.async {
             Utils.showProgressHub()
-            Utils.appSyncClient?.fetch(query: GetUserQuery.init(id: username), cachePolicy: CachePolicy.fetchIgnoringCacheData, resultHandler: { (result, error) in
+            Utils.appSyncClient?.fetch(query: GetUserQuery.init(id: username), cachePolicy: CachePolicy.returnCacheDataElseFetch, resultHandler: { (result, error) in
                 Utils.hideProgressHub()
                 if let error = error {
                     MessageUtils.showErrorMessage(error: error)
