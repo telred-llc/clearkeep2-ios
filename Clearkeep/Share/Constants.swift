@@ -4,24 +4,7 @@ import AWSCognitoIdentityProvider
 
 struct Constant {
     static let globalDateFormat = "yyyy-MM-dd'T'HH:mm:ss.SSSZ"
-    
-//    static let CognitoIdentityUserPoolRegion = AWSRegionType.USWest2
-//    static let CognitoIdentityUserPoolId = "us-west-2_aPJPmiYme"
-//    static let CognitoIdentityUserPoolAppClientId = "6e64simkbl26gkl70429jtu9kn"
-//    static let CognitoIdentityUserPoolAppClientSecret = "19tahbccjg2cjk30bkvl8r0d98rhj2vhmje1v2k2f4ku4aesf42g"
-//
-//    static let AWSCognitoUserPoolsSignInProviderKey = "UserPool"
-//    static let CognitoIdentityPoolID = "us-west-2:15ca6845-8457-4344-8722-a3207bb58fa7"
-//
-//    static let AWSKinesisVideoEndpoint = "https://kinesisvideo.us-west-2.amazonaws.com"
-//    static let AWSKinesisVideoKey = "kinesisvideo"
-//    
-//    static let videoProtocols =  ["WSS", "HTTPS"]
-//    static let ConnectAsMaster = "connect-as-master"
-//    static let ConnectAsViewer = "connect-as-viewer"
-//    static let MasterRole = "MASTER"
-//    static let ViewerRole = "VIEWER"
-    
+    static let appsyncReachabilityChanged = Notification.Name("AppSyncNetworkAvailabilityChangedNotification")
     static let countries = ["AF": ["Afghanistan","93"],
                      "AX": ["Aland Islands","358"],
                      "AL": ["Albania","355"],

@@ -24,7 +24,7 @@ class DetailConversationViewModel: ObservableObject {
         NotificationCenter.default.addObserver(
             self,
             selector: #selector(appsyncReachabilityChanged(note:)),
-            name: Notification.Name("AppSyncNetworkAvailabilityChangedNotification"),
+            name: Constant.appsyncReachabilityChanged,
             object: nil)
     }
     
@@ -32,7 +32,7 @@ class DetailConversationViewModel: ObservableObject {
         let connectionInfo = note.object as! AppSyncConnectionInfo
         let isReachable = connectionInfo.isConnectionAvailable
         if isReachable {
-            getData(isReachable: isReachable)
+            getData()
         }
     }
     
@@ -56,7 +56,7 @@ class DetailConversationViewModel: ObservableObject {
         })
     }
     
-    func getData(isReachable: Bool = true) {
+    func getData() {
         if idConversation.isEmpty {
             return
         } else {
